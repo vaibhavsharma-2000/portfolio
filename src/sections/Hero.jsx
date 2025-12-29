@@ -22,7 +22,7 @@ const Hero = () => {
                     <img
                         src={heroImg}
                         alt="Vaibhav Sharma"
-                        className="w-full h-full object-cover grayscale opacity-50 brightness-75 contrast-110"
+                        className="w-full h-full object-cover grayscale opacity-50 brightness-75 contrast-90"
                     />
                     {/* Subtle gradient to blend into the background */}
                     <div className="absolute inset-0 bg-gradient-to-b from-dark/20 via-transparent to-dark" />
@@ -33,9 +33,9 @@ const Hero = () => {
                     <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="inline-block mb-4 px-3 py-1 border border-brand/30 rounded-full text-[10px] uppercase tracking-widest text-brand font-bold bg-brand/5"
+                        className="inline-block mb-4 px-5 py-1 border border-brand/30 rounded-full text-[12px] uppercase tracking-widest text-brand font-bold bg-brand/5"
                     >
-                        UX Researcher & Developer
+                        UX Researcher & Frontend Developer
                     </motion.span>
                     <motion.h1
                         className="text-7xl md:text-9xl font-serif text-white tracking-tighter leading-none"
