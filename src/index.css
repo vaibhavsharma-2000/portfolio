@@ -1,12 +1,19 @@
 @import "tailwindcss";
-/* */
 
-/* Customizing your Design System (v4 style) */
 @theme {
+  /* The SF Pro / System Font Stack */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  /* Keeping Playfair for your "Psychology" headers */
   --font-serif: "Playfair Display", serif;
-  --font-sans: "Inter", sans-serif;
+
   --color-brand: #ffc107;
-  /* BrewQuest Yellow */
   --color-dark: #0a0a0a;
-  /* Dark Mode 2.0 Background */
+}
+
+/* Optional: Smooth transitions for all font changes */
+body {
+  @apply antialiased text-white bg-dark;
+  font-feature-settings: "cv11", "ss01";
+  /* Enables high-end typography features */
 }
