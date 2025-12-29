@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-const SectionHeader = ({ title = "Experience & Qualifications" }) => {
+const SectionHeader = ({ title }) => {
     return (
         <section className="relative py-24 flex flex-col items-center justify-center overflow-hidden">
             <div className="relative inline-block overflow-hidden pb-4 px-4">

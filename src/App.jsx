@@ -14,8 +14,9 @@ function App() {
         <Hero />
       </div>
       <Bridge />
-      <SectionHeader />
+      <SectionHeader title="Experience & Qualifications" />
       <Journey />
+      <SectionHeader title="Skills" />
       <div id="toolkit">
         <BentoGrid />
       </div>

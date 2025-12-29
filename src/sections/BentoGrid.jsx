@@ -10,15 +10,7 @@ const BentoGrid = () => {
     ];
 
     return (
-        <section className="py-24 px-6 max-w-7xl mx-auto bg-dark">
-            <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-4xl font-serif mb-12 text-white"
-            >
-                The Toolkit
-            </motion.h2>
+        <section className="pb-24 px-6 max-w-7xl mx-auto bg-dark">
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[180px]">
                 {cards.map((card, index) => (
