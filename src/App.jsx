@@ -1,10 +1,15 @@
-export default function App() {
+import Hero from './sections/Hero';
+
+function App() {
   return (
-    <div className="h-screen bg-dark flex flex-col items-center justify-center text-white">
-      <h1 className="text-5xl font-serif text-brand">Vaibhav Sharma</h1>
-      <p className="mt-4 font-sans text-neutral-400 italic">
-        UX Designer & Researcher • Tailwind v4 is live!
-      </p>
-    </div>
-  )
+    <main className="bg-dark selection:bg-brand selection:text-dark">
+      <Hero />
+      {/* Spacer to allow scrolling */}
+      <div className="h-screen flex items-center justify-center text-neutral-600">
+        <p>Next: The Bento Grid Skills Section...</p>
+      </div>
+    </main>
+  );
 }
+
+export default App;
