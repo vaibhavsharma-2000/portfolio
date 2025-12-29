@@ -1,0 +1,12 @@
+@import "tailwindcss";
+/* */
+
+/* Customizing your Design System (v4 style) */
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --color-brand: #ffc107;
+  /* BrewQuest Yellow */
+  --color-dark: #0a0a0a;
+  /* Dark Mode 2.0 Background */
+}
