@@ -1,58 +1,49 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+// If using Vite and image is in src/assets:
+import heroImg from '../assets/hero section image.jpg';
 
 const Hero = () => {
     const containerRef = useRef(null);
-
-    // Tracks scroll progress of this specific section
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end start"]
     });
 
-    // Mapping scroll progress (0 to 1) to animation values
-    const y = useTransform(scrollYProgress, [0, 0.4], ["0%", "25%"]);
+    const y = useTransform(scrollYProgress, [0, 0.4], ["0%", "30%"]);
     const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.4], [1, 0.95]);
 
     return (
-        <section ref={containerRef} className="relative h-[150vh] bg-dark">
-            {/* The Sticky Wrapper keeps content visible while scrolling the 150vh */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+        <section ref={containerRef} className="relative h-[150vh] bg-dark overflow-hidden">
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center">
 
-                {/* Background Image Layer: Grayscale & Darkened for 2025 aesthetic */}
-                <motion.div
-                    style={{ y, opacity }}
-                    className="absolute inset-0 z-0"
-                >
+                {/* Updated Background Image Layer */}
+                <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
                     <img
-                        src="/your-photo.jpg"
+                        src={heroImg}
                         alt="Vaibhav Sharma"
-                        className="w-full h-full object-cover grayscale opacity-40 contrast-125"
+                        className="w-full h-full object-cover grayscale opacity-50 brightness-75 contrast-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-dark" />
+                    {/* Subtle gradient to blend into the background */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-dark/20 via-transparent to-dark" />
                 </motion.div>
 
-                {/* Text Content: Kinetic Staggered Entrance */}
-                <motion.div
-                    style={{ scale }}
-                    className="relative z-10 px-6 text-center"
-                >
+                {/* Narrative Text Layer */}
+                <div className="relative z-10 text-center px-6">
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="inline-block mb-4 px-3 py-1 border border-brand/30 rounded-full text-[10px] uppercase tracking-widest text-brand font-bold bg-brand/5"
+                    >
+                        UX Researcher & Developer
+                    </motion.span>
                     <motion.h1
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-6xl md:text-8xl font-serif text-white tracking-tighter"
+                        className="text-7xl md:text-9xl font-serif text-white tracking-tighter leading-none"
                     >
-                        Vaibhav Sharma
+                        Vaibhav <br /> Sharma
                     </motion.h1>
+                </div>
 
-                    <motion.p
-                        className="mt-6 text-xl md:text-2xl font-sans text-neutral-400 max-w-2xl mx-auto leading-relaxed"
-                    >
-                        I apply <span className="text-brand font-medium">Psychology</span> and <span className="text-white font-medium">Code</span> to solve complex user problems.
-                    </motion.p>
-                </motion.div>
             </div>
         </section>
     );
