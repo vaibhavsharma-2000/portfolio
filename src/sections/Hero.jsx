@@ -35,7 +35,7 @@ const Hero = () => {
                         animate={{ opacity: 1 }}
                         className="inline-block mb-4 px-3 py-1 border border-brand/30 rounded-full text-[12px] uppercase tracking-widest text-brand font-bold bg-brand/5"
                     >
-                        UX Researcher & Frontend Developer
+                        UX Researcher & Front-end Developer
                     </motion.span>
                     <motion.h1
                         className="text-5xl md:text-8xl font-serif text-white tracking-tighter leading-none"
