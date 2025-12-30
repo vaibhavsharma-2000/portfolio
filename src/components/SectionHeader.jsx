@@ -18,7 +18,7 @@ const SectionHeader = ({ title }) => {
 
                 {/* Glow Underline */}
                 <motion.div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-brand shadow-[0_0_15px_#FFC107]"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-brand max-w-[80%] md:max-w-none"
                     initial={{ width: 0, opacity: 0 }}
                     whileInView={{ width: "100%", opacity: 1 }}
                     viewport={{ once: true }}
@@ -26,19 +26,6 @@ const SectionHeader = ({ title }) => {
                         delay: 0.6,
                         duration: 1.2,
                         ease: [0.16, 1, 0.3, 1]
-                    }}
-                />
-
-                {/* Secondary bloom glow */}
-                <motion.div
-                    className="absolute bottom-[-2px] left-1/2 -translate-x-1/2 h-[8px] bg-brand/30 blur-md"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "110%" }}
-                    viewport={{ once: true }}
-                    transition={{
-                        delay: 0.8,
-                        duration: 1.4,
-                        ease: "circOut"
                     }}
                 />
             </div>
