@@ -29,6 +29,7 @@ function App() {
         [THE LAB - FUTURE SECTION]
         Description: A playground for experimental projects (AI Agents, Animation Libs). 
         Features: Horizontal scrolling, hover-to-play interactions, and draggable cards.
+        Will be added later as a playground for experimental projects.
         
         <SectionHeader title="The Lab" />
         <TheLab />
