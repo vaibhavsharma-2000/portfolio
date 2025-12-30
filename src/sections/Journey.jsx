@@ -82,33 +82,24 @@ const ExperienceCard = ({ exp, isInView }) => {
                 {exp.context && <span className="block text-xs text-neutral-500 font-sans mt-1">{exp.context}</span>}
             </div>
 
-            {/* Expandable Content */}
-            <AnimatePresence>
-                {isInView && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                    >
-                        <ul className="space-y-3 pt-4 border-t border-white/10">
-                            {exp.highlights.map((point, i) => (
-                                <motion.li
-                                    key={i}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: i * 0.1, duration: 0.3 }}
-                                    className="flex items-start gap-3 text-neutral-300 font-sans leading-relaxed text-sm md:text-base"
-                                >
-                                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-                                    {point}
-                                </motion.li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Expandable Content - Always rendered to prevent scroll jank */}
+            <div className="overflow-hidden">
+                <ul className="space-y-3 pt-4 border-t border-white/10">
+                    {exp.highlights.map((point, i) => (
+                        <motion.li
+                            key={i}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1, duration: 0.3 }}
+                            className="flex items-start gap-3 text-neutral-300 font-sans leading-relaxed text-sm md:text-base"
+                        >
+                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
+                            {point}
+                        </motion.li>
+                    ))}
+                </ul>
+            </div>
         </motion.div>
     );
 };
