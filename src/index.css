@@ -11,6 +11,12 @@
   --color-dark: #0a0a0a;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  /* Safer than mandatory */
+}
+
 /* Optional: Smooth transitions for all font changes */
 body {
   @apply antialiased text-white bg-dark;
