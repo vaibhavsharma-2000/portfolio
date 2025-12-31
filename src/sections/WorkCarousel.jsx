@@ -21,6 +21,7 @@ const projects = [
         visual: animindImg,
         color: "#ba0000", // White accent
         link: "#",
+        tags: ['UX Design', 'Front-end', 'UI Design']
     },
     {
         id: 1,
@@ -29,6 +30,7 @@ const projects = [
         visual: brewQuestImg,
         color: "#FFC107", // Misted Marigold
         link: "#",
+        tags: ['UX Research', 'UX Design', 'Figma']
     },
     {
         id: 2,
@@ -37,6 +39,7 @@ const projects = [
         visual: recypeImg,
         color: "#8076A3", // Purple Majesty
         link: "#",
+        tags: ['UX Research', 'UI Design', 'Product Strategy']
     },
     {
         id: 3,
@@ -44,16 +47,18 @@ const projects = [
         description: "Predictive delay alerts for DB station operators.",
         visual: bahnAssistImg,
         color: "#EF4444", // DB Red
-        link: "https://www.deutschebahn.com",
+        link: "https://www.behance.net/gallery/208525545/DB-BahnAssist-(UX-Research-Wireframing-Prototyping)",
         isExternal: true,
+        tags: ['UX Research', 'UI Design', 'Figma']
     },
     // {
-    //   id: 4,
+    //   id: 5,
     //   title: "NEW PROJECT",
     //   description: "Description of the new project.",
     //   visual: bahnAssistImg, // Replace with new image import
     //   color: "#3B82F6", // Custom accent color
     //   link: "#",
+    //   tags: ['Tag 1', 'Tag 2']
     // },
 ];
 
@@ -71,9 +76,6 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
     // Card 1 peak: 0.5
     // Card 2 peak: 0.9
 
-    // NOTE: If adding more cards, decrease this step size.
-    // Formula: 1 / number_of_cards (approx)
-    // e.g., for 4 cards, use 0.25
     // NOTE: If adding more cards, decrease this step size.
     // Formula: 1 / number_of_cards (approx)
     // e.g., for 4 cards, use 0.25
@@ -117,17 +119,53 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                 </div>
 
                 {/* Content */}
+                {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-                    <motion.span
-                        style={{ color: project.color }}
-                        className="text-xs font-bold tracking-widest uppercase mb-4"
-                    >
-                        Project 0{index + 1}
-                    </motion.span>
 
-                    <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
-                        {project.title}
-                    </h3>
+                    {/* Tags Container - Moved to Top Right */}
+                    <motion.div
+                        style={{
+                            opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
+                            y: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [-10, 0, 0, -10]) // Slide down into place
+                        }}
+                        className="absolute top-8 right-8 md:top-12 md:right-12 flex flex-row flex-wrap justify-end gap-2 max-w-[60%]"
+                    >
+                        {project.tags.map((tag, i) => (
+                            <motion.span
+                                key={i}
+                                style={{
+                                    color: useTransform(
+                                        scrollYProgress,
+                                        [start, plateauStart, plateauEnd, end],
+                                        ["rgba(255,255,255,0.5)", project.color, project.color, "rgba(255,255,255,0.5)"]
+                                    ),
+                                    borderColor: useTransform(
+                                        scrollYProgress,
+                                        [start, plateauStart, plateauEnd, end],
+                                        ["rgba(255,255,255,0.1)", project.color, project.color, "rgba(255,255,255,0.1)"]
+                                    )
+                                }}
+                                className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] border rounded-lg bg-black/20 backdrop-blur-md"
+                            >
+                                {tag}
+                            </motion.span>
+                        ))}
+                    </motion.div>
+
+                    <motion.div
+                        className="flex flex-col items-start"
+                    >
+                        <motion.span
+                            style={{ color: project.color }}
+                            className="text-xs font-bold tracking-widest uppercase mb-4"
+                        >
+                            Project 0{index + 1}
+                        </motion.span>
+
+                        <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
+                            {project.title}
+                        </h3>
+                    </motion.div>
 
                     <p className="text-white/70 text-base md:text-lg mb-8 max-w-md line-clamp-3">
                         {project.description}
@@ -136,6 +174,8 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                     <div className="flex gap-4">
                         <motion.a
                             href={project.link}
+                            target={project.isExternal ? "_blank" : undefined}
+                            rel={project.isExternal ? "noopener noreferrer" : undefined}
                             initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                             whileHover={{
                                 backgroundColor: `${project.color}40`, // ~25% opacity of project color
@@ -187,8 +227,6 @@ export default function WorkCarousel() {
 
     // FIX: Added buffers [0.1, 0.9] so the animation doesn't start/end immediately.
     // This prevents the "rushed" feel at the very top and bottom of the section.
-    // FIX: Added buffers [0.1, 0.9] so the animation doesn't start/end immediately.
-    // This prevents the "rushed" feel at the very top and bottom of the section.
     // 4 Cards -> Go to -80%
     const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-80%"]);
     // '10%' start gives a bit of padding before first card hits edge
@@ -203,7 +241,7 @@ export default function WorkCarousel() {
 
                 {/* Section Header - Natural Flow (No Overlap) */}
                 <div className="w-full z-20 shrink-0 pt-10">
-                    <SectionHeader title="Work and Projects" />.
+                    <SectionHeader title="Work and Projects" />
                 </div>
 
                 {/* Background Ambience */}
