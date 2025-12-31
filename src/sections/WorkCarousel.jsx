@@ -8,11 +8,20 @@ import {
 import { ArrowUpRight } from "lucide-react";
 
 // Import local assets
+import animindImg from "../assets/Animind.png"; // Import Animind
 import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
 
 const projects = [
+    {
+        id: 4,
+        title: "ANIMIND",
+        description: "A social sanctuary to catalog, review, and curate your personal anime odyssey.",
+        visual: animindImg,
+        color: "#ba0000", // White accent
+        link: "#",
+    },
     {
         id: 1,
         title: "BREWQUEST",
@@ -65,7 +74,10 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
     // NOTE: If adding more cards, decrease this step size.
     // Formula: 1 / number_of_cards (approx)
     // e.g., for 4 cards, use 0.25
-    const step = 0.35;
+    // NOTE: If adding more cards, decrease this step size.
+    // Formula: 1 / number_of_cards (approx)
+    // e.g., for 4 cards, use 0.25
+    const step = 0.25;
     const peak = 0.1 + (index * step);
 
     // Range for "Active Focus": [peak - 0.2, peak, peak + 0.2]
@@ -175,7 +187,10 @@ export default function WorkCarousel() {
 
     // FIX: Added buffers [0.1, 0.9] so the animation doesn't start/end immediately.
     // This prevents the "rushed" feel at the very top and bottom of the section.
-    const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-60%"]);
+    // FIX: Added buffers [0.1, 0.9] so the animation doesn't start/end immediately.
+    // This prevents the "rushed" feel at the very top and bottom of the section.
+    // 4 Cards -> Go to -80%
+    const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-80%"]);
     // '10%' start gives a bit of padding before first card hits edge
     // '-60%' end ensures the last card (index 2) is fully centered/viewable by end
 
