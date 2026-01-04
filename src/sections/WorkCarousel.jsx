@@ -29,7 +29,7 @@ const projects = [
         description: "25+ Interviews bridging the homebrewing community.",
         visual: brewQuestImg,
         color: "#FFC107", // Misted Marigold
-        link: "#",
+        link: "/work/brewquest",
         tags: ['UX Research', 'UX Design', 'Figma']
     },
     {
