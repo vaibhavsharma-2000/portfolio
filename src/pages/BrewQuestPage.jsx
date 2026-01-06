@@ -6,6 +6,7 @@ import UserFlow from '../components/UserFlow';
 import sketch1 from '../assets/Sketch-BrewQuest 1.png';
 import sketch2 from '../assets/Sketch-BrewQuest 2.png';
 import hifiMockups from '../assets/BrewQuest HiFi mockups.png';
+import personaImg from '../assets/Persona-BrewQuest.png';
 
 const BrewQuestPage = () => {
     const [isPrototypeLoaded, setIsPrototypeLoaded] = useState(false);
@@ -242,10 +243,11 @@ const BrewQuestPage = () => {
                     >
                         {/* Visual */}
                         <div className="w-full md:w-1/3 aspect-[3/4] bg-neutral-800 rounded-2xl relative overflow-hidden group">
-                            {/* Placeholder for Profile Image */}
-                            <div className="absolute inset-0 bg-neutral-700 flex items-center justify-center text-white/20">
-                                <span className="uppercase tracking-widest font-bold">Lukas<br />Profile</span>
-                            </div>
+                            <img
+                                src={personaImg}
+                                alt="Lukas Weber - User Persona"
+                                className="w-full h-95% object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#FFC107]/20 to-transparent opacity-60" />
                         </div>
 
