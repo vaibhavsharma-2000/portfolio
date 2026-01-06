@@ -8,12 +8,22 @@ import {
 import { ArrowUpRight, Github } from "lucide-react";
 
 // Import local assets
-// Import local assets
-import animindImg from "../assets/Animind.png"; // Import Animind
+import animindImg from "../assets/Animind.png";
 import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
-import portfolioImg from "../assets/hero section image.jpg"; // Using Hero Image for Portfolio
+import portfolioImg from "../assets/hero section image.jpg";
+
+const BehanceIcon = ({ className }) => (
+    <svg className={className} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fillRule="evenodd" clipRule="evenodd" d="M5.5 12V6H8.5C10.1569 6 11.5 7.34315 11.5 9C11.5 10.6569 10.1569 12 8.5 12C10.1569 12 11.5 13.3431 11.5 15C11.5 16.6569 10.1569 18 8.5 18H5.5V12Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path fillRule="evenodd" clipRule="evenodd" d="M19.5 15C19.5 13.3431 18.1569 12 16.5 12C14.8431 12 13.5 13.3431 13.5 15H19.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5.5 11.25C5.08579 11.25 4.75 11.5858 4.75 12C4.75 12.4142 5.08579 12.75 5.5 12.75V11.25ZM8.5 12.75C8.91421 12.75 9.25 12.4142 9.25 12C9.25 11.5858 8.91421 11.25 8.5 11.25V12.75ZM14.25 15C14.25 14.5858 13.9142 14.25 13.5 14.25C13.0858 14.25 12.75 14.5858 12.75 15L14.25
+         15ZM15.4295 17.8024L15.1619 18.5031L15.4295 17.8024ZM19.295 17.5C19.5712 17.1913 19.5447 16.7172 19.236 16.441C18.9273 16.1648 18.4532 16.1913 18.177 16.5L19.295 17.5ZM18.5 10.75C18.9142 10.75 19.25 10.4142 19.25 10C19.25 9.58579 18.9142 9.25 18.5 9.25V10.75ZM14.5 9.25C14.0858
+          9.25 13.75 9.58579 13.75 10C13.75 10.4142 14.0858 10.75 14.5 10.75V9.25ZM5.5 12.75H8.5V11.25H5.5V12.75ZM12.75 15C12.75 16.5548 13.7095 17.9483 15.1619 18.5031L15.6971 17.1018C14.8257 16.7689 14.25 15.9328 14.25 15L12.75 15ZM15.1619 18.5031C16.6143 19.0578 18.2584 18.6588 19.295 
+          17.5L18.177 16.5C17.5551 17.1953 16.5686 17.4347 15.6971 17.1018L15.1619 18.5031ZM18.5 9.25H14.5V10.75H18.5V9.25Z" fill="currentColor" />
+    </svg>
+);
 
 const projects = [
     {
@@ -21,7 +31,7 @@ const projects = [
         title: "ANIMIND",
         description: "A social sanctuary to catalog, review, and curate your personal anime odyssey.",
         visual: animindImg,
-        color: "#ba0000", // White accent
+        color: "#ba0000",
         customButtons: [
             { label: "View Website", link: "https://animind-v2.vercel.app/", icon: ArrowUpRight },
             { label: "View Code", link: "https://github.com/vaibhavsharma-2000/animind", icon: Github }
@@ -33,7 +43,7 @@ const projects = [
         title: "BREWQUEST",
         description: "25+ Interviews bridging the homebrewing community.",
         visual: brewQuestImg,
-        color: "#FFC107", // Misted Marigold
+        color: "#FFC107",
         link: "/work/brewquest",
         tags: ['UX Research', 'UX Design', 'Figma']
     },
@@ -42,10 +52,11 @@ const projects = [
         title: "RECY-PE",
         description: "AI algorithms optimizing recycled material sourcing.",
         visual: recypeImg,
-        color: "#8076A3", // Purple Majesty
+        color: "#8076A3",
         customButtons: [
             { label: "View Project", link: "https://www.behance.net/gallery/218546301/Recy-pe-AI-Solutions-for-Recyclers-(UX-Case-Study)", icon: ArrowUpRight }
         ],
+        platform: "behance",
         tags: ['UX Research', 'UI Design', 'Product Strategy']
     },
     {
@@ -53,7 +64,7 @@ const projects = [
         title: "MY WEBSITE",
         description: "A personal portfolio website that brings all my work together, highlighting my design thinking and growing design and development skills.",
         visual: portfolioImg,
-        color: "#FFC107", // Yellow
+        color: "#FFC107",
         customButtons: [
             { label: "View Code", link: "https://github.com/vaibhavsharma-2000/portfolio", icon: Github }
         ],
@@ -64,47 +75,27 @@ const projects = [
         title: "BAHN ASSIST",
         description: "Predictive delay alerts for DB station operators.",
         visual: bahnAssistImg,
-        color: "#EF4444", // DB Red
+        color: "#EF4444",
         customButtons: [
             { label: "View Project", link: "https://www.behance.net/gallery/208525545/DB-BahnAssist-(UX-Research-Wireframing-Prototyping)", icon: ArrowUpRight }
         ],
+        platform: "behance",
         tags: ['UX Research', 'UI Design', 'Figma']
     },
 ];
 
 const HorizontalCard = ({ project, index, scrollYProgress }) => {
-    // Mapping logic:
-    // We have 3 cards.
-    // Card 1 is "Active" at start (0 - 0.2)
-    // Card 2 is "Active" around middle (0.4 - 0.6)
-    // Card 3 is "Active" at end (0.8 - 1.0)
-
-    // Create ranges based on index
-    // Total scroll 0..1
-    // Step per card approx 0.33
-    // Card 0 peak: 0.1
-    // Card 1 peak: 0.5
-    // Card 2 peak: 0.9
-
-    // NOTE: If adding more cards, decrease this step size.
-    // Formula: 1 / number_of_cards (approx)
-    // e.g., for 5 cards, use 0.2
     const step = 0.2;
     const peak = 0.1 + (index * step);
 
-    // Range for "Active Focus": [peak - 0.2, peak, peak + 0.2]
-    // We clamp 0 and 1
-
-    // FIX: Widen the focus window using a plateau so content stays clear longer.
-    // Instead of a single peak, we have a range [plateauStart, plateauEnd] where values are optimal.
     const start = Math.max(0, peak - 0.35);
-    const plateauStart = Math.max(0, peak - 0.15); // Stays clear from here...
-    const plateauEnd = Math.min(1, peak + 0.15);   // ...to here
+    const plateauStart = Math.max(0, peak - 0.15);
+    const plateauEnd = Math.min(1, peak + 0.15);
     const end = Math.min(1, peak + 0.35);
 
     const scale = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.85, 1.05, 1.05, 0.85]);
     const opacity = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.2, 1, 1, 0.2]);
-    const blur = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["10px", "0px", "0px", "10px"]); // Harder blur on edges, mostly clear in middle
+    const blur = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["10px", "0px", "0px", "10px"]);
 
     return (
         <motion.div
@@ -112,13 +103,11 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                 scale,
                 opacity,
                 filter: useTransform(blur, b => `blur(${b})`),
-                zIndex: useTransform(scale, s => s > 1 ? 10 : 1) // Active on top
+                zIndex: useTransform(scale, s => s > 1 ? 10 : 1)
             }}
             className="w-[85vw] max-w-[600px] h-[60vh] shrink-0 p-4 md:p-0 flex items-center justify-center snap-center"
         >
-            {/* Card Container */}
             <div className="w-full h-full relative rounded-[2rem] bg-[#1a1a1a] overflow-hidden border border-white/10 shadow-2xl">
-                {/* Background Image with Overlay */}
                 <div className="absolute inset-0">
                     <img
                         src={project.visual}
@@ -128,15 +117,11 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-[#1a1a1a]/50 to-transparent" />
                 </div>
 
-                {/* Content */}
-                {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-
-                    {/* Tags Container - Moved to Top Right */}
                     <motion.div
                         style={{
                             opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
-                            y: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [-10, 0, 0, -10]) // Slide down into place
+                            y: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [-10, 0, 0, -10])
                         }}
                         className="absolute top-8 right-8 md:top-12 md:right-12 flex flex-row flex-wrap justify-end gap-2 max-w-[60%]"
                     >
@@ -144,16 +129,8 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                             <motion.span
                                 key={i}
                                 style={{
-                                    color: useTransform(
-                                        scrollYProgress,
-                                        [start, plateauStart, plateauEnd, end],
-                                        ["rgba(255,255,255,0.5)", project.color, project.color, "rgba(255,255,255,0.5)"]
-                                    ),
-                                    borderColor: useTransform(
-                                        scrollYProgress,
-                                        [start, plateauStart, plateauEnd, end],
-                                        ["rgba(255,255,255,0.1)", project.color, project.color, "rgba(255,255,255,0.1)"]
-                                    )
+                                    color: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.5)", project.color, project.color, "rgba(255,255,255,0.5)"]),
+                                    borderColor: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.1)", project.color, project.color, "rgba(255,255,255,0.1)"])
                                 }}
                                 className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] border rounded-lg bg-black/20 backdrop-blur-md"
                             >
@@ -162,16 +139,10 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                         ))}
                     </motion.div>
 
-                    <motion.div
-                        className="flex flex-col items-start"
-                    >
-                        <motion.span
-                            style={{ color: project.color }}
-                            className="text-xs font-bold tracking-widest uppercase mb-4"
-                        >
+                    <motion.div className="flex flex-col items-start">
+                        <motion.span style={{ color: project.color }} className="text-xs font-bold tracking-widest uppercase mb-4">
                             Project 0{index + 1}
                         </motion.span>
-
                         <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
                             {project.title}
                         </h3>
@@ -206,11 +177,9 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                         ) : (
                             <motion.a
                                 href={project.link}
-                                target={project.isExternal ? "_blank" : undefined}
-                                rel={project.isExternal ? "noopener noreferrer" : undefined}
                                 initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                 whileHover={{
-                                    backgroundColor: `${project.color}40`, // ~25% opacity of project color
+                                    backgroundColor: `${project.color}40`,
                                     borderColor: project.color,
                                     scale: 1.05
                                 }}
@@ -225,7 +194,26 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                     </div>
                 </div>
 
-                {/* Subtle Glow */}
+                {project.platform === "behance" && (
+                    <motion.div
+                        style={{
+                            opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
+                            scale: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.8, 1, 1, 0.8])
+                        }}
+                        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-20"
+                    >
+                        <div className="group relative flex items-center justify-center">
+                            <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full scale-150 group-hover:scale-[1.8] group-hover:bg-white/10 transition-transform duration-500" />
+                            <BehanceIcon className="w-8 h-8 text-white relative z-10 transition-transform duration-500 group-hover:scale-110" />
+                            <div className="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                <div className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1 rounded-lg">
+                                    <p className="text-[10px] text-white font-bold uppercase tracking-widest whitespace-nowrap">Hosted on Behance</p>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+
                 <div
                     className="absolute inset-0 -z-10 pointer-events-none opacity-30 mix-blend-screen bg-gradient-to-tr from-transparent"
                     style={{
@@ -237,7 +225,7 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
     );
 };
 
-import SectionHeader from "../components/SectionHeader"; // Import SectionHeader
+import SectionHeader from "../components/SectionHeader";
 
 export default function WorkCarousel() {
     const containerRef = useRef(null);
@@ -246,44 +234,19 @@ export default function WorkCarousel() {
         offset: ["start start", "end end"]
     });
 
-    // Total horizontal scroll distance
-    // We want to move from 0% to approximately -(TotalWidth - ViewportWidth)
-    // 3 cards * 85vw + gaps
-    // Let's approximate a smooth translation range
-
-    // NOTE: If adding more cards, you need to adjust two things:
-    // 1. The 'step' value in HorizontalCard component (approx 1 / number_of_cards)
-    // 2. The destination value below ("-60%"). 
-    //    - For 3 cards: -60%
-    //    - For 4 cards: -80% (approx)
-    //    - For 5 cards: -100% (approx)
-
-    // FIX: Added buffers [0.1, 0.9] so the animation doesn't start/end immediately.
-    // This prevents the "rushed" feel at the very top and bottom of the section.
-    // 5 Cards -> Go to approx -82% (Calculated based on approx 465vw total width)
     const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-82%"]);
-    // '10%' start gives a bit of padding before first card hits edge
-    // '-82%' end ensures the last card (index 4) aligns with viewport end without overshooting
-
     const springX = useSpring(x, { stiffness: 50, damping: 20, mass: 0.5 });
 
     return (
-        // FIX: Increased to 500vh to make the scroll slower and more deliberate
         <section id="work" ref={containerRef} className="h-[500vh] bg-[#0a0a0a] relative">
             <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
-
-                {/* Section Header - Natural Flow (No Overlap) */}
                 <div className="w-full z-20 shrink-0 pt-10">
                     <SectionHeader title="Work and Projects" />
                 </div>
-
-                {/* Background Ambience */}
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/20 blur-[150px] rounded-full mix-blend-screen" />
                     <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-amber-900/20 blur-[150px] rounded-full mix-blend-screen" />
                 </div>
-
-                {/* Horizontal Track - Fills remaining space and centers cards */}
                 <motion.div
                     style={{ x: springX }}
                     className="flex-1 flex items-center gap-[5vw] px-[10vw] w-max"

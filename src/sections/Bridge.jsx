@@ -77,7 +77,10 @@ const Bridge = () => {
                             <p key={pIdx} className="mb-8 md:mb-12 last:mb-0">
                                 {p.split(" ").map((word, i) => {
                                     const total = allWords.length;
-                                    const start = wordCounter / total;
+                                    // Compress animation to finish early (at 80% scroll) 
+                                    // so the last line stays visible for the final 20%
+                                    const ANIMATION_END_LIMIT = 0.8;
+                                    const start = (wordCounter / total) * ANIMATION_END_LIMIT;
                                     const end = start + (1.5 / total);
 
                                     const cleanWord = word.toLocaleLowerCase().replace(/[.,]/g, "");
