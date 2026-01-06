@@ -33,9 +33,7 @@ function Home() {
             <div id="home">
                 <Hero />
             </div>
-            <div id="about">
-                <Bridge />
-            </div>
+            <Bridge />
             <div id="experience">
                 <SectionHeader title="Experience & Qualifications" />
                 <Journey />

@@ -1,58 +1,104 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 
-const Sentence = ({ children, progress, range }) => {
+const Word = ({ children, progress, range, isHighlight }) => {
+    // Normalizing the range to allow for a smoother fade-in/out window
+    // We want the word to start lighting up slightly before it hits the center
     const opacity = useTransform(progress, range, [0.2, 1]);
+    const scale = useTransform(progress, range, [0.95, 1]);
 
     return (
-        <motion.span style={{ opacity }} className="inline-block transition-opacity duration-300">
-            {children}
-        </motion.span>
+        <span className="relative inline-block mx-[0.15em] my-[0.1em]">
+            <motion.span
+                style={{ opacity, scale }}
+                className={`inline-block font-sans ${isHighlight ? 'text-[#FFC107] font-bold' : 'text-white/90 font-medium'}`}
+            >
+                {children}
+            </motion.span>
+
+
+        </span>
     );
 };
 
 const Bridge = () => {
     const containerRef = useRef(null);
+
+    // Total scroll progress for the section
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start end", "end start"]
+        offset: ["start 0.5", "end 0.5"] // Reveal triggers as it moves through middle half of viewport
     });
 
-    const sentences = [
-        {
-            text: ["With a foundation in ", <span key="psy" className="text-brand">Psychology</span>, " and an MSc. in ", <span key="ue" className="text-brand">Usability Engineering</span>, " (GPA 1.5), I bridge the gap between the human 'why' and the technical 'how'."]
-        },
-        {
-            text: ["Currently at ", <span key="tv" className="text-brand">TeamViewer</span>, ", I leverage AI and mixed-method research to solve complex user problems."]
-        },
-        {
-            text: ["I don't just hand off research; I bridge the gap between concept and code."]
-        },
-        {
-            text: ["I define the destination before I draw the map."]
-        }
+    const paragraphs = [
+        "I design by understanding people first. With a foundation in Psychology and an MSc in Usability Engineering, I approach problems through human behavior and system thinking.",
+        "Currently working in UX Research at TeamViewer, I use mixed-method research and AI-driven insights to uncover real user needs.",
+        "I collaborate closely with designers and engineers to ensure research leads to real product impact, not just documentation."
     ];
 
-    return (
-        <section ref={containerRef} className="relative min-h-[150vh] bg-dark">
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center px-6 md:px-12">
-                <div className="max-w-3xl text-center md:text-left py-12">
-                    <p className="text-xl md:text-2xl font-sans font-medium leading-[1.6] md:leading-[1.7] tracking-tight text-white">
-                        {sentences.map((sentence, idx) => {
-                            // Sharpen the reveal: shorter range for a more distinct "active" state
-                            const start = (idx / sentences.length) * 0.7 + 0.15;
-                            const end = start + 0.1;
-                            const range = [start, end];
+    const highlightWords = [
+        "psychology", "usability", "engineering", "human", "behavior", "system",
+        "thinking", "ux", "research", "teamviewer", "mixed-method",
+        "ai-driven", "insights", "real", "user", "needs", "product", "impact"
+    ];
 
-                            return (
-                                <span key={idx} className="block mb-6 md:mb-8">
-                                    <Sentence progress={scrollYProgress} range={range}>
-                                        {sentence.text}
-                                    </Sentence>
-                                </span>
-                            );
-                        })}
-                    </p>
+    // Flatten all words to calculate their individual scroll ranges
+    const allWords = useMemo(() => {
+        return paragraphs.flatMap(p => p.split(" "));
+    }, [paragraphs]);
+
+    let wordCounter = 0;
+
+    return (
+        <section
+            id="about"
+            ref={containerRef}
+            className="relative min-h-[300vh] bg-[#0a0a0a]"
+        >
+            {/* PHILOSOPHY Watermark Background */}
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden pointer-events-none z-0">
+                <motion.h2
+                    style={{
+                        opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.02, 0.08, 0.02]),
+                        scale: useTransform(scrollYProgress, [0, 1], [0.9, 1.1]),
+                        y: useTransform(scrollYProgress, [0, 1], [50, -50])
+                    }}
+                    className="text-[18vw] font-serif font-black uppercase text-white/50 tracking-tight leading-none pointer-events-none select-none"
+                >
+                    Philosophy
+                </motion.h2>
+            </div>
+
+            {/* Scrollytelling Text Container */}
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center z-10">
+                <div className="max-w-4xl px-8 md:px-12 text-center py-40">
+                    <div className="text-base md:text-xl font-sans leading-[1.8] md:leading-[1.8] tracking-tight">
+                        {paragraphs.map((p, pIdx) => (
+                            <p key={pIdx} className="mb-8 md:mb-12 last:mb-0">
+                                {p.split(" ").map((word, i) => {
+                                    const total = allWords.length;
+                                    const start = wordCounter / total;
+                                    const end = start + (1.5 / total);
+
+                                    const cleanWord = word.toLocaleLowerCase().replace(/[.,]/g, "");
+                                    const isHighlight = highlightWords.includes(cleanWord);
+
+                                    wordCounter++;
+
+                                    return (
+                                        <Word
+                                            key={`${pIdx}-${i}`}
+                                            progress={scrollYProgress}
+                                            range={[start, end]}
+                                            isHighlight={isHighlight}
+                                        >
+                                            {word}
+                                        </Word>
+                                    );
+                                })}
+                            </p>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

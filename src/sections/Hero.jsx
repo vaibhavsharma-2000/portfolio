@@ -63,7 +63,7 @@ const Hero = () => {
                             }}
                             className="inline-block mb-6 px-3 py-1 border border-brand/30 rounded-full text-[12px] uppercase tracking-widest text-brand font-bold bg-brand/5 backdrop-blur-sm"
                         >
-                            UX Researcher & Front-end Developer
+                            UX Designer & Front-end Developer
                         </motion.span>
                         <h1 className="text-5xl md:text-8xl font-serif text-white tracking-tighter leading-none mb-2">
                             <motion.span
