@@ -99,7 +99,7 @@ const Navbar = () => {
                     ))}
 
                     <motion.a
-                        href="https://drive.google.com/uc?id=16napEIFHbp_fYi7lzlUotGun0RQDBMZ9&export=download"
+                        href="https://drive.google.com/uc?export=download&id=12n5l42mpqFmr74iw_JX_Sy4fkp2iIoSt"
                         target="_blank"
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
