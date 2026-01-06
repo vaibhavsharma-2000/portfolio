@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import UserFlow from '../components/UserFlow';
 
 const BrewQuestPage = () => {
     const [isPrototypeLoaded, setIsPrototypeLoaded] = useState(false);
@@ -67,15 +68,15 @@ const BrewQuestPage = () => {
                         </div>
                         <div>
                             <h3 className="text-white mb-2">Timeline</h3>
-                            <p>2023</p>
+                            <p>2024</p>
                         </div>
                         <div>
                             <h3 className="text-white mb-2">Tools</h3>
-                            <p>Figma, Notion,<br />Google Forms</p>
+                            <p>Figma, Google Meet,<br />Google Forms, Notion</p>
                         </div>
                         <div>
                             <h3 className="text-white mb-2">Team</h3>
-                            <p>Team BrewQuest</p>
+                            <p>Team BrewQuest <br></br>- University Project</p>
                         </div>
                     </motion.div>
                 </div>
@@ -185,8 +186,8 @@ const BrewQuestPage = () => {
                         <h2 className="text-4xl md:text-5xl font-serif mb-8">Discover Phase</h2>
                         <div className="flex flex-col md:flex-row gap-8">
                             <div className="p-8 bg-white/5 rounded-2xl border border-white/5 flex-1">
-                                <h3 className="text-2xl font-bold mb-2">20/80 Rule</h3>
-                                <p className="text-white/60">Prioritizing the 20% of features that deliver 80% of value.</p>
+                                <h3 className="text-2xl font-bold mb-2">User Surveys</h3>
+                                <p className="text-white/60">Gathering insights from Brewers to validate whether the features we envisioned are aligned with the target audience's needs.</p>
                             </div>
                             <div className="p-8 bg-white/5 rounded-2xl border border-white/5 flex-1">
                                 <h3 className="text-2xl font-bold mb-2">25+ Interviews</h3>
@@ -195,38 +196,41 @@ const BrewQuestPage = () => {
                         </div>
                     </div>
 
-                    {/* Bar Charts */}
-                    <div className="space-y-8 max-w-3xl">
-                        {[
-                            { label: 'Personalized Discovery', value: '92%' },
-                            { label: 'Event Notifications', value: '78%' },
-                            { label: 'Recipe Sharing', value: '65%' }
-                        ].map((item, index) => (
-                            <div key={index}>
-                                <div className="flex justify-between text-sm uppercase tracking-widest mb-2 text-white/80">
-                                    <span>{item.label}</span>
-                                    <span>{item.value}</span>
-                                </div>
-                                <div className="h-4 bg-white/10 rounded-full overflow-hidden">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        whileInView={{ width: item.value }}
-                                        transition={{ duration: 1.5, ease: "easeOut", delay: index * 0.2 }}
-                                        viewport={{ once: true }}
-                                        className="h-full bg-[#FFC107] rounded-full relative"
-                                    >
-                                        <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-white/50 shadow-[0_0_10px_white]" />
-                                    </motion.div>
-                                </div>
+                    {/* Research Results */}
+                    <div className="mt-20">
+                        <h3 className="text-3xl md:text-4xl font-serif mb-8 text-white/90">User Research Results</h3>
+                        <div className="flex flex-col md:flex-row gap-8">
+                            <div className="p-8 bg-white/5 rounded-2xl border border-white/5 flex-1">
+                                <h3 className="text-2xl font-bold mb-4">Key Insights</h3>
+                                <p className="text-white/60 leading-relaxed">
+                                    Interviews revealed strong interest in a personalized beer discovery tool, event notifications, and a beginner-friendly brewing community with recipe sharing and mentorship.
+                                </p>
                             </div>
-                        ))}
+                            <div className="p-8 bg-white/5 rounded-2xl border border-white/5 flex-1">
+                                <h3 className="text-2xl font-bold mb-4">Feature Validation</h3>
+                                <p className="text-white/60 leading-relaxed">
+                                    Survey results confirmed enthusiasm for discovery, events, and community features, while food pairing suggestions received low interest and were excluded from the final design.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* USER PERSONA section */}
             <section className="py-32 px-8 md:px-20 bg-[#0a0a0a]">
                 <div className="max-w-5xl mx-auto">
+                    <div className="mb-16">
+                        <motion.span
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="text-[#FFC107] font-bold tracking-widest uppercase mb-4 block"
+                        >
+                            The Definition
+                        </motion.span>
+                        <h2 className="text-4xl md:text-5xl font-serif">Define Phase</h2>
+                    </div>
+
                     <motion.div
                         initial={{ y: 50, opacity: 0 }}
                         whileInView={{ y: 0, opacity: 1 }}
@@ -246,7 +250,7 @@ const BrewQuestPage = () => {
                         <div className="flex-1 flex flex-col justify-center">
                             <span className="text-[#FFC107] font-bold tracking-widest uppercase mb-6">User Persona</span>
                             <h2 className="text-4xl font-serif mb-2">Lukas Weber</h2>
-                            <p className="text-white/50 text-sm uppercase tracking-widest mb-8">Age 26 • Software Engineer • Munich</p>
+                            <p className="text-white/50 text-sm uppercase tracking-widest mb-8">Age 34 • Software Engineer • Munich</p>
 
                             <div className="space-y-8">
                                 <div>
@@ -260,6 +264,105 @@ const BrewQuestPage = () => {
                             </div>
                         </div>
                     </motion.div>
+                </div>
+            </section>
+
+            {/* COLOR SCHEME section */}
+            <section className="py-32 px-8 md:px-20 bg-[#111] relative overflow-hidden">
+                <div className="max-w-5xl mx-auto">
+                    <h3 className="text-3xl md:text-4xl font-serif mb-12">Color Scheme</h3>
+
+                    <div className="flex flex-col md:flex-row gap-16">
+                        <div className="md:w-1/3">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="p-8 bg-white/5 rounded-2xl border border-white/5"
+                            >
+                                <p className="text-white/60 leading-relaxed text-sm">
+                                    I chose colors that echo the warmth of beer culture—inviting and familiar. This palette ensures a clean, modern aesthetic while maintaining high accessibility and intuitive navigation.
+                                </p>
+                            </motion.div>
+                        </div>
+
+                        <div className="flex-1 space-y-10">
+                            {/* Yellow */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                className="flex items-start gap-8 border-b border-white/10 pb-10"
+                            >
+                                <div className="flex gap-3 shrink-0">
+                                    <div className="w-14 h-14 rounded-xl bg-[#F8BD00] shadow-lg shadow-amber-500/10" title="#F8BD00" />
+                                    <div className="w-14 h-14 rounded-xl bg-[#FDD85C] shadow-lg shadow-amber-300/10" title="#FDD85C" />
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-bold mb-2 text-white">Yellow</h4>
+                                    <p className="text-white/60 text-sm leading-relaxed">Represents energy and warmth, mirroring the passion of brewing and making key UI elements stand out.</p>
+                                </div>
+                            </motion.div>
+
+                            {/* White */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.1 }}
+                                className="flex items-start gap-8 border-b border-white/10 pb-10"
+                            >
+                                <div className="flex gap-3 shrink-0">
+                                    <div className="w-14 h-14 rounded-xl bg-[#FFFFFF] border border-white/10" title="#FFFFFF" />
+                                    <div className="w-14 h-14 rounded-xl bg-[#D9D9D9] border border-white/10" title="#D9D9D9" />
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-bold mb-2 text-white">White</h4>
+                                    <p className="text-white/60 text-sm leading-relaxed">Provides clarity and simplicity, ensuring a clean, modern, and highly user-friendly interface.</p>
+                                </div>
+                            </motion.div>
+
+                            {/* Black */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                                className="flex items-start gap-8"
+                            >
+                                <div className="flex gap-3 shrink-0">
+                                    <div className="w-14 h-14 rounded-xl bg-[#000000] border border-white/10" title="#000000" />
+                                    <div className="w-14 h-14 rounded-xl bg-[#3D3D3D] border border-white/10" title="#3D3D3D" />
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-bold mb-2 text-white">Black & Gray</h4>
+                                    <p className="text-white/60 text-sm leading-relaxed">Adds depth and tradition, reinforcing brewing heritage while maintaining strong contrast for superior readability.</p>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* DEVELOPMENT PHASE section */}
+            <section className="py-32 px-8 md:px-20 bg-[#0a0a0a]">
+                <div className="max-w-6xl mx-auto">
+                    <div className="mb-16">
+                        <motion.span
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="text-[#FFC107] font-bold tracking-widest uppercase mb-4 block"
+                        >
+                            The Implementation
+                        </motion.span>
+                        <h2 className="text-4xl md:text-5xl font-serif">Development Phase</h2>
+                    </div>
+
+                    <div className="mb-12">
+                        <h3 className="text-3xl md:text-4xl font-serif mb-8 text-white/90">User Flow</h3>
+                        <UserFlow />
+                    </div>
                 </div>
             </section>
 

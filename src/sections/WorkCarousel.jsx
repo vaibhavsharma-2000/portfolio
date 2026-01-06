@@ -5,13 +5,15 @@ import {
     useTransform,
     useSpring,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 
+// Import local assets
 // Import local assets
 import animindImg from "../assets/Animind.png"; // Import Animind
 import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
+import portfolioImg from "../assets/hero section image.jpg"; // Using Hero Image for Portfolio
 
 const projects = [
     {
@@ -20,8 +22,11 @@ const projects = [
         description: "A social sanctuary to catalog, review, and curate your personal anime odyssey.",
         visual: animindImg,
         color: "#ba0000", // White accent
-        link: "#",
-        tags: ['UX Design', 'Front-end', 'UI Design']
+        customButtons: [
+            { label: "View Website", link: "https://animind-v2.vercel.app/", icon: ArrowUpRight },
+            { label: "View Code", link: "https://github.com/vaibhavsharma-2000/animind", icon: Github }
+        ],
+        tags: ['UX Design', 'Front-end', 'UX Research']
     },
     {
         id: 1,
@@ -38,28 +43,34 @@ const projects = [
         description: "AI algorithms optimizing recycled material sourcing.",
         visual: recypeImg,
         color: "#8076A3", // Purple Majesty
-        link: "#",
+        customButtons: [
+            { label: "View Project", link: "https://www.behance.net/gallery/218546301/Recy-pe-AI-Solutions-for-Recyclers-(UX-Case-Study)", icon: ArrowUpRight }
+        ],
         tags: ['UX Research', 'UI Design', 'Product Strategy']
     },
     {
+        id: 5,
+        title: "MY WEBSITE",
+        description: "A personal portfolio website that brings all my work together, highlighting my design thinking and growing design and development skills.",
+        visual: portfolioImg,
+        color: "#FFC107", // Yellow
+        customButtons: [
+            { label: "View Code", link: "https://github.com/vaibhavsharma-2000/portfolio", icon: Github }
+        ],
+        tags: ['UX Design', 'Front-end', 'Tailwind']
+    },
+    {
         id: 3,
-        title: "BAHNASSIST",
+        title: "BAHN ASSIST",
         description: "Predictive delay alerts for DB station operators.",
         visual: bahnAssistImg,
         color: "#EF4444", // DB Red
-        link: "https://www.behance.net/gallery/208525545/DB-BahnAssist-(UX-Research-Wireframing-Prototyping)",
-        isExternal: true,
+        customButtons: [
+            { label: "View Project", link: "https://www.behance.net/gallery/208525545/DB-BahnAssist-(UX-Research-Wireframing-Prototyping)", icon: ArrowUpRight }
+        ],
         tags: ['UX Research', 'UI Design', 'Figma']
     },
-    // {
-    //   id: 5,
-    //   title: "NEW PROJECT",
-    //   description: "Description of the new project.",
-    //   visual: bahnAssistImg, // Replace with new image import
-    //   color: "#3B82F6", // Custom accent color
-    //   link: "#",
-    //   tags: ['Tag 1', 'Tag 2']
-    // },
+
 ];
 
 const HorizontalCard = ({ project, index, scrollYProgress }) => {
@@ -78,8 +89,8 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
 
     // NOTE: If adding more cards, decrease this step size.
     // Formula: 1 / number_of_cards (approx)
-    // e.g., for 4 cards, use 0.25
-    const step = 0.25;
+    // e.g., for 5 cards, use 0.2
+    const step = 0.2;
     const peak = 0.1 + (index * step);
 
     // Range for "Active Focus": [peak - 0.2, peak, peak + 0.2]
@@ -172,23 +183,46 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                     </p>
 
                     <div className="flex gap-4">
-                        <motion.a
-                            href={project.link}
-                            target={project.isExternal ? "_blank" : undefined}
-                            rel={project.isExternal ? "noopener noreferrer" : undefined}
-                            initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                            whileHover={{
-                                backgroundColor: `${project.color}40`, // ~25% opacity of project color
-                                borderColor: project.color,
-                                scale: 1.05
-                            }}
-                            transition={{ duration: 0.3 }}
-                            style={{ borderColor: "rgba(255,255,255,0.1)" }}
-                            className="group flex items-center gap-3 px-6 py-3 rounded-full backdrop-blur-md border text-white text-sm font-bold tracking-widest uppercase"
-                        >
-                            View Project
-                            <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                        </motion.a>
+                        {project.customButtons ? (
+                            project.customButtons.map((btn, i) => (
+                                <motion.a
+                                    key={i}
+                                    href={btn.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                                    whileHover={{
+                                        backgroundColor: `${project.color}40`,
+                                        borderColor: project.color,
+                                        scale: 1.05
+                                    }}
+                                    transition={{ duration: 0.3 }}
+                                    style={{ borderColor: "rgba(255,255,255,0.1)" }}
+                                    className="group flex items-center gap-3 px-6 py-3 rounded-full backdrop-blur-md border text-white text-sm font-bold tracking-widest uppercase"
+                                >
+                                    {btn.label}
+                                    <btn.icon className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                                </motion.a>
+                            ))
+                        ) : (
+                            <motion.a
+                                href={project.link}
+                                target={project.isExternal ? "_blank" : undefined}
+                                rel={project.isExternal ? "noopener noreferrer" : undefined}
+                                initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                                whileHover={{
+                                    backgroundColor: `${project.color}40`, // ~25% opacity of project color
+                                    borderColor: project.color,
+                                    scale: 1.05
+                                }}
+                                transition={{ duration: 0.3 }}
+                                style={{ borderColor: "rgba(255,255,255,0.1)" }}
+                                className="group flex items-center gap-3 px-6 py-3 rounded-full backdrop-blur-md border text-white text-sm font-bold tracking-widest uppercase"
+                            >
+                                View Project
+                                <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                            </motion.a>
+                        )}
                     </div>
                 </div>
 
@@ -227,10 +261,10 @@ export default function WorkCarousel() {
 
     // FIX: Added buffers [0.1, 0.9] so the animation doesn't start/end immediately.
     // This prevents the "rushed" feel at the very top and bottom of the section.
-    // 4 Cards -> Go to -80%
-    const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-80%"]);
+    // 5 Cards -> Go to approx -82% (Calculated based on approx 465vw total width)
+    const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-82%"]);
     // '10%' start gives a bit of padding before first card hits edge
-    // '-60%' end ensures the last card (index 2) is fully centered/viewable by end
+    // '-82%' end ensures the last card (index 4) aligns with viewport end without overshooting
 
     const springX = useSpring(x, { stiffness: 50, damping: 20, mass: 0.5 });
 
