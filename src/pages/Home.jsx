@@ -7,7 +7,7 @@ import BentoGrid from '../sections/BentoGrid';
 import Journey from '../sections/Journey';
 import Articles from '../sections/Articles';
 import WorkCarousel from "../sections/WorkCarousel";
-import TheLab from '../sections/TheLab';
+
 import SectionHeader from '../components/SectionHeader';
 import Footer from '../components/Footer';
 
