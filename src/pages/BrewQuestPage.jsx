@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import UserFlow from '../components/UserFlow';
+import sketch1 from '../assets/Sketch-BrewQuest 1.png';
+import sketch2 from '../assets/Sketch-BrewQuest 2.png';
+import hifiMockups from '../assets/BrewQuest HiFi mockups.png';
 
 const BrewQuestPage = () => {
     const [isPrototypeLoaded, setIsPrototypeLoaded] = useState(false);
@@ -16,7 +19,7 @@ const BrewQuestPage = () => {
                 transition={{ delay: 0.5 }}
                 className="fixed top-8 left-8 z-50"
             >
-                <Link to="/">
+                <Link to="/#work">
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -363,6 +366,71 @@ const BrewQuestPage = () => {
                         <h3 className="text-3xl md:text-4xl font-serif mb-8 text-white/90">User Flow</h3>
                         <UserFlow />
                     </div>
+                </div>
+            </section>
+
+            {/* SKETCHING SECTION */}
+            <section className="py-32 px-8 md:px-20 bg-[#111] relative">
+                <div className="max-w-6xl mx-auto">
+                    <div className="mb-12">
+                        <h3 className="text-3xl md:text-4xl font-serif mb-8 text-white/90">Sketching</h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl border border-white/5"
+                        >
+                            <img src={sketch1} alt="Early ideation sketch 1" className="w-full h-auto object-cover opacity-90 contrast-85 brightness-95 hover:opacity-100 hover:contrast-100 transition-all duration-300" />
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                            className="bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl border border-white/5"
+                        >
+                            <img src={sketch2} alt="Early ideation sketch 2" className="w-full h-auto object-cover opacity-90 contrast-85 brightness-95 hover:opacity-100 hover:contrast-100 transition-all duration-300" />
+                        </motion.div>
+                    </div>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 1 }}
+                        className="text-white/40 text-sm mt-8 text-center italic font-medium"
+                    >
+                        Early ideation focusing on beer discovery and community logic
+                    </motion.p>
+                </div>
+            </section>
+
+            {/* HI-FI MOCKUPS SECTION */}
+            <section className="py-32 px-8 md:px-20 bg-[#0a0a0a]">
+                <div className="max-w-6xl mx-auto">
+                    <div className="mb-12">
+                        <h3 className="text-3xl md:text-4xl font-serif mb-8 text-white/90">High-Fidelity Mockups</h3>
+                    </div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, type: "spring", bounce: 0.3 }}
+                        className="relative max-h-[85vh] overflow-y-auto rounded-[2rem] border border-white/5 bg-[#1a1a1a] shadow-2xl scrollbar-hide group"
+                    >
+
+                        <img
+                            src={hifiMockups}
+                            alt="BrewQuest High-Fidelity Mockups"
+                            className="w-full h-auto contrast-85 brightness-95 transition-all duration-500"
+                        />
+                    </motion.div>
                 </div>
             </section>
 

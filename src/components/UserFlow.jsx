@@ -197,6 +197,7 @@ const initialEdges = [
 const UserFlow = () => {
     const [nodes, , onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [isInteractive, setIsInteractive] = React.useState(false);
 
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge({ ...params, type: 'animated' }, eds)),
@@ -230,6 +231,13 @@ const UserFlow = () => {
                 minZoom={0.1}
                 maxZoom={1.5}
                 colorMode="dark"
+                panOnScroll={isInteractive}
+                zoomOnScroll={isInteractive}
+                panOnDrag={isInteractive}
+                zoomOnPinch={isInteractive}
+                elementsSelectable={isInteractive}
+                nodesDraggable={isInteractive}
+                preventScrolling={false}
             >
                 <Background color="#1a1a1a" gap={20} variant="dots" />
                 <Controls className="!bg-[#1B1B1B] !border-white/10 fill-white [&_button]:!border-white/5 !shadow-none" />
@@ -242,8 +250,63 @@ const UserFlow = () => {
                 />
             </ReactFlow>
 
-            {/* Overlay Info */}
-            <div className="absolute top-8 left-8 p-6 bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 pointer-events-none z-10 hidden md:block">
+            {/* Interaction Overlay */}
+            <AnimatePresence>
+                {!isInteractive && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm pointer-events-auto"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="bg-[#1B1B1B] p-8 rounded-3xl border border-white/10 shadow-2xl text-center max-w-sm mx-4"
+                        >
+                            <div className="w-16 h-16 bg-[#FFC107]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <motion.span
+                                    animate={{ scale: [1, 1.2, 1] }}
+                                    transition={{ repeat: Infinity, duration: 2 }}
+                                    className="text-2xl"
+                                >
+                                    🖱️
+                                </motion.span>
+                            </div>
+                            <h4 className="text-white font-serif text-2xl mb-2">Explore the Flow</h4>
+                            <p className="text-white/40 text-sm mb-8 leading-relaxed">
+                                Click below to enable interactive panning and zooming for the Information Architecture.
+                            </p>
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => setIsInteractive(true)}
+                                className="w-full py-4 bg-[#FFC107] text-black font-bold uppercase tracking-widest text-xs rounded-full shadow-[0_10px_20px_rgba(255,193,7,0.2)] hover:shadow-[0_15px_30px_rgba(255,193,7,0.3)] transition-shadow"
+                            >
+                                Enable Interaction
+                            </motion.button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Deactivate Button (Visible only when interactive) */}
+            <AnimatePresence>
+                {isInteractive && (
+                    <motion.button
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        onClick={() => setIsInteractive(false)}
+                        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/10 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:bg-white/20 transition-colors"
+                    >
+                        Lock Scroll Focus
+                    </motion.button>
+                )}
+            </AnimatePresence>
+
+            {/* Overlay Info Header */}
+            <div className={`absolute top-8 left-8 p-6 bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 pointer-events-none z-10 hidden md:block transition-opacity duration-500 ${isInteractive ? 'opacity-100' : 'opacity-0'}`}>
                 <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-1">BrewQuest User Flow</h4>
                 <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-[#FFC107] animate-pulse" />

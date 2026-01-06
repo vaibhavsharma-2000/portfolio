@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../sections/Hero';
 import Bridge from '../sections/Bridge';
@@ -10,6 +12,21 @@ import SectionHeader from '../components/SectionHeader';
 import Footer from '../components/Footer';
 
 function Home() {
+    const { hash } = useLocation();
+
+    useEffect(() => {
+        if (hash) {
+            const id = hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                // Short delay to ensure components are mounted and layout is stable
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, [hash]);
+
     return (
         <main className="bg-dark selection:bg-brand selection:text-dark antialiased">
             <Navbar />

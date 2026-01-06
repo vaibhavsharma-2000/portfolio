@@ -70,7 +70,6 @@ const projects = [
         ],
         tags: ['UX Research', 'UI Design', 'Figma']
     },
-
 ];
 
 const HorizontalCard = ({ project, index, scrollYProgress }) => {
