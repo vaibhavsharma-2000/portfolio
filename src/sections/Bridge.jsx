@@ -27,7 +27,7 @@ const Bridge = () => {
     // Total scroll progress for the section
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start 0.5", "end 0.5"] // Reveal triggers as it moves through middle half of viewport
+        offset: ["start 0.8", "end 0.5"] // Reveal triggers much earlier (when top hits bottom 20% of screen)
     });
 
     const paragraphs = [

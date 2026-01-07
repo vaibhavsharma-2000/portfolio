@@ -89,7 +89,7 @@ const Footer = () => {
 
                 {/* Bottom Bar */}
                 <div className="mt-32 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-neutral-600 text-[10px] uppercase tracking-[0.2em] font-sans">
-                    <p>© 2025 Vaibhav Sharma — All Rights Reserved </p>
+                    <p>© 2026 Vaibhav Sharma — All Rights Reserved </p>
                     <p>Designed on Figma & Coded with React and Tailwind CSS</p>
                 </div>
             </div>
