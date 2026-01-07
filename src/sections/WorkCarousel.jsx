@@ -119,13 +119,14 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-[#1a1a1a]/50 to-transparent" />
                 </div>
 
-                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+                <div className="absolute inset-0 flex flex-col p-6 md:p-12">
                     <motion.div
                         style={{
                             opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
                             y: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [-10, 0, 0, -10])
                         }}
-                        className="absolute top-8 right-8 md:top-12 md:right-12 flex flex-row flex-wrap justify-end gap-2 max-w-[60%]"
+                        // Mobile: Relative, Top of flow. Desktop: Absolute Top-Right.
+                        className="relative w-full flex flex-wrap justify-end gap-2 mb-auto md:absolute md:top-12 md:right-12 md:w-[60%] md:mb-0 z-10"
                     >
                         {project.tags.map((tag, i) => (
                             <motion.span
@@ -134,18 +135,19 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                                     color: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.5)", project.color, project.color, "rgba(255,255,255,0.5)"]),
                                     borderColor: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.1)", project.color, project.color, "rgba(255,255,255,0.1)"])
                                 }}
-                                className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] border rounded-lg bg-black/20 backdrop-blur-md"
+                                className="px-2 py-1 md:px-3 md:py-1 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.15em] border rounded-lg bg-black/40 backdrop-blur-md"
                             >
                                 {tag}
                             </motion.span>
                         ))}
                     </motion.div>
 
-                    <motion.div className="flex flex-col items-start">
-                        <motion.span style={{ color: project.color }} className="text-xs font-bold tracking-widest uppercase mb-4">
+                    {/* mt-auto pushes this block to the bottom of the container */}
+                    <motion.div className="flex flex-col items-start mt-auto relative z-10">
+                        <motion.span style={{ color: project.color }} className="text-xs font-bold tracking-widest uppercase mb-3 md:mb-4">
                             Project 0{index + 1}
                         </motion.span>
-                        <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
+                        <h3 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-3 md:mb-4 leading-tight">
                             {project.title}
                         </h3>
                     </motion.div>
