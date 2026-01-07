@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
     motion,
     useScroll,
     useTransform,
+    useSpring,
 } from "framer-motion";
 import { ArrowUpRight, Github } from "lucide-react";
 
@@ -12,7 +13,6 @@ import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
 import portfolioImg from "../assets/hero section image.jpg";
-import SectionHeader from "../components/SectionHeader";
 
 const BehanceIcon = ({ className }) => (
     <svg className={className} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,32 +84,28 @@ const projects = [
     },
 ];
 
-const HorizontalCard = ({ project, index, containerRef }) => {
-    const cardRef = useRef(null);
-    const { scrollXProgress } = useScroll({
-        target: cardRef,
-        container: containerRef,
-        axis: "x",
-        offset: ["center end", "center start"]
-    });
+const HorizontalCard = ({ project, index, scrollYProgress }) => {
+    const step = 0.2;
+    const peak = 0.1 + (index * step);
 
-    // Animate scale/opacity based on horizontal position in container
-    // 0 = entering right, 0.5 = center, 1 = leaving left
-    // We want peak focus at 0.5
-    const scale = useTransform(scrollXProgress, [0, 0.5, 1], [0.85, 1, 0.85]);
-    const opacity = useTransform(scrollXProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
-    const blur = useTransform(scrollXProgress, [0, 0.5, 1], ["5px", "0px", "5px"]);
+    const start = Math.max(0, peak - 0.35);
+    const plateauStart = Math.max(0, peak - 0.15);
+    const plateauEnd = Math.min(1, peak + 0.15);
+    const end = Math.min(1, peak + 0.35);
+
+    const scale = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.85, 1.05, 1.05, 0.85]);
+    const opacity = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.2, 1, 1, 0.2]);
+    const blur = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["10px", "0px", "0px", "10px"]);
 
     return (
         <motion.div
-            ref={cardRef}
             style={{
                 scale,
                 opacity,
                 filter: useTransform(blur, b => `blur(${b})`),
-                zIndex: useTransform(scale, s => s > 0.95 ? 10 : 1)
+                zIndex: useTransform(scale, s => s > 1 ? 10 : 1)
             }}
-            className="min-w-[85vw] md:min-w-[600px] h-[60vh] shrink-0 p-4 md:p-0 flex items-center justify-center snap-center"
+            className="w-[85vw] max-w-[600px] h-[60vh] shrink-0 p-4 md:p-0 flex items-center justify-center snap-center"
         >
             <div className="w-full h-full relative rounded-[2rem] bg-[#1a1a1a] overflow-hidden border border-white/10 shadow-2xl">
                 <div className="absolute inset-0">
@@ -122,30 +118,35 @@ const HorizontalCard = ({ project, index, containerRef }) => {
                 </div>
 
                 <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-                    {/* Tags */}
-                    <div className="absolute top-8 right-8 md:top-12 md:right-12 flex flex-row flex-wrap justify-end gap-2 max-w-[60%]">
+                    <motion.div
+                        style={{
+                            opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
+                            y: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [-10, 0, 0, -10])
+                        }}
+                        className="absolute top-8 right-8 md:top-12 md:right-12 flex flex-row flex-wrap justify-end gap-2 max-w-[60%]"
+                    >
                         {project.tags.map((tag, i) => (
-                            <span
+                            <motion.span
                                 key={i}
                                 style={{
-                                    color: project.color,
-                                    borderColor: project.color
+                                    color: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.5)", project.color, project.color, "rgba(255,255,255,0.5)"]),
+                                    borderColor: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.1)", project.color, project.color, "rgba(255,255,255,0.1)"])
                                 }}
-                                className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] border rounded-lg bg-black/40 backdrop-blur-md"
+                                className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] border rounded-lg bg-black/20 backdrop-blur-md"
                             >
                                 {tag}
-                            </span>
+                            </motion.span>
                         ))}
-                    </div>
+                    </motion.div>
 
-                    <div className="flex flex-col items-start">
-                        <span style={{ color: project.color }} className="text-xs font-bold tracking-widest uppercase mb-4">
+                    <motion.div className="flex flex-col items-start">
+                        <motion.span style={{ color: project.color }} className="text-xs font-bold tracking-widest uppercase mb-4">
                             Project 0{index + 1}
-                        </span>
+                        </motion.span>
                         <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
                             {project.title}
                         </h3>
-                    </div>
+                    </motion.div>
 
                     <p className="text-white/70 text-base md:text-lg mb-8 max-w-md line-clamp-3">
                         {project.description}
@@ -176,8 +177,6 @@ const HorizontalCard = ({ project, index, containerRef }) => {
                         ) : (
                             <motion.a
                                 href={project.link}
-                                target={project.isExternal ? "_blank" : undefined}
-                                rel={project.isExternal ? "noopener noreferrer" : undefined}
                                 initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                 whileHover={{
                                     backgroundColor: `${project.color}40`,
@@ -195,24 +194,24 @@ const HorizontalCard = ({ project, index, containerRef }) => {
                     </div>
                 </div>
 
-                {/* Floating Platform Badge (Behance) */}
                 {project.platform === "behance" && (
-                    <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-20">
+                    <motion.div
+                        style={{
+                            opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
+                            scale: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.8, 1, 1, 0.8])
+                        }}
+                        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-20"
+                    >
                         <div className="group relative flex items-center justify-center">
-                            {/* Glass Container */}
                             <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full scale-150 group-hover:scale-[1.8] group-hover:bg-white/10 transition-transform duration-500" />
-
-                            {/* Icon */}
                             <BehanceIcon className="w-8 h-8 text-white relative z-10 transition-transform duration-500 group-hover:scale-110" />
-
-                            {/* Tooltip hint */}
                             <div className="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                                 <div className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1 rounded-lg">
                                     <p className="text-[10px] text-white font-bold uppercase tracking-widest whitespace-nowrap">Hosted on Behance</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 )}
 
                 <div
@@ -226,41 +225,41 @@ const HorizontalCard = ({ project, index, containerRef }) => {
     );
 };
 
+import SectionHeader from "../components/SectionHeader";
+
 export default function WorkCarousel() {
     const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
+    const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-82%"]);
+    const springX = useSpring(x, { stiffness: 50, damping: 20, mass: 0.5 });
 
     return (
-        <section id="work" className="relative bg-[#0a0a0a] py-20 overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/20 blur-[150px] rounded-full mix-blend-screen" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-amber-900/20 blur-[150px] rounded-full mix-blend-screen" />
-            </div>
-
-            <div className="w-full z-20 shrink-0 mb-8">
-                <SectionHeader title="Work and Projects" />
-            </div>
-
-            {/* Native Scroll Container */}
-            <div
-                ref={containerRef}
-                className="flex gap-8 overflow-x-auto snap-x snap-mandatory px-8 pb-12 w-full no-scrollbar"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-                {/* Spacer for left padding visual balance */}
-                <div className="min-w-[5vw] shrink-0" />
-
-                {projects.map((project, index) => (
-                    <HorizontalCard
-                        key={project.id}
-                        project={project}
-                        index={index}
-                        containerRef={containerRef}
-                    />
-                ))}
-
-                {/* Spacer for right padding visual balance */}
-                <div className="min-w-[5vw] shrink-0" />
+        <section id="work" ref={containerRef} className="h-[500vh] bg-[#0a0a0a] relative">
+            <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+                <div className="w-full z-20 shrink-0 pt-10">
+                    <SectionHeader title="Work and Projects" />
+                </div>
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/20 blur-[150px] rounded-full mix-blend-screen" />
+                    <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-amber-900/20 blur-[150px] rounded-full mix-blend-screen" />
+                </div>
+                <motion.div
+                    style={{ x: springX }}
+                    className="flex-1 flex items-center gap-[5vw] px-[10vw] w-max"
+                >
+                    {projects.map((project, index) => (
+                        <HorizontalCard
+                            key={project.id}
+                            project={project}
+                            index={index}
+                            scrollYProgress={scrollYProgress}
+                        />
+                    ))}
+                </motion.div>
             </div>
         </section>
     );
