@@ -6,6 +6,7 @@ import {
     useSpring,
 } from "framer-motion";
 import { ArrowUpRight, Github } from "lucide-react";
+import SectionHeader from "../components/SectionHeader";
 
 // Import local assets
 import animindImg from "../assets/Animind.png";
@@ -105,7 +106,8 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
                 filter: useTransform(blur, b => `blur(${b})`),
                 zIndex: useTransform(scale, s => s > 1 ? 10 : 1)
             }}
-            className="w-[85vw] max-w-[600px] h-[60vh] shrink-0 p-4 md:p-0 flex items-center justify-center snap-center"
+            // Reduced height to 50vh to ensure dots fit below without overlap
+            className="w-[85vw] max-w-[600px] h-[50vh] shrink-0 p-4 md:p-0 flex items-center justify-center snap-center"
         >
             <div className="w-full h-full relative rounded-[2rem] bg-[#1a1a1a] overflow-hidden border border-white/10 shadow-2xl">
                 <div className="absolute inset-0">
@@ -225,7 +227,37 @@ const HorizontalCard = ({ project, index, scrollYProgress }) => {
     );
 };
 
-import SectionHeader from "../components/SectionHeader";
+// Component to render the navigation dots
+const NavigationDots = ({ totalProjects, scrollYProgress }) => {
+    return (
+        <div className="flex justify-center gap-3 pb-8 z-30 shrink-0">
+            {Array.from({ length: totalProjects }).map((_, index) => {
+                const step = 0.2;
+                const peak = 0.1 + (index * step);
+                const start = Math.max(0, peak - 0.15);
+                const end = Math.min(1, peak + 0.15);
+
+                const opacity = useTransform(scrollYProgress, [start, peak, end], [0.3, 1, 0.3]);
+                const scale = useTransform(scrollYProgress, [start, peak, end], [1, 1.5, 1]);
+                const width = useTransform(scrollYProgress, [start, peak, end], ["8px", "24px", "8px"]);
+                const backgroundColor = useTransform(scrollYProgress, [start, peak, end], ["rgba(255,255,255,0.2)", "rgba(255,255,255,1)", "rgba(255,255,255,0.2)"]);
+
+                return (
+                    <motion.div
+                        key={index}
+                        style={{
+                            opacity,
+                            scale,
+                            width,
+                            backgroundColor
+                        }}
+                        className="h-2 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+                    />
+                );
+            })}
+        </div>
+    );
+};
 
 export default function WorkCarousel() {
     const containerRef = useRef(null);
@@ -234,7 +266,9 @@ export default function WorkCarousel() {
         offset: ["start start", "end end"]
     });
 
-    const x = useTransform(scrollYProgress, [0.1, 0.9], ["10%", "-82%"]);
+    // Delayed start: Animation begins at 0.2 (20% through the section)
+    // This allows the user to scroll down, see the full layout/dots, and "pause" briefly before movement starts.
+    const x = useTransform(scrollYProgress, [0.2, 0.9], ["10%", "-82%"]);
     const springX = useSpring(x, { stiffness: 50, damping: 20, mass: 0.5 });
 
     return (
@@ -247,6 +281,7 @@ export default function WorkCarousel() {
                     <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/20 blur-[150px] rounded-full mix-blend-screen" />
                     <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-amber-900/20 blur-[150px] rounded-full mix-blend-screen" />
                 </div>
+
                 <motion.div
                     style={{ x: springX }}
                     className="flex-1 flex items-center gap-[5vw] px-[10vw] w-max"
@@ -260,7 +295,14 @@ export default function WorkCarousel() {
                         />
                     ))}
                 </motion.div>
+
+                {/* Navigation Dots - Now part of flex flow at bottom */}
+                <NavigationDots
+                    totalProjects={projects.length}
+                    scrollYProgress={scrollYProgress}
+                />
             </div>
         </section>
     );
 }
+
