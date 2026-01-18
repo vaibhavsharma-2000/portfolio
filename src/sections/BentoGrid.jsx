@@ -54,7 +54,7 @@ const BentoCard = ({ title, subtitle, size, color, icon: Icon }) => {
             className={`${size} relative group rounded-3xl z-0`}
         >
             {/* Spotlight Border Container */}
-            <div className="absolute inset-0 rounded-3xl bg-[#1a1a1a] overflow-hidden p-[1px]">
+            <div className="absolute inset-0 rounded-3xl bg-white/5 overflow-hidden p-[1px]">
                 {/* The Spotlight Gradient */}
                 <motion.div
                     style={{
@@ -70,7 +70,7 @@ const BentoCard = ({ title, subtitle, size, color, icon: Icon }) => {
                 />
 
                 {/* Inner Card Content */}
-                <div className="relative h-full w-full bg-[#111111] rounded-[23px] overflow-hidden p-8 flex flex-col justify-end">
+                <div className="relative h-full w-full bg-[#242424]/80 backdrop-blur-xl rounded-[23px] overflow-hidden p-8 flex flex-col justify-end">
 
                     {/* Background Icon */}
                     <Icon
