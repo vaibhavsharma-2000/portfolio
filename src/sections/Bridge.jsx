@@ -53,7 +53,7 @@ const Bridge = () => {
         <section
             id="about"
             ref={containerRef}
-            className="relative min-h-[300vh] bg-[#0a0a0a]"
+            className="relative min-h-[150vh] bg-[#0a0a0a]"
         >
             {/* PHILOSOPHY Watermark Background */}
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden pointer-events-none z-0">

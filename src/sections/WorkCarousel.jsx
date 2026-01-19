@@ -1,10 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import {
-    motion,
-    useScroll,
-    useTransform,
-    useSpring,
-} from "framer-motion";
+import { useRef } from "react";
+import { useScroll, motion, useTransform, useSpring, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowUpRight, Github } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
 
@@ -19,10 +14,7 @@ const BehanceIcon = ({ className }) => (
     <svg className={className} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fillRule="evenodd" clipRule="evenodd" d="M5.5 12V6H8.5C10.1569 6 11.5 7.34315 11.5 9C11.5 10.6569 10.1569 12 8.5 12C10.1569 12 11.5 13.3431 11.5 15C11.5 16.6569 10.1569 18 8.5 18H5.5V12Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path fillRule="evenodd" clipRule="evenodd" d="M19.5 15C19.5 13.3431 18.1569 12 16.5 12C14.8431 12 13.5 13.3431 13.5 15H19.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M5.5 11.25C5.08579 11.25 4.75 11.5858 4.75 12C4.75 12.4142 5.08579 12.75 5.5 12.75V11.25ZM8.5 12.75C8.91421 12.75 9.25 12.4142 9.25 12C9.25 11.5858 8.91421 11.25 8.5 11.25V12.75ZM14.25 15C14.25 14.5858 13.9142 14.25 13.5 14.25C13.0858 14.25 12.75 14.5858 12.75 15L14.25
-         15ZM15.4295 17.8024L15.1619 18.5031L15.4295 17.8024ZM19.295 17.5C19.5712 17.1913 19.5447 16.7172 19.236 16.441C18.9273 16.1648 18.4532 16.1913 18.177 16.5L19.295 17.5ZM18.5 10.75C18.9142 10.75 19.25 10.4142 19.25 10C19.25 9.58579 18.9142 9.25 18.5 9.25V10.75ZM14.5 9.25C14.0858
-          9.25 13.75 9.58579 13.75 10C13.75 10.4142 14.0858 10.75 14.5 10.75V9.25ZM5.5 12.75H8.5V11.25H5.5V12.75ZM12.75 15C12.75 16.5548 13.7095 17.9483 15.1619 18.5031L15.6971 17.1018C14.8257 16.7689 14.25 15.9328 14.25 15L12.75 15ZM15.1619 18.5031C16.6143 19.0578 18.2584 18.6588 19.295 
-          17.5L18.177 16.5C17.5551 17.1953 16.5686 17.4347 15.6971 17.1018L15.1619 18.5031ZM18.5 9.25H14.5V10.75H18.5V9.25Z" fill="currentColor" />
+        <path d="M5.5 11.25C5.08579 11.25 4.75 11.5858 4.75 12C4.75 12.4142 5.08579 12.75 5.5 12.75V11.25ZM8.5 12.75C8.91421 12.75 9.25 12.4142 9.25 12C9.25 11.5858 8.91421 11.25 8.5 11.25V12.75ZM14.25 15C14.25 14.5858 13.9142 14.25 13.5 14.25C13.0858 14.25 12.75 14.5858 12.75 15L14.25 15ZM15.4295 17.8024L15.1619 18.5031L15.4295 17.8024ZM19.295 17.5C19.5712 17.1913 19.5447 16.7172 19.236 16.441C18.9273 16.1648 18.4532 16.1913 18.177 16.5L19.295 17.5ZM18.5 10.75C18.9142 10.75 19.25 10.4142 19.25 10C19.25 9.58579 18.9142 9.25 18.5 9.25V10.75ZM14.5 9.25C14.0858 9.25 13.75 9.58579 13.75 10C13.75 10.4142 14.0858 10.75 14.5 10.75V9.25ZM5.5 12.75H8.5V11.25H5.5V12.75ZM12.75 15C12.75 16.5548 13.7095 17.9483 15.1619 18.5031L15.6971 17.1018C14.8257 16.7689 14.25 15.9328 14.25 15L12.75 15ZM15.1619 18.5031C16.6143 19.0578 18.2584 18.6588 19.295 17.5L18.177 16.5C17.5551 17.1953 16.5686 17.4347 15.6971 17.1018L15.1619 18.5031ZM18.5 9.25H14.5V10.75H18.5V9.25Z" fill="currentColor" />
     </svg>
 );
 
@@ -63,7 +55,7 @@ const projects = [
     {
         id: 5,
         title: "MY WEBSITE",
-        description: "A personal portfolio website that brings all my work together, highlighting my design thinking and growing design and development skills.",
+        description: "A personal portfolio website that brings all my work together.",
         visual: portfolioImg,
         color: "#FFC107",
         customButtons: [
@@ -85,226 +77,165 @@ const projects = [
     },
 ];
 
-const HorizontalCard = ({ project, index, scrollYProgress }) => {
-    const step = 0.2;
-    const peak = 0.1 + (index * step);
+const Card = ({ project, index, progress, range, targetScale }) => {
+    const container = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: container,
+        offset: ['start end', 'start start']
+    });
 
-    const start = Math.max(0, peak - 0.35);
-    const plateauStart = Math.max(0, peak - 0.15);
-    const plateauEnd = Math.min(1, peak + 0.15);
-    const end = Math.min(1, peak + 0.35);
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
 
-    const scale = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.85, 1.05, 1.05, 0.85]);
-    const opacity = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.2, 1, 1, 0.2]);
-    const blur = useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["10px", "0px", "0px", "10px"]);
+    const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
+    const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
+
+    // Spotlight Gradient following mouse
+    const spotlightLeft = useTransform(mouseX, [-0.5, 0.5], ["0%", "100%"]);
+    const spotlightTop = useTransform(mouseY, [-0.5, 0.5], ["0%", "100%"]);
+
+    const onMouseMove = ({ currentTarget, clientX, clientY }) => {
+        const { left, top, width, height } = currentTarget.getBoundingClientRect();
+        x.set((clientX - left) / width - 0.5);
+        y.set((clientY - top) / height - 0.5);
+    };
+
+    const onMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    // Scale effect for the card itself as it stacks
+    const scale = useTransform(progress, range, [1, targetScale]);
+
+    // Smooth opacity transition if needed, but let's keep it solid for stacking
+    // const opacity = useTransform(progress, range, [1, 0.5]);
 
     return (
-        <motion.div
-            style={{
-                scale,
-                opacity,
-                filter: useTransform(blur, b => `blur(${b})`),
-                zIndex: useTransform(scale, s => s > 1 ? 10 : 1)
-            }}
-            // Reduced height to 50vh to ensure dots fit below without overlap
-            className="w-[85vw] max-w-[600px] h-[50vh] shrink-0 p-4 md:p-0 flex items-center justify-center snap-center"
-        >
-            <div className="w-full h-full relative rounded-[2rem] bg-[#1a1a1a] overflow-hidden border border-white/10 shadow-2xl">
-                <div className="absolute inset-0">
-                    <img
-                        src={project.visual}
-                        alt={project.title}
-                        className="w-full h-full object-cover opacity-60 mix-blend-overlay transition-transform duration-700 hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-[#1a1a1a]/50 to-transparent" />
-                </div>
-
-                <div className="absolute inset-0 flex flex-col p-6 md:p-12">
-                    <motion.div
-                        style={{
-                            opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
-                            y: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [-10, 0, 0, -10])
-                        }}
-                        // Mobile: Relative, Top of flow. Desktop: Absolute Top-Right.
-                        className="relative w-full flex flex-wrap justify-end gap-2 mb-auto md:absolute md:top-12 md:right-12 md:w-[60%] md:mb-0 z-10"
-                    >
+        <div ref={container} className="h-screen flex items-center justify-center sticky top-0 pointer-events-none">
+            <motion.div
+                style={{
+                    scale,
+                    top: `calc(10vh + ${index * 25}px)`
+                }}
+                onMouseMove={onMouseMove}
+                onMouseLeave={onMouseLeave}
+                className="relative flex flex-col-reverse md:flex-row h-[65vh] w-[90vw] md:w-[70vw] rounded-[30px] border border-white/10 bg-[#1a1a1a] overflow-hidden shadow-2xl origin-top group pointer-events-auto"
+            >
+                {/* Spotlight Overlay */}
+                <motion.div
+                    style={{
+                        background: useMotionTemplate`
+                            radial-gradient(
+                                600px circle at ${spotlightLeft} ${spotlightTop}, 
+                                ${project.color}20, 
+                                transparent 80%
+                            )
+                        `,
+                    }}
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none mix-blend-screen"
+                />
+                {/* Left Side: Content */}
+                <div className="w-full h-[60%] md:h-full md:w-[45%] p-6 md:p-12 flex flex-col justify-center md:justify-start relative z-20 bg-[#1a1a1a]">
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
                         {project.tags.map((tag, i) => (
-                            <motion.span
-                                key={i}
-                                style={{
-                                    color: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.5)", project.color, project.color, "rgba(255,255,255,0.5)"]),
-                                    borderColor: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], ["rgba(255,255,255,0.1)", project.color, project.color, "rgba(255,255,255,0.1)"])
-                                }}
-                                className="px-2 py-1 md:px-3 md:py-1 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.15em] border rounded-lg bg-black/40 backdrop-blur-md"
-                            >
+                            <span key={i} style={{ borderColor: project.color, color: project.color }} className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest border rounded-full bg-black/20">
                                 {tag}
-                            </motion.span>
+                            </span>
                         ))}
-                    </motion.div>
+                    </div>
 
-                    {/* mt-auto pushes this block to the bottom of the container */}
-                    <motion.div className="flex flex-col items-start mt-auto relative z-10">
-                        <motion.span style={{ color: project.color }} className="text-xs font-bold tracking-widest uppercase mb-3 md:mb-4">
-                            Project 0{index + 1}
-                        </motion.span>
-                        <h3 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-3 md:mb-4 leading-tight">
-                            {project.title}
-                        </h3>
-                    </motion.div>
+                    <h3 className="text-2xl min-[400px]:text-3xl md:text-5xl font-serif font-bold text-white mb-3 md:mb-4 leading-tight">
+                        {project.title}
+                    </h3>
 
-                    <p className="text-white/70 text-base md:text-lg mb-8 max-w-md line-clamp-3">
+                    <p className="text-white/60 text-sm md:text-lg mb-6 leading-relaxed line-clamp-3 md:line-clamp-none">
                         {project.description}
                     </p>
 
-                    <div className="flex gap-4">
+                    <div className="mt-auto flex gap-4">
                         {project.customButtons ? (
                             project.customButtons.map((btn, i) => (
-                                <motion.a
+                                <a
                                     key={i}
                                     href={btn.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                                    whileHover={{
-                                        backgroundColor: `${project.color}40`,
-                                        borderColor: project.color,
-                                        scale: 1.05
-                                    }}
-                                    transition={{ duration: 0.3 }}
-                                    style={{ borderColor: "rgba(255,255,255,0.1)" }}
-                                    className="group flex items-center gap-3 px-6 py-3 rounded-full backdrop-blur-md border text-white text-sm font-bold tracking-widest uppercase"
+                                    className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
                                 >
                                     {btn.label}
-                                    <btn.icon className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                                </motion.a>
+                                    <btn.icon className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                                </a>
                             ))
                         ) : (
-                            <motion.a
+                            <a
                                 href={project.link}
-                                initial={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                                whileHover={{
-                                    backgroundColor: `${project.color}40`,
-                                    borderColor: project.color,
-                                    scale: 1.05
-                                }}
-                                transition={{ duration: 0.3 }}
-                                style={{ borderColor: "rgba(255,255,255,0.1)" }}
-                                className="group flex items-center gap-3 px-6 py-3 rounded-full backdrop-blur-md border text-white text-sm font-bold tracking-widest uppercase"
+                                className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
                             >
                                 View Project
-                                <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                            </motion.a>
+                                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            </a>
                         )}
                     </div>
                 </div>
 
-                {project.platform === "behance" && (
-                    <motion.div
-                        style={{
-                            opacity: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0, 1, 1, 0]),
-                            scale: useTransform(scrollYProgress, [start, plateauStart, plateauEnd, end], [0.8, 1, 1, 0.8])
-                        }}
-                        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-20"
-                    >
-                        <div className="group relative flex items-center justify-center">
-                            <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full scale-150 group-hover:scale-[1.8] group-hover:bg-white/10 transition-transform duration-500" />
-                            <BehanceIcon className="w-8 h-8 text-white relative z-10 transition-transform duration-500 group-hover:scale-110" />
-                            <div className="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                                <div className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1 rounded-lg">
-                                    <p className="text-[10px] text-white font-bold uppercase tracking-widest whitespace-nowrap">Hosted on Behance</p>
-                                </div>
+                {/* Right Side: Image */}
+                <div className="w-full h-[40%] md:h-full md:w-[55%] relative overflow-hidden bg-black border-b md:border-b-0 md:border-l border-white/5">
+                    <motion.div className="w-full h-full relative group">
+                        <img
+                            src={project.visual}
+                            alt={project.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-transparent to-[#1a1a1a] opacity-50" />
+                    </motion.div>
+
+                    {/* Behance Badge if applicable */}
+                    {project.platform === "behance" && (
+                        <div className="absolute top-4 right-4 md:bottom-6 md:right-6 z-20">
+                            <div className="bg-black/50 backdrop-blur-md p-2 rounded-full border border-white/20">
+                                <BehanceIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                             </div>
                         </div>
-                    </motion.div>
-                )}
-
-                <div
-                    className="absolute inset-0 -z-10 pointer-events-none opacity-30 mix-blend-screen bg-gradient-to-tr from-transparent"
-                    style={{
-                        backgroundImage: `radial-gradient(circle at bottom right, ${project.color}, transparent 60%)`
-                    }}
-                />
-            </div>
-        </motion.div>
-    );
-};
-
-// Component to render the navigation dots
-const NavigationDots = ({ totalProjects, scrollYProgress }) => {
-    return (
-        <div className="flex justify-center gap-3 pb-8 z-30 shrink-0">
-            {Array.from({ length: totalProjects }).map((_, index) => {
-                const step = 0.2;
-                const peak = 0.1 + (index * step);
-                const start = Math.max(0, peak - 0.15);
-                const end = Math.min(1, peak + 0.15);
-
-                const opacity = useTransform(scrollYProgress, [start, peak, end], [0.3, 1, 0.3]);
-                const scale = useTransform(scrollYProgress, [start, peak, end], [1, 1.5, 1]);
-                const width = useTransform(scrollYProgress, [start, peak, end], ["8px", "24px", "8px"]);
-                const backgroundColor = useTransform(scrollYProgress, [start, peak, end], ["rgba(255,255,255,0.2)", "rgba(255,255,255,1)", "rgba(255,255,255,0.2)"]);
-
-                return (
-                    <motion.div
-                        key={index}
-                        style={{
-                            opacity,
-                            scale,
-                            width,
-                            backgroundColor
-                        }}
-                        className="h-2 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
-                    />
-                );
-            })}
+                    )}
+                </div>
+            </motion.div>
         </div>
     );
 };
 
 export default function WorkCarousel() {
-    const containerRef = useRef(null);
+    const container = useRef(null);
     const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"]
+        target: container,
+        offset: ['start start', 'end end']
     });
 
-    // Delayed start: Animation begins at 0.2 (20% through the section)
-    // This allows the user to scroll down, see the full layout/dots, and "pause" briefly before movement starts.
-    const x = useTransform(scrollYProgress, [0.2, 0.9], ["10%", "-82%"]);
-    const springX = useSpring(x, { stiffness: 50, damping: 20, mass: 0.5 });
-
     return (
-        <section id="work" ref={containerRef} className="h-[500vh] bg-[#0a0a0a] relative">
-            <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
-                <div className="w-full z-20 shrink-0 pt-10">
-                    <SectionHeader title="Work and Projects" />
-                </div>
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/20 blur-[150px] rounded-full mix-blend-screen" />
-                    <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-amber-900/20 blur-[150px] rounded-full mix-blend-screen" />
-                </div>
+        <section ref={container} id="work" className="bg-[#0a0a0a] relative">
+            <div className="py-20 px-6 max-w-7xl mx-auto mb-10">
+                <SectionHeader title="Work and Projects" />
+                <p className="text-white/50 text-center max-w-2xl mx-auto mt-4">
+                    A curated selection of my design research and development work.
+                </p>
+            </div>
 
-                <motion.div
-                    style={{ x: springX }}
-                    className="flex-1 flex items-center gap-[5vw] px-[10vw] w-max"
-                >
-                    {projects.map((project, index) => (
-                        <HorizontalCard
-                            key={project.id}
-                            project={project}
+            <div className="mt-10 mb-[20vh]">
+                {projects.map((project, index) => {
+                    const targetScale = 1 - ((projects.length - index) * 0.05);
+                    return (
+                        <Card
+                            key={index}
                             index={index}
-                            scrollYProgress={scrollYProgress}
+                            project={project}
+                            progress={scrollYProgress}
+                            range={[index * 0.25, 1]}
+                            targetScale={targetScale}
                         />
-                    ))}
-                </motion.div>
-
-                {/* Navigation Dots - Now part of flex flow at bottom */}
-                <NavigationDots
-                    totalProjects={projects.length}
-                    scrollYProgress={scrollYProgress}
-                />
+                    );
+                })}
             </div>
         </section>
     );
 }
-
