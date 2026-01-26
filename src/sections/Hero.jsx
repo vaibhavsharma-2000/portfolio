@@ -65,7 +65,7 @@ const Hero = () => {
                         >
                             UX Designer & Front-end Developer
                         </motion.span>
-                        <h1 className="text-5xl md:text-8xl font-serif text-white tracking-tighter leading-none mb-2">
+                        <h1 className="text-5xl md:text-8xl font-serif text-white tracking-tighter leading-none mb-2" aria-label="Vaibhav Sharma - UX Designer, Front-end Developer, and Product Manager">
                             <motion.span
                                 className="block"
                                 variants={{
@@ -85,6 +85,7 @@ const Hero = () => {
                                 Sharma
                             </motion.span>
                         </h1>
+                        <p className="sr-only">UX Designer, Front-end Developer, and Product Manager based in Germany. Specializing in user research, Figma, React, UI/UX design, and human-centered product design.</p>
                     </motion.div>
                 </div>
 

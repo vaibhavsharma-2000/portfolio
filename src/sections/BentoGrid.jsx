@@ -111,8 +111,8 @@ const BentoGrid = () => {
             icon: Layers
         },
         {
-            title: "Front-end",
-            subtitle: <>HTML, CSS, <span className="text-neutral-300 font-medium">JavaScript</span>, React, Tailwind, Git, Github,</>,
+            title: "Front-end Development",
+            subtitle: <>HTML, CSS, <span className="text-neutral-300 font-medium">JavaScript</span>, React, Tailwind, Git, GitHub,</>,
             size: "md:col-span-1 md:row-span-2",
             color: "#06B6D4",
             icon: Code2

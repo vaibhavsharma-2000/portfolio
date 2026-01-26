@@ -185,7 +185,7 @@ const Card = ({ project, index, progress, range, targetScale }) => {
                     <motion.div className="w-full h-full relative group">
                         <img
                             src={project.visual}
-                            alt={project.title}
+                            alt={`${project.title} - ${project.tags.join(', ')} project by Vaibhav Sharma`}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-transparent to-[#1a1a1a] opacity-50" />

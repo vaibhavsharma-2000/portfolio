@@ -28,36 +28,42 @@ function Home() {
     }, [hash]);
 
     return (
-        <main className="bg-dark selection:bg-brand selection:text-dark antialiased">
-            <Navbar />
-            <div id="home">
-                <Hero />
-            </div>
-            <Bridge />
-            <div id="experience">
-                <SectionHeader title="Experience & Qualifications" />
-                <Journey />
-            </div>
+        <>
+            {/* Skip to main content link for accessibility */}
+            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand text-dark px-4 py-2 rounded z-50 font-bold">
+                Skip to main content
+            </a>
+            <main className="bg-dark selection:bg-brand selection:text-dark antialiased">
+                <Navbar />
+                <header id="home" role="banner">
+                    <Hero />
+                </header>
+                <Bridge />
+                <section id="experience" aria-label="Experience and Qualifications">
+                    <SectionHeader title="Experience & Qualifications" />
+                    <Journey />
+                </section>
 
-            <WorkCarousel />
+                <WorkCarousel />
 
-            <div id="skills">
-                <SectionHeader title="Skills" />
-                <div id="toolkit">
-                    <BentoGrid />
-                </div>
-            </div>
+                <section id="skills" aria-label="Skills and Toolkit">
+                    <SectionHeader title="Skills" />
+                    <div id="toolkit" role="main" aria-label="Main content">
+                        <BentoGrid />
+                    </div>
+                </section>
 
-            <div id="articles">
-                <SectionHeader title="Articles & Publications" />
-                <Articles />
-            </div>
+                <section id="articles" aria-label="Articles and Publications">
+                    <SectionHeader title="Articles & Publications" />
+                    <Articles />
+                </section>
 
-            {/* Footer / Contact Placeholder */}
-            <div id="contact">
-                <Footer />
-            </div>
-        </main>
+                {/* Footer / Contact */}
+                <footer id="contact" role="contentinfo">
+                    <Footer />
+                </footer>
+            </main>
+        </>
     );
 }
 
