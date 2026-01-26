@@ -14,20 +14,7 @@ const Footer = () => {
             label: "GitHub"
         },
         {
-            icon: (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 10h5" /><path d="M18 6h3" />
-                    <path d="M22 6c0-2.5-2-4.5-4.5-4.5H6C3.5 1.5 1.5 3.5 1.5 6v12c0 2.5 2 4.5 4.5 4.5h11.5c2.5 0 4.5-2 4.5-4.5V6zM7.5 7h4M7.5 12h5" />
-                    <path d="M7.5 17h3" />
-                    {/* Simplified Behance-like shapes or just use generic link if complexity is high, but let's try a custom B approx */}
-                    <path d="M14 13.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-                    <path d="M14 13.5h0c2 0 3.5 1 3.5 3.5v.5h-7v-.5c0-2.5 1.5-3.5 3.5-3.5z" />
-                </svg>
-            ),
-            // Better Behance SVG path approximation or just use text 'Be'
-            icon: (
-                <span className="font-serif text-xl font-bold">Be</span>
-            ),
+            icon: <span className="font-serif text-xl font-bold">Be</span>,
             url: "https://behance.net/vaibhavsharma2000",
             label: "Behance"
         },
@@ -50,31 +37,33 @@ const Footer = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             className="text-5xl md:text-7xl font-serif text-white mb-8"
                         >
-                            Let’s build <br /> <span className="text-brand">something human.</span>
+                            Let's build <br /> <span className="text-brand">something human.</span>
                         </motion.h3>
                         <a
                             href="mailto:vb.vaibhav99@gmail.com"
                             className="text-lg md:text-xl font-sans text-neutral-400 hover:text-brand transition-colors flex items-center gap-3"
+                            aria-label="Send email to vb.vaibhav99@gmail.com"
                         >
-                            <Mail size={20} /> vb.vaibhav99@gmail.com
+                            <Mail size={20} aria-hidden="true" /> vb.vaibhav99@gmail.com
                         </a>
                     </div>
 
                     {/* Right Side: Socials & Location */}
                     <div className="flex flex-col items-start md:items-end gap-12">
-                        <div className="flex gap-6">
+                        <div className="flex gap-6" role="list" aria-label="Social media links">
                             {socials.map((social, i) => (
-                                <div key={i} className="flex flex-col items-center gap-2 group">
+                                <div key={i} className="flex flex-col items-center gap-2 group" role="listitem">
                                     <motion.a
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         whileHover={{ y: -5, scale: 1.1 }}
                                         className="w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white hover:text-brand hover:border-brand/50 transition-all flex items-center justify-center p-0"
+                                        aria-label={`Visit ${social.label} profile`}
                                     >
-                                        {social.icon}
+                                        <span aria-hidden="true">{social.icon}</span>
                                     </motion.a>
-                                    <span className="text-xs text-neutral-500 font-sans tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-y-1 group-hover:translate-y-0">{social.label}</span>
+                                    <span className="text-xs text-neutral-500 font-sans tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-y-1 group-hover:translate-y-0" aria-hidden="true">{social.label}</span>
                                 </div>
                             ))}
                         </div>

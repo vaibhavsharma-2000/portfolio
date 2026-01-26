@@ -111,7 +111,11 @@ const Navbar = () => {
 
                 {/* Mobile Header (Home Icon + Toggle) */}
                 <div className="flex md:hidden items-center justify-between w-full gap-4 px-2">
-                    <button onClick={() => scrollToSection('home')} className="text-white hover:text-brand transition-colors">
+                    <button
+                        onClick={() => scrollToSection('home')}
+                        className="text-white hover:text-brand transition-colors"
+                        aria-label="Go to home section"
+                    >
                         <Home size={20} />
                     </button>
 
@@ -129,6 +133,8 @@ const Navbar = () => {
                             ref={buttonRef}
                             onClick={() => setIsOpen(!isOpen)}
                             className="p-2 text-white/80 hover:text-white transition-colors"
+                            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                            aria-expanded={isOpen}
                         >
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
