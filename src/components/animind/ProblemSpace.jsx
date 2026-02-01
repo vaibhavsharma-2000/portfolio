@@ -21,7 +21,7 @@ export function ProblemSpace() {
                             Escaping the Algorithmic Walled Garden
                         </h3>
                         <p className="text-[#b0b0b0] text-lg font-light leading-relaxed">
-                            Why current discovery tools are biased and fragmented.
+                            Why current discovery tools are biased and fragmented?
                         </p>
                     </motion.div>
                 </div>
@@ -65,8 +65,8 @@ function ProblemCard({ icon, title, description, highlight = false }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className={`p-8 rounded-xl border ${highlight
-                    ? "bg-[#121212] border-[#e63946]/30 shadow-[0_0_30px_rgba(230,57,70,0.1)]"
-                    : "bg-[#0a0a0a] border-white/10"
+                ? "bg-[#121212] border-[#e63946]/30 shadow-[0_0_30px_rgba(230,57,70,0.1)]"
+                : "bg-[#0a0a0a] border-white/10"
                 }`}
         >
             <div className="flex items-start gap-4">
