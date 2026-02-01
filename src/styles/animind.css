@@ -1,0 +1,29 @@
+/* Animind Page Specific Styles */
+/* Scoped to .animind-page to prevent conflicts */
+
+.animind-page {
+    /* Font imports for the page */
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Playfair Display for serif headings */
+.animind-page .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Animations */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animind-page .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

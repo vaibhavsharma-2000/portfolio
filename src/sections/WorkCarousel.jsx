@@ -25,10 +25,7 @@ const projects = [
         description: "A social sanctuary to catalog, review, and curate your personal anime odyssey.",
         visual: animindImg,
         color: "#ba0000",
-        customButtons: [
-            { label: "View Website", link: "https://animind-v2.vercel.app/", icon: ArrowUpRight },
-            { label: "View Code", link: "https://github.com/vaibhavsharma-2000/animind", icon: Github }
-        ],
+        link: "/work/animind",
         tags: ['UX Design', 'Front-end', 'UX Research']
     },
     {
