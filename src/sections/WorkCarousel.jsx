@@ -159,21 +159,21 @@ const Card = ({ project, index, progress, range, targetScale }) => {
                                     href={btn.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
+                                    className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
                                     aria-label={`${btn.label} - ${project.title}`}
                                 >
                                     {btn.label}
-                                    <btn.icon className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true" />
+                                    <btn.icon className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" aria-hidden="true" />
                                 </a>
                             ))
                         ) : (
                             <a
                                 href={project.link}
-                                className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
+                                className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
                                 aria-label={`View Project - ${project.title}`}
                             >
                                 View Project
-                                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true" />
+                                <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" aria-hidden="true" />
                             </a>
                         )}
                     </div>
