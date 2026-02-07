@@ -9,6 +9,13 @@ const publications = [
         description: "This research investigates the psychological impact of social networking on adolescent body image, leveraging quantitative methods and statistical analysis.",
         fullUrl: "https://drive.google.com/file/d/13rB0KUVFGhyOwCRZHVTHAiTwMQxmqQGT/view?usp=sharing"
     },
+    {
+        id: "pub-2",
+        title: "“Letterboxd for Anime” in a Week: The Reality of Building with Gemini, Stitch, and Antigravity.",
+        reference: "Published on Medium (2026).",
+        description: "A candid retrospective on building 'Animind'— a vibe-based anime discovery platform in just one week. This article breaks down how a UX Designer leveraged AI tools like Gemini and Antigravity to ship a full-stack application, exploring the reality of the AI-assisted design-to-code workflow.",
+        fullUrl: "https://medium.com/@vaibhavsharmaux/letterboxd-for-anime-in-a-week-the-reality-of-building-with-gemini-stitch-and-antigravity-2a8d9743be29"
+    },
     /* 
     HOW TO ADD A NEW ARTICLE:
     1. Copy the template object below.
