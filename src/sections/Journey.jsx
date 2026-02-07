@@ -46,7 +46,7 @@ const experiences = [
         context: "GPA 8.02",
         highlights: [
             "Published research: 'Does social networking usage impact body self-image in late adolescents?'.",
-            "Gained strong foundation in qualitative & quantitative research methods, statistics, and data analysis.j"
+            "Gained strong foundation in qualitative & quantitative research methods, statistics, and data analysis."
         ]
     },
     {
