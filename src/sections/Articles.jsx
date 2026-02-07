@@ -11,9 +11,9 @@ const publications = [
     },
     {
         id: "pub-2",
-        title: "“Letterboxd for Anime” in a Week: The Reality of Building with Gemini, Stitch, and Antigravity.",
+        title: "“Letterboxd for Anime” in 3 days: The Reality of Building with Gemini, Stitch, and Antigravity.",
         reference: "Published on Medium (2026).",
-        description: "A candid retrospective on building 'Animind'— a vibe-based anime discovery platform in just one week. This article breaks down how a UX Designer leveraged AI tools like Gemini and Antigravity to ship a full-stack application, exploring the reality of the AI-assisted design-to-code workflow.",
+        description: "A candid retrospective on building 'Animind'— a vibe-based anime discovery platform in under a week. This article breaks down how a UX Designer leveraged AI tools like Gemini and Antigravity to ship a full-stack application, exploring the reality of the AI-assisted design-to-code workflow.",
         fullUrl: "https://medium.com/@vaibhavsharmaux/letterboxd-for-anime-in-a-week-the-reality-of-building-with-gemini-stitch-and-antigravity-2a8d9743be29"
     },
     /* 
