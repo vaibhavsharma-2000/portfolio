@@ -156,7 +156,7 @@ export function DesignSystemSection() {
 
                         {/* Effect specs — moved here to balance column heights */}
                         <div className="mt-8">
-                            <p className="text-xs font-bold uppercase tracking-widest text-white/30 mb-4">Visual Effects</p>
+                            <p className="text-s font-bold uppercase tracking-widest text-white/30 mb-4">Visual Effects</p>
                             <div className="space-y-2">
                                 {[
                                     { mode: 'Dark', name: 'Glassmorphism Cards', spec: 'backdrop-filter: blur(20px) · border: 1px rgba(255,255,255,0.08)' },
@@ -183,18 +183,18 @@ export function DesignSystemSection() {
                     >
                         {/* Color tokens */}
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-widest text-white/30 mb-4">Color Tokens</p>
+                            <p className="text-s font-bold uppercase tracking-widest text-white/30 mb-4">Color Tokens</p>
                             <div className="space-y-3">
                                 {tokens.map((token, i) => (
                                     <div key={i} className="flex items-center gap-4">
                                         <div className="flex gap-2">
                                             <div
-                                                className="w-8 h-8 rounded-lg border border-white/10"
+                                                className="w-12 h-12 rounded-lg border border-white/10"
                                                 style={{ backgroundColor: token.dark }}
                                                 title={`Dark: ${token.dark}`}
                                             />
                                             <div
-                                                className="w-8 h-8 rounded-lg border border-white/10"
+                                                className="w-12 h-12 rounded-lg border border-white/10"
                                                 style={{ backgroundColor: token.light }}
                                                 title={`Light: ${token.light}`}
                                             />
@@ -210,7 +210,7 @@ export function DesignSystemSection() {
 
                         {/* Typography */}
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-widest text-white/30 mb-4">Typography</p>
+                            <p className="text-s font-bold uppercase tracking-widest text-white/30 mb-4 pt-10">Typography</p>
                             <div className="space-y-4">
                                 <div className="verity-card-dark p-6">
                                     <div className="flex justify-between items-end mb-4 pb-4 border-b border-white/5">
