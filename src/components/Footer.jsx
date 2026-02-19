@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, MapPin, ExternalLink } from 'lucide-react';
+import { Mail, Linkedin, Github, MapPin, ExternalLink, Sparkles } from 'lucide-react';
+import siteLogo from '../assets/Vaibhav Portfolio Logo.png';
 
 const Footer = () => {
     const socials = [
@@ -28,6 +29,37 @@ const Footer = () => {
             </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
+                <div className="mb-16 flex justify-start">
+                    {/* Button wrapper ensures it can receive focus on mobile tap */}
+                    <button className="relative group cursor-help text-left outline-none">
+                        {/* Logo */}
+                        <motion.img
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            src={siteLogo}
+                            alt="Vaibhav Sharma Logo"
+                            className="w-16 h-16 rounded-[4px] object-cover border border-white/10 transition-colors duration-300 group-hover:border-white/20 group-focus:border-white/20"
+                        />
+
+                        {/* Tooltip */}
+                        <div className="absolute top-1/2 -translate-y-1/2 left-full ml-4 md:ml-6 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-all duration-300 transform translate-x-4 group-hover:translate-x-0 group-focus:translate-x-0 w-[260px] md:w-80 z-50">
+                            <div className="bg-[#111] border border-brand/20 rounded-xl p-4 shadow-2xl backdrop-blur-xl relative">
+                                {/* Triangle pointer */}
+                                <div className="absolute top-1/2 -translate-y-1/2 -left-1.5 w-3 h-3 bg-[#111] border-l border-b border-brand/20 rotate-45" />
+
+                                <p className="text-brand text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-2">
+                                    <Sparkles size={12} />
+                                    Logo Design Rationale
+                                </p>
+                                <p className="text-white/70 text-xs leading-relaxed font-sans">
+                                    A synthesis of neural pathways and digital circuits—representing the intersection where human psychology meets front-end architecture.
+                                    <br /><br />
+                                    <span className="italic text-white/40">...and definitely not just my initials 'V' and 'S' layered on top of each other.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </button>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-end">
 
                     {/* Left Side: Direct Contact */}
