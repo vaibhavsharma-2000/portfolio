@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import SEOHead from "../components/SEOHead";
 
 // Import all section components
 import { Hero } from "../components/animind/Hero";
@@ -17,9 +18,35 @@ import { Footer } from "../components/animind/Footer";
 // Import Animind-specific styles
 import "../styles/animind.css";
 
+const ANIMIND_JSON_LD = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "AniMind — Anime Discovery UX Case Study",
+    "author": {
+        "@type": "Person",
+        "name": "Vaibhav Sharma",
+        "url": "https://www.vaibhavsharma.de"
+    },
+    "description": "UX case study for AniMind, a social platform to catalog, review, and curate your personal anime journey. Featuring user research, design systems, and React front-end development.",
+    "url": "https://www.vaibhavsharma.de/work/animind",
+    "dateCreated": "2026",
+    "genre": "UX Case Study",
+    "keywords": "AniMind, anime app, UX case study, UX research, design system, React, Figma, product design",
+    "tools": ["Figma", "React", "Gemini", "Google Stitch"],
+    "inLanguage": "en"
+};
+
 export default function AnimindPage() {
     return (
-        <div className="animind-page min-h-screen bg-[#050505] text-white font-sans">
+        <main className="animind-page min-h-screen bg-[#050505] text-white font-sans">
+            <SEOHead
+                title="AniMind — Anime Discovery UX Case Study"
+                description="UX case study for AniMind, a social platform to catalog, review, and curate your personal anime journey. Featuring user research, design systems, and React front-end development."
+                url="/work/animind"
+                keywords="AniMind, anime app, UX case study, UX research, design system, React, Figma, Vaibhav Sharma"
+                jsonLd={ANIMIND_JSON_LD}
+            />
+
             {/* Navigation - Floating Back Button */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -40,16 +67,18 @@ export default function AnimindPage() {
             </motion.div>
 
             {/* Page Content */}
-            <Hero />
-            <ProblemSpace />
-            <Research />
-            <Process />
-            <DesignSystem />
-            <Wireframing />
-            <Solutions />
-            <HighFidelity />
-            <Outcome />
+            <article>
+                <Hero />
+                <ProblemSpace />
+                <Research />
+                <Process />
+                <DesignSystem />
+                <Wireframing />
+                <Solutions />
+                <HighFidelity />
+                <Outcome />
+            </article>
             <Footer />
-        </div>
+        </main>
     );
 }

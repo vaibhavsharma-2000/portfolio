@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Toaster } from 'sonner';
+import SEOHead from '../components/SEOHead';
 import { Hero } from '../components/verity/Hero';
 import { ProblemSection } from '../components/verity/ProblemSection';
 import { DefineSection } from '../components/verity/DefineSection';
@@ -13,14 +14,40 @@ import { ReflectionSection } from '../components/verity/ReflectionSection';
 import { motion } from 'framer-motion';
 import '../styles/verity.css';
 
+const VERITY_JSON_LD = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Verity — AI-Driven SaaS Dashboard UX Case Study",
+    "author": {
+        "@type": "Person",
+        "name": "Vaibhav Sharma",
+        "url": "https://www.vaibhavsharma.de"
+    },
+    "description": "UX case study for Verity, an AI-driven decision engine and SaaS dashboard designed for high-end fashion merchants. Featuring user research, interactive prototypes, and design system development.",
+    "url": "https://www.vaibhavsharma.de/work/verity",
+    "dateCreated": "2026",
+    "genre": "UX Case Study",
+    "keywords": "Verity, SaaS dashboard, AI, UX case study, UX research, fashion, Figma, React, design system",
+    "tools": ["Figma", "React", "Tailwind CSS", "Framer Motion"],
+    "inLanguage": "en"
+};
+
 export default function VerityPage() {
     return (
-        <motion.div
+        <motion.main
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="verity-page bg-[#0a0a0a] min-h-screen text-white"
         >
+            <SEOHead
+                title="Verity — AI-Driven SaaS Dashboard UX Case Study"
+                description="UX case study for Verity, an AI-driven decision engine and SaaS dashboard designed for high-end fashion merchants. Featuring user research, interactive prototypes, and design system development."
+                url="/work/verity"
+                keywords="Verity, SaaS dashboard, AI, UX case study, UX research, fashion, Figma, React, Vaibhav Sharma"
+                jsonLd={VERITY_JSON_LD}
+            />
+
             {/* Toaster for AI Search feedback */}
             <Toaster
                 theme="dark"
@@ -55,54 +82,55 @@ export default function VerityPage() {
             </motion.div>
 
             {/* Page Sections */}
-            {/* Page Sections - Develop Phase Reordered */}
-            <Hero />
-            <ProblemSection />
-            <DefineSection />
-            {/* Phase 03: Consolidated Solutions Wrapper */}
-            <section className="bg-[#0a0a0a] pt-32 pb-0 relative">
-                <div className="max-w-7xl mx-auto px-8 md:px-20 mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="flex items-center gap-3 mb-6"
-                    >
-                        <div className="w-8 h-[1px] bg-[#7B61FF]" />
-                        <span className="text-[#7B61FF] font-bold tracking-[0.3em] uppercase text-xs">Phase 03 — Develop</span>
-                    </motion.div>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="font-serif text-4xl md:text-6xl leading-tight text-white mb-6"
-                    >
-                        The Complete Solution.
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="text-white/40 text-lg max-w-2xl leading-relaxed"
-                    >
-                        From the executive dashboard to the logistics layer, every screen was built for clarity, speed, and quiet luxury.
-                    </motion.p>
-                </div>
+            <article>
+                <Hero />
+                <ProblemSection />
+                <DefineSection />
+                {/* Phase 03: Consolidated Solutions Wrapper */}
+                <section className="bg-[#0a0a0a] pt-32 pb-0 relative">
+                    <div className="max-w-7xl mx-auto px-8 md:px-20 mb-12">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="flex items-center gap-3 mb-6"
+                        >
+                            <div className="w-8 h-[1px] bg-[#7B61FF]" />
+                            <span className="text-[#7B61FF] font-bold tracking-[0.3em] uppercase text-xs">Phase 03 — Develop</span>
+                        </motion.div>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="font-serif text-4xl md:text-6xl leading-tight text-white mb-6"
+                        >
+                            The Complete Solution.
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            className="text-white/40 text-lg max-w-2xl leading-relaxed"
+                        >
+                            From the executive dashboard to the logistics layer, every screen was built for clarity, speed, and quiet luxury.
+                        </motion.p>
+                    </div>
 
-                {/* 1. Dashboard Hub (Includes Fulfillment & Ecosystem now) */}
-                <DashboardShowcase />
+                    {/* 1. Dashboard Hub (Includes Fulfillment & Ecosystem now) */}
+                    <DashboardShowcase />
 
-                {/* 4. Intelligence */}
-                <AISearch />
+                    {/* 4. Intelligence */}
+                    <AISearch />
 
-                {/* 5. System */}
-                <DesignSystemSection />
-            </section>
+                    {/* 5. System */}
+                    <DesignSystemSection />
+                </section>
 
-            {/* Outcomes & Review */}
-            <OutcomeSection />
-            <HighFidelitySection />
-            <ReflectionSection />
+                {/* Outcomes & Review */}
+                <OutcomeSection />
+                <HighFidelitySection />
+                <ReflectionSection />
+            </article>
 
             {/* Footer strip */}
             <div className="border-t border-white/5 py-12 px-8 md:px-20 text-center">
@@ -110,6 +138,7 @@ export default function VerityPage() {
                     VERITY — Designed by Vaibhav Sharma · 2026
                 </p>
             </div>
-        </motion.div>
+        </motion.main>
     );
 }
+

@@ -1,12 +1,26 @@
-import { useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Briefcase, GraduationCap } from 'lucide-react';
+
+const useIsMobile = (breakpoint = 768) => {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < breakpoint);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, [breakpoint]);
+    return isMobile;
+};
 
 const experiences = [
     {
         id: 1,
+        type: "work",
         role: "UX Research Intern",
         org: "TeamViewer GmbH",
         date: "09/2025 – 02/2026",
+        months: 6,
         highlights: [
             "Spearheaded AI integration and engineered a centralized AI Research Agent using historical data.",
             "Strategically redesigned the internal User Focus Program to enhance engagement.",
@@ -17,9 +31,11 @@ const experiences = [
     },
     {
         id: 2,
+        type: "education",
         role: "MSc. Usability Engineering",
         org: "Rhine-Waal University",
         date: "09/2023 – Present",
+        months: 29,
         context: "GPA 1.5",
         highlights: [
             "Focus: Human-centered design processes and UI/UX best practices.",
@@ -29,9 +45,11 @@ const experiences = [
     },
     {
         id: 3,
+        type: "work",
         role: "UI/UX Design Intern",
         org: "eCommerce Simple",
         date: "08/2022 – 04/2023",
+        months: 9,
         highlights: [
             "Designed high-conversion landing pages and responsive email templates.",
             "Created detailed wireframes and prototypes to streamline development.",
@@ -40,9 +58,11 @@ const experiences = [
     },
     {
         id: 4,
+        type: "education",
         role: "BA Psychology (Honors)",
         org: "University of Delhi",
         date: "2020 – 2023",
+        months: 36,
         context: "GPA 8.02",
         highlights: [
             "Published research: 'Does social networking usage impact body self-image in late adolescents?'.",
@@ -51,9 +71,11 @@ const experiences = [
     },
     {
         id: 5,
+        type: "work",
         role: "Psychology Intern",
-        org: "IPAC- Institute of Psychometric Assessment and Counseling",
+        org: "IPAC",
         date: "07/2022 – 08/2022",
+        months: 2,
         highlights: [
             "Administered Psychological Assessments",
             "Learned Cognitive Behavior Therapy",
@@ -62,79 +84,218 @@ const experiences = [
     }
 ];
 
-const ExperienceCard = ({ exp, isInView }) => {
+// Proportional width: map months to a percentage of max container width
+const maxMonths = Math.max(...experiences.map(e => e.months));
+
+const colorConfig = {
+    work: {
+        accent: '#ffc107',
+        bg: 'rgba(255, 193, 7, 0.08)',
+        bgHover: 'rgba(255, 193, 7, 0.14)',
+        border: 'rgba(255, 193, 7, 0.3)',
+        borderHover: 'rgba(255, 193, 7, 0.6)',
+        glow: 'rgba(255, 193, 7, 0.15)',
+        label: 'Work',
+    },
+    education: {
+        accent: '#38bdf8',
+        bg: 'rgba(56, 189, 248, 0.08)',
+        bgHover: 'rgba(56, 189, 248, 0.14)',
+        border: 'rgba(56, 189, 248, 0.3)',
+        borderHover: 'rgba(56, 189, 248, 0.6)',
+        glow: 'rgba(56, 189, 248, 0.15)',
+        label: 'Education',
+    }
+};
+
+const Pill = ({ exp, index, totalCount }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const isMobile = useIsMobile();
+    const config = colorConfig[exp.type];
+    const Icon = exp.type === 'work' ? Briefcase : GraduationCap;
+
+    // Width: minimum 40%, max 100%, proportional to months (desktop only)
+    const widthPercent = 40 + (exp.months / maxMonths) * 60;
+
+    // Stagger offset: each pill shifts further right (desktop only)
+    const staggerOffset = (index / (totalCount - 1)) * 100; // 0% to 100%
+
+    const pillWidth = isMobile || isExpanded ? '100%' : `min(${widthPercent}%, 100%)`;
+
     return (
         <motion.div
-            animate={{
-                opacity: isInView ? 1 : 0.3,
-                scale: isInView ? 1 : 0.95,
-                filter: isInView ? "blur(0px)" : "blur(2px)"
+            initial={{ opacity: 0, x: -60, y: 20 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="w-full"
+            style={{
+                paddingLeft: isMobile ? '0px' : `clamp(0px, ${staggerOffset * 0.5}%, 45%)`,
             }}
-            transition={{ duration: 0.5 }}
-            className={`relative p-8 rounded-3xl border transition-colors duration-500
-                ${isInView ? 'bg-white/10 border-brand/50 shadow-[0_0_30px_rgba(255,193,7,0.1)]' : 'bg-white/5 border-white/10'}
-                backdrop-blur-xl w-full max-w-2xl mx-auto`}
         >
-            {/* Header */}
-            <div className="flex flex-col mb-4 gap-1">
-                <h3 className="text-2xl md:text-3xl font-serif text-white">{exp.role}</h3>
-                <p className="text-brand font-sans font-medium">{exp.org}</p>
-                {exp.context && <span className="block text-xs text-neutral-500 font-sans mt-1">{exp.context}</span>}
-            </div>
-
-            {/* Expandable Content - Always rendered to prevent scroll jank */}
-            <div className="overflow-hidden">
-                <ul className="space-y-3 pt-4 border-t border-white/10">
-                    {exp.highlights.map((point, i) => (
-                        <motion.li
-                            key={i}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1, duration: 0.3 }}
-                            className="flex items-start gap-3 text-neutral-300 font-sans leading-relaxed text-sm md:text-base"
+            <motion.div
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="relative cursor-pointer group"
+                style={{
+                    width: pillWidth,
+                }}
+                whileHover={{ scale: 1.015 }}
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            >
+                {/* Pill Container */}
+                <motion.div
+                    className="relative rounded-full overflow-hidden backdrop-blur-xl transition-all duration-500"
+                    style={{
+                        background: isExpanded ? config.bgHover : config.bg,
+                        border: `1px solid ${isExpanded ? config.borderHover : config.border}`,
+                        boxShadow: isExpanded
+                            ? `0 0 40px ${config.glow}, 0 8px 32px rgba(0,0,0,0.3)`
+                            : `0 4px 20px rgba(0,0,0,0.2)`,
+                        borderRadius: isExpanded ? '24px' : '999px',
+                    }}
+                    layout
+                >
+                    {/* Main Pill Content - always visible */}
+                    <div className="flex items-center gap-4 px-6 py-4 md:px-8 md:py-5">
+                        {/* Icon Badge */}
+                        <div
+                            className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300"
+                            style={{
+                                background: `${config.accent}20`,
+                                border: `1px solid ${config.accent}40`,
+                            }}
                         >
-                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-                            {point}
-                        </motion.li>
-                    ))}
-                </ul>
-            </div>
+                            <Icon size={18} style={{ color: config.accent }} />
+                        </div>
+
+                        {/* Role & Org */}
+                        <div className="flex-1 min-w-0">
+                            <h3
+                                className={`text-white font-serif text-lg md:text-xl font-semibold leading-tight ${isExpanded ? 'whitespace-normal' : 'truncate'
+                                    }`}
+                                title={exp.role}
+                            >
+                                {exp.role}
+                            </h3>
+                            <p
+                                className={`text-neutral-400 font-sans text-sm ${isExpanded ? 'whitespace-normal' : 'truncate'
+                                    }`}
+                                title={`${exp.org}${exp.context ? ` · ${exp.context}` : ''}`}
+                            >
+                                {exp.org}
+                                {exp.context && <span className="text-neutral-500 ml-2">· {exp.context}</span>}
+                            </p>
+                        </div>
+
+                        {/* Date - Desktop: two-line stacked, Mobile: compact inline */}
+                        <div className="flex-shrink-0 text-right">
+                            {/* Desktop format */}
+                            <span
+                                className="hidden sm:block text-sm font-sans font-bold tracking-wider"
+                                style={{ color: config.accent }}
+                            >
+                                {exp.date.split(' – ')[0]}
+                            </span>
+                            <span className="hidden sm:block text-xs text-neutral-500 font-sans">
+                                {exp.date.split(' – ')[1] || 'Present'}
+                            </span>
+                            {/* Mobile format - compact */}
+                            <span
+                                className="sm:hidden text-xs font-sans font-bold tracking-wider"
+                                style={{ color: config.accent }}
+                            >
+                                {exp.date}
+                            </span>
+                        </div>
+
+                        {/* Expand Indicator */}
+                        <motion.div
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"
+                            style={{ color: config.accent }}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="3 5 7 9 11 5" />
+                            </svg>
+                        </motion.div>
+                    </div>
+
+                    {/* Expanded Content */}
+                    <AnimatePresence>
+                        {isExpanded && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                className="overflow-hidden"
+                            >
+                                {/* Mobile date (visible on small screens when expanded) */}
+                                <div className="sm:hidden px-8 pb-2">
+                                    <span
+                                        className="text-sm font-sans font-bold tracking-wider"
+                                        style={{ color: config.accent }}
+                                    >
+                                        {exp.date}
+                                    </span>
+                                </div>
+
+                                <ul className="px-8 pb-6 space-y-3 border-t border-white/10 pt-4 mx-4">
+                                    {exp.highlights.map((point, i) => (
+                                        <motion.li
+                                            key={i}
+                                            initial={{ opacity: 0, x: -16 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: i * 0.08, duration: 0.3 }}
+                                            className="flex items-start gap-3 text-neutral-300 font-sans leading-relaxed text-sm"
+                                        >
+                                            <span
+                                                className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0"
+                                                style={{ background: config.accent }}
+                                            />
+                                            {point}
+                                        </motion.li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+            </motion.div>
         </motion.div>
     );
 };
 
 const Journey = () => {
     return (
-        <section className="py-20 bg-dark relative overflow-hidden">
-            <div className="max-w-6xl mx-auto px-6 grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr] gap-8">
+        <section className="py-16 md:py-24 bg-dark relative overflow-hidden">
+            <div className="max-w-5xl mx-auto px-6">
+                {/* Legend */}
+                <div className="flex items-center gap-6 mb-12 md:mb-16">
+                    {Object.entries(colorConfig).map(([type, config]) => (
+                        <div key={type} className="flex items-center gap-2">
+                            <div
+                                className="w-3 h-3 rounded-full"
+                                style={{ background: config.accent }}
+                            />
+                            <span className="text-sm font-sans text-neutral-400 tracking-wide">
+                                {config.label}
+                            </span>
+                        </div>
+                    ))}
+                </div>
 
-                {/* Spacing Column (Line removed) */}
-                <div className="relative pointer-events-none" />
-
-                {/* Scrollable Cards */}
-                <div className="flex flex-col gap-24 py-10">
-                    {experiences.map((exp) => {
-                        const cardRef = useRef(null);
-                        const isInView = useInView(cardRef, { amount: 0.6, margin: "-10% 0px -10% 0px" });
-
-                        return (
-                            <div key={exp.id} className="relative min-h-[40vh] flex items-center">
-                                {/* Date (Absolute positioned relative to the row) */}
-                                <div className={`absolute -left-[calc(80px+2rem)] md:-left-[calc(120px+2rem)] w-[80px] md:w-[120px] text-right pr-6 transition-opacity duration-500 ${isInView ? 'opacity-100' : 'opacity-30'}`}>
-                                    <span className="text-sm md:text-base font-sans font-bold text-white tracking-wider block">{exp.date.split(' – ')[0]}</span>
-                                    <span className="text-xs text-neutral-500 font-sans block">{exp.date.split(' – ')[1] || 'Present'}</span>
-                                </div>
-
-                                {/* Milestone Dot indicator */}
-                                <div className={`absolute -left-[calc(2rem-1px)] md:-left-[calc(2rem-1px)] w-3 h-3 rounded-full border-2 transition-all duration-500 z-10 bg-dark ${isInView ? 'border-brand scale-125 shadow-[0_0_10px_#FFC107]' : 'border-white/20'}`} />
-
-                                <div ref={cardRef} className="w-full">
-                                    <ExperienceCard exp={exp} isInView={isInView} />
-                                </div>
-                            </div>
-                        );
-                    })}
+                {/* Staggered Pills */}
+                <div className="flex flex-col gap-5 md:gap-6">
+                    {experiences.map((exp, index) => (
+                        <Pill
+                            key={exp.id}
+                            exp={exp}
+                            index={index}
+                            totalCount={experiences.length}
+                        />
+                    ))}
                 </div>
             </div>
         </section>
