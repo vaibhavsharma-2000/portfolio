@@ -9,6 +9,8 @@ import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
 import portfolioImg from "../assets/hero section image.jpg";
+import verityImg from "../assets/verity-cover.png";
+
 
 const BehanceIcon = ({ className }) => (
     <svg className={className} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,6 +21,15 @@ const BehanceIcon = ({ className }) => (
 );
 
 const projects = [
+    {
+        id: 6,
+        title: "VERITY",
+        description: "The Dashboard for Quiet Luxury. An AI-driven decision engine for high-end fashion merchants.",
+        visual: verityImg,
+        color: "#7B61FF",
+        link: "/work/verity",
+        tags: ['UX Design', 'SaaS Dashboard', 'AI']
+    },
     {
         id: 4,
         title: "ANIMIND",

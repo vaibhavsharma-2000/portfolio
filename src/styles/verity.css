@@ -1,0 +1,62 @@
+/* ============================================================
+   VERITY — Case Study Styles
+   ============================================================ */
+
+.verity-page {
+  --verity-accent: #7B61FF;
+  --verity-green: #27F59F;
+  --verity-red: #FF4D4D;
+  --verity-amber: #F59E0B;
+}
+
+/* Glass card — dark */
+.verity-card-dark {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+}
+
+/* Soft card — light preview */
+.verity-card-light {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+}
+
+/* Hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Shimmer placeholder */
+.verity-placeholder {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0.07) 50%,
+      rgba(255, 255, 255, 0.03) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Purple glow */
+.verity-glow {
+  box-shadow: 0 0 40px rgba(123, 97, 255, 0.2), 0 0 80px rgba(123, 97, 255, 0.08);
+}
