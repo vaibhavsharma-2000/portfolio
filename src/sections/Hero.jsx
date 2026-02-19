@@ -14,7 +14,7 @@ const Hero = () => {
     const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative h-[150vh] bg-dark overflow-hidden">
+        <section ref={containerRef} className="relative h-[115vh] bg-dark overflow-hidden">
             <div className="sticky top-0 h-screen w-full flex items-center justify-center">
 
                 {/* --- BACKGROUND SWEEP ANIMATION --- */}

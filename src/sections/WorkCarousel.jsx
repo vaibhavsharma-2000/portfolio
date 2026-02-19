@@ -8,7 +8,7 @@ import animindImg from "../assets/Animind.png";
 import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
-import portfolioImg from "../assets/hero section image.jpg";
+import portfolioImg from "../assets/My Portfolio cover.png";
 import verityImg from "../assets/verity-cover.png";
 
 
@@ -22,15 +22,6 @@ const BehanceIcon = ({ className }) => (
 
 const projects = [
     {
-        id: 6,
-        title: "VERITY",
-        description: "The Dashboard for Quiet Luxury. An AI-driven decision engine for high-end fashion merchants.",
-        visual: verityImg,
-        color: "#7B61FF",
-        link: "/work/verity",
-        tags: ['UX Design', 'SaaS Dashboard', 'AI']
-    },
-    {
         id: 4,
         title: "ANIMIND",
         description: "A social sanctuary to catalog, review, and curate your personal anime odyssey.",
@@ -38,6 +29,15 @@ const projects = [
         color: "#ba0000",
         link: "/work/animind",
         tags: ['UX Design', 'Front-end', 'UX Research']
+    },
+    {
+        id: 6,
+        title: "VERITY",
+        description: "The Dashboard for Quiet Luxury. An AI-driven decision engine for high-end fashion merchants.",
+        visual: verityImg,
+        color: "#7B61FF",
+        link: "/work/verity",
+        tags: ['UX Design', 'SaaS Dashboard', 'AI']
     },
     {
         id: 1,

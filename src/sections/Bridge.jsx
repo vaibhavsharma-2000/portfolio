@@ -27,19 +27,21 @@ const Bridge = () => {
     // Total scroll progress for the section
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start 1", "end 0.5"] // Reveal triggers much earlier (when top hits bottom 20% of screen)
+        offset: ["start 0.9", "end 0.4"] // Start when top hits 90% of viewport, end when bottom hits 40%
     });
 
     const paragraphs = [
-        "I design by understanding people first. With a foundation in Psychology and an MSc in Usability Engineering, I approach problems through human behavior and system thinking.",
-        "Currently working in UX Research at TeamViewer, I use mixed-method research and AI-driven insights to uncover real user needs.",
-        "I collaborate closely with designers and engineers to ensure research leads to real product impact, not just documentation."
+        "I design by understanding people first, whether that's through a deep-dive research session or a conversation over a meal I've just cooked. With a foundation in Psychology and an MSc in Usability Engineering, I look past the visual layer to solve for human behavior and system logic.",
+        "I am a firm believer that the future of design is not found in static prototypes but in living, working applications. Currently at TeamViewer, I use mixed-method research and AI-driven insights to ensure our work leads to real product impact instead of just documentation.",
+        "When I'm not at my desk, you'll likely find me traveling to gain new perspectives or cooking with the same trial and error logic I use in design. I'm an outgoing collaborator who believes the best products and the best stories are built together."
     ];
 
     const highlightWords = [
         "psychology", "usability", "engineering", "human", "behavior", "system",
-        "thinking", "ux", "research", "teamviewer", "mixed-method",
-        "ai-driven", "insights", "real", "user", "needs", "product", "impact"
+        "logic", "deep-dive", "research", "teamviewer", "mixed-method",
+        "ai-driven", "insights", "product", "impact", "design",
+        "prototypes", "applications", "collaborator", "perspectives",
+        "trial", "error"
     ];
 
     // Flatten all words to calculate their individual scroll ranges
@@ -53,7 +55,7 @@ const Bridge = () => {
         <section
             id="about"
             ref={containerRef}
-            className="relative min-h-[150vh] bg-[#0a0a0a]"
+            className="relative min-h-[250vh] bg-[#0a0a0a]"
         >
             {/* PHILOSOPHY Watermark Background */}
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden pointer-events-none z-0">
@@ -65,7 +67,7 @@ const Bridge = () => {
                     }}
                     className="text-[18vw] font-serif font-black uppercase text-white/50 tracking-tight leading-none pointer-events-none select-none"
                 >
-                    Philosophy
+                    About Me
                 </motion.h2>
             </div>
 
@@ -77,11 +79,11 @@ const Bridge = () => {
                             <p key={pIdx} className="mb-8 md:mb-12 last:mb-0">
                                 {p.split(" ").map((word, i) => {
                                     const total = allWords.length;
-                                    // Compress animation to finish early (at 80% scroll) 
-                                    // so the last line stays visible for the final 20%
-                                    const ANIMATION_END_LIMIT = 0.8;
+                                    // Compress animation to finish early (at 75% scroll) 
+                                    // so the last line stays visible for the final 25%
+                                    const ANIMATION_END_LIMIT = 0.75;
                                     const start = (wordCounter / total) * ANIMATION_END_LIMIT;
-                                    const end = start + (1.5 / total);
+                                    const end = start + (3 / total);
 
                                     const cleanWord = word.toLocaleLowerCase().replace(/[.,]/g, "");
                                     const isHighlight = highlightWords.includes(cleanWord);

@@ -6,7 +6,7 @@ const experiences = [
         id: 1,
         role: "UX Research Intern",
         org: "TeamViewer GmbH",
-        date: "09/2025 – Present",
+        date: "09/2025 – 02/2026",
         highlights: [
             "Spearheaded AI integration and engineered a centralized AI Research Agent using historical data.",
             "Strategically redesigned the internal User Focus Program to enhance engagement.",
