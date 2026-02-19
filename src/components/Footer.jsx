@@ -37,7 +37,7 @@ const Footer = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             className="text-5xl md:text-7xl font-serif text-white mb-8"
                         >
-                            Let's build <br /> <span className="text-brand">something human.</span>
+                            Let's build <br /> <span className="text-brand">something together.</span>
                         </motion.h3>
                         <a
                             href="mailto:vb.vaibhav99@gmail.com"
