@@ -39,23 +39,24 @@ export function OutcomeSection() {
                 }}
             />
 
-            <div className="max-w-7xl mx-auto relative z-10">
+            <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
                 {/* Label */}
                 <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="flex items-center gap-3 mb-6"
+                    className="flex items-center gap-3 mb-6 justify-center"
                 >
                     <div className="w-8 h-[1px] bg-[#27F59F]" />
                     <span className="text-[#27F59F] font-bold tracking-[0.3em] uppercase text-xs">Phase 04 — Deliver</span>
+                    <div className="w-8 h-[1px] bg-[#27F59F]" />
                 </motion.div>
 
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="font-serif text-4xl md:text-6xl leading-tight mb-4"
+                    className="font-serif text-4xl md:text-6xl leading-tight mb-4 text-center"
                 >
                     Outcomes.
                 </motion.h2>
@@ -65,7 +66,7 @@ export function OutcomeSection() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
-                    className="text-white/40 text-lg mb-20 max-w-2xl leading-relaxed"
+                    className="text-white/40 text-lg mb-20 max-w-2xl leading-relaxed mx-auto text-center"
                 >
                     Measured against the three Jobs to Be Done that defined the design brief.
                 </motion.p>

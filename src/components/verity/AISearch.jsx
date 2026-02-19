@@ -42,11 +42,11 @@ export function AISearch() {
     };
 
     return (
-        <section className="py-32 px-8 md:px-20 bg-[#0a0a0a] relative overflow-hidden">
+        <section className="py-32 px-8 md:px-20 bg-[#111] relative overflow-hidden">
             {/* Purple glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#7B61FF]/8 rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="max-w-4xl mx-auto relative z-10">
+            <div className="max-w-4xl relative z-10">
                 {/* Label removed - moved to parent container */}
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -199,14 +199,20 @@ export function AISearch() {
                     className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
                 >
                     {[
-                        { icon: '⚡', title: 'AnimatePresence', desc: 'Framer Motion drives the dropdown with smooth enter/exit transitions and directional spring physics.' },
-                        { icon: '🛡', title: 'Race Condition Fix', desc: 'onMouseDown + e.preventDefault() ensures suggestion clicks register before the search bar\'s onBlur fires.' },
-                        { icon: '🔔', title: 'Sonner Toasts', desc: 'Each AI suggestion click fires a contextual toast notification for instant feedback without navigation.' },
+                        { title: 'Flattened Architecture', desc: 'Replaces deep, multi-level menus with a global command layer, letting users jump directly to insights.' },
+                        { title: 'Anticipatory Design', desc: 'Contextual suggestions appear before typing, predicting high-value Jobs To Be Done to reduce cognitive load.' },
+                        { title: 'In-Context Resolution', desc: 'Inline feedback eliminates page reloads, preserving focus so merchants can decide without losing their place.' },
                     ].map((item, i) => (
-                        <div key={i} className="p-5 bg-white/3 rounded-2xl border border-white/5">
-                            <div className="text-2xl mb-3">{item.icon}</div>
-                            <h4 className="font-bold text-white/80 mb-2 text-sm">{item.title}</h4>
-                            <p className="text-white/35 text-xs leading-relaxed">{item.desc}</p>
+                        <div key={i} className="p-6 bg-white/[0.02] rounded-2xl border border-white/5 group hover:border-[#7B61FF]/30 transition-all duration-500 hover:bg-white/[0.04]">
+                            {/* Abstract Intelligence Dot */}
+                            <div className="relative mb-6">
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#7B61FF] relative z-10" />
+                                <div className="absolute inset-0 w-1.5 h-1.5 rounded-full bg-[#7B61FF] blur-[4px] opacity-80" />
+                                <div className="absolute -inset-2 w-5.5 h-5.5 rounded-full bg-[#7B61FF]/20 blur-[8px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            </div>
+
+                            <h4 className="font-bold text-white/90 mb-2 text-sm uppercase tracking-[0.15em]">{item.title}</h4>
+                            <p className="text-white/40 text-xs leading-relaxed">{item.desc}</p>
                         </div>
                     ))}
                 </motion.div>

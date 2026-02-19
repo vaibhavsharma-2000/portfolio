@@ -48,16 +48,17 @@ export function ProblemSection() {
                 }}
             />
 
-            <div className="max-w-7xl mx-auto relative z-10">
+            <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
                 {/* Label */}
                 <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="flex items-center gap-3 mb-6"
+                    className="flex items-center gap-3 mb-6 justify-center"
                 >
                     <div className="w-8 h-[1px] bg-[#FF4D4D]" />
                     <span className="text-[#FF4D4D] font-bold tracking-[0.3em] uppercase text-xs">Phase 01 — Discover</span>
+                    <div className="w-8 h-[1px] bg-[#FF4D4D]" />
                 </motion.div>
 
                 {/* Heading */}
@@ -65,7 +66,7 @@ export function ProblemSection() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="font-serif text-4xl md:text-6xl leading-tight mb-4 max-w-3xl"
+                    className="font-serif text-4xl md:text-6xl leading-tight mb-4 max-w-4xl"
                 >
                     Luxury merchants are data-rich but truth-poor.
                 </motion.h2>
@@ -75,7 +76,7 @@ export function ProblemSection() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
-                    className="text-white/40 text-lg max-w-2xl mb-20 leading-relaxed"
+                    className="text-white/40 text-lg max-w-2xl mb-20 leading-relaxed mx-auto"
                 >
                     Based on real-world interviews with high-end designer clothing merchants — three critical blind spots emerged.
                 </motion.p>

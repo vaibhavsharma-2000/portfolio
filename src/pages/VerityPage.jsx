@@ -88,15 +88,16 @@ export default function VerityPage() {
                 <DefineSection />
                 {/* Phase 03: Consolidated Solutions Wrapper */}
                 <section className="bg-[#0a0a0a] pt-32 pb-0 relative">
-                    <div className="max-w-7xl mx-auto px-8 md:px-20 mb-12">
+                    <div className="max-w-7xl mx-auto px-8 md:px-20 mb-12 flex flex-col items-center text-center">
                         <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="flex items-center gap-3 mb-6"
+                            className="flex items-center gap-3 mb-6 justify-center"
                         >
                             <div className="w-8 h-[1px] bg-[#7B61FF]" />
                             <span className="text-[#7B61FF] font-bold tracking-[0.3em] uppercase text-xs">Phase 03 — Develop</span>
+                            <div className="w-8 h-[1px] bg-[#7B61FF]" />
                         </motion.div>
                         <motion.h2
                             initial={{ opacity: 0, y: 30 }}
@@ -110,7 +111,7 @@ export default function VerityPage() {
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
-                            className="text-white/40 text-lg max-w-2xl leading-relaxed"
+                            className="text-white/40 text-lg max-w-2xl leading-relaxed mx-auto"
                         >
                             From the executive dashboard to the logistics layer, every screen was built for clarity, speed, and quiet luxury.
                         </motion.p>
