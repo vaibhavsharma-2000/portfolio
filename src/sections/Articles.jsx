@@ -16,6 +16,13 @@ const publications = [
         description: "A candid retrospective on building 'Animind'— a vibe-based anime discovery platform in under a week. This article breaks down how a UX Designer leveraged AI tools like Gemini and Antigravity to ship a full-stack application, exploring the reality of the AI-assisted design-to-code workflow.",
         fullUrl: "https://medium.com/@vaibhavsharmaux/letterboxd-for-anime-in-a-week-the-reality-of-building-with-gemini-stitch-and-antigravity-2a8d9743be29"
     },
+    {
+        id: "pub-3",
+        title: "I Leaked My API Key So You Don't Have To: The Reality of \"Vibe Coding\"",
+        reference: "Published on Medium (2026).",
+        description: "A candid look at the hidden pitfalls of AI \"vibe coding,\" from leaked API keys to hallucinated code. It highlights why human technical literacy remains essential to cross the finish line.",
+        fullUrl: "https://medium.com/@vaibhavsharmaux/i-leaked-my-api-key-so-you-dont-have-to-the-reality-of-vibe-coding-859c05046fef"
+    },
     /* 
     HOW TO ADD A NEW ARTICLE:
     1. Copy the template object below.
