@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { BookOpen, Search, Users } from 'lucide-react';
 
 export function ReflectionSection() {
     return (
@@ -29,21 +30,28 @@ export function ReflectionSection() {
                     <div className="space-y-4">
                         <h4 className="text-xs font-bold uppercase tracking-widest text-white/30 mb-5">What I'd Explore Next</h4>
                         {[
-                            { title: 'Diary Study with Merchants', desc: 'Two-week longitudinal study to validate daily usage patterns and uncover latent needs', color: '#27F59F' },
-                            { title: 'Accessibility Audit', desc: 'WCAG 2.1 AA compliance pass covering contrast ratios, screen reader flows, and keyboard navigation', color: '#7B61FF' },
-                            { title: 'Usability Testing at Scale', desc: 'Moderated sessions with 12+ luxury brand managers to validate information hierarchy', color: '#F59E0B' },
-                        ].map((next, i) => (
-                            <div key={i} className="flex gap-4 p-4 bg-white/3 rounded-2xl border border-white/5">
-                                <div
-                                    className="w-1.5 rounded-full shrink-0 mt-1"
-                                    style={{ backgroundColor: next.color, minHeight: '40px' }}
-                                />
-                                <div>
-                                    <p className="text-white/70 font-semibold text-sm">{next.title}</p>
-                                    <p className="text-white/35 text-xs mt-1">{next.desc}</p>
+                            { title: 'Diary Study with Merchants', desc: 'Two-week longitudinal study to validate daily usage patterns and uncover latent needs', color: '#27F59F', icon: BookOpen },
+                            { title: 'Accessibility Audit', desc: 'WCAG 2.1 AA compliance pass covering contrast ratios, screen reader flows, and keyboard navigation', color: '#7B61FF', icon: Search },
+                            { title: 'Usability Testing at Scale', desc: 'Moderated sessions with 12+ luxury brand managers to validate information hierarchy', color: '#F59E0B', icon: Users },
+                        ].map((next, i) => {
+                            const Icon = next.icon;
+                            return (
+                                <div key={i} className="flex gap-4 p-4 bg-white/[0.02] rounded-2xl border border-white/5 group hover:border-white/10 transition-all duration-500 hover:bg-white/[0.04]">
+                                    {/* Dynamic SVG Icon */}
+                                    <div className="relative shrink-0 mt-0.5 w-10 h-10 flex items-center justify-center rounded-[12px] bg-white/[0.03] border border-white/10 group-hover:scale-110 group-hover:border-white/20 transition-all duration-500 origin-center">
+                                        <div
+                                            className="absolute inset-0 rounded-[12px] blur-[6px] opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+                                            style={{ backgroundColor: next.color }}
+                                        />
+                                        {Icon && <Icon size={18} style={{ color: next.color }} className="relative z-10" />}
+                                    </div>
+                                    <div>
+                                        <p className="text-white/70 font-semibold text-sm">{next.title}</p>
+                                        <p className="text-white/35 text-xs mt-1">{next.desc}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </motion.div>
 

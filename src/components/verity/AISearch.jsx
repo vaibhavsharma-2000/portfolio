@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, DollarSign, TrendingUp, Users, BarChart3, Package, Target, Sparkles } from 'lucide-react';
+import { Search, DollarSign, TrendingUp, Users, BarChart3, Package, Target, Sparkles, Layers } from 'lucide-react';
 import { toast } from 'sonner';
 
 const suggestions = [
@@ -199,22 +199,26 @@ export function AISearch() {
                     className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
                 >
                     {[
-                        { title: 'Flattened Architecture', desc: 'Replaces deep, multi-level menus with a global command layer, letting users jump directly to insights.' },
-                        { title: 'Anticipatory Design', desc: 'Contextual suggestions appear before typing, predicting high-value Jobs To Be Done to reduce cognitive load.' },
-                        { title: 'In-Context Resolution', desc: 'Inline feedback eliminates page reloads, preserving focus so merchants can decide without losing their place.' },
-                    ].map((item, i) => (
-                        <div key={i} className="p-6 bg-white/[0.02] rounded-2xl border border-white/5 group hover:border-[#7B61FF]/30 transition-all duration-500 hover:bg-white/[0.04]">
-                            {/* Abstract Intelligence Dot */}
-                            <div className="relative mb-6">
-                                <div className="w-1.5 h-1.5 rounded-full bg-[#7B61FF] relative z-10" />
-                                <div className="absolute inset-0 w-1.5 h-1.5 rounded-full bg-[#7B61FF] blur-[4px] opacity-80" />
-                                <div className="absolute -inset-2 w-5.5 h-5.5 rounded-full bg-[#7B61FF]/20 blur-[8px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            </div>
+                        { title: 'Flattened Architecture', desc: 'Replaces deep, multi-level menus with a global command layer, letting users jump directly to insights.', icon: Layers },
+                        { title: 'Anticipatory Design', desc: 'Contextual suggestions appear before typing, predicting high-value Jobs To Be Done to reduce cognitive load.', icon: Sparkles },
+                        { title: 'In-Context Resolution', desc: 'Inline feedback eliminates page reloads, preserving focus so merchants can decide without losing their place.', icon: Target },
+                    ].map((item, i) => {
+                        const Icon = item.icon;
+                        return (
+                            <div key={i} className="p-6 bg-white/[0.02] rounded-2xl border border-white/5 group hover:border-[#7B61FF]/30 transition-all duration-500 hover:bg-white/[0.04]">
+                                {/* Dynamic SVG Icon */}
+                                <div className="relative mb-6 w-10 h-10 flex items-center justify-center rounded-[12px] bg-white/[0.03] border border-white/10 group-hover:scale-110 group-hover:border-[#7B61FF]/40 transition-all duration-500 origin-left">
+                                    <div
+                                        className="absolute inset-0 rounded-[12px] blur-[6px] opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-[#7B61FF]"
+                                    />
+                                    {Icon && <Icon size={18} className="relative z-10 text-[#7B61FF]" />}
+                                </div>
 
-                            <h4 className="font-bold text-white/90 mb-2 text-sm uppercase tracking-[0.15em]">{item.title}</h4>
-                            <p className="text-white/40 text-xs leading-relaxed">{item.desc}</p>
-                        </div>
-                    ))}
+                                <h4 className="font-bold text-white/90 mb-2 text-sm uppercase tracking-[0.15em]">{item.title}</h4>
+                                <p className="text-white/40 text-xs leading-relaxed">{item.desc}</p>
+                            </div>
+                        );
+                    })}
                 </motion.div>
             </div>
         </section>

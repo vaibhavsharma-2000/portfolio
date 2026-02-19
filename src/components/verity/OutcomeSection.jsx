@@ -1,31 +1,96 @@
 import { motion } from 'framer-motion';
+import { TrendingUp, Shield, Star, Clock, Sparkles, Bell } from 'lucide-react';
 
-const outcomes = [
-    {
-        stat: '30%',
-        label: 'Reduction in Wardrobing Fraud',
-        description: 'By surfacing return rate patterns per courier and customer flag, merchants detect fraud loops within days — not months.',
-        color: '#27F59F',
-        icon: '🎯',
-        span: 'col-span-1 md:col-span-1',
-    },
+const businessOutcomes = [
     {
         stat: '15%',
-        label: 'Increase in Net Margins',
-        description: 'Understanding true cost-per-channel ROAS enabled merchants to cut underperforming ad spend and reinvest in high-yield creatives.',
-        color: '#7B61FF',
-        icon: '📈',
-        span: 'col-span-1 md:col-span-1',
+        label: 'Lift in Net Margins',
+        description: 'By surfacing hidden marketplace commissions and gateway fees in a real-time waterfall, merchants stopped scaling unprofitable ad campaigns.',
+        color: '#27F59F', // Capital Domain
+        icon: TrendingUp,
     },
     {
-        stat: '10 hrs',
-        label: 'Saved per Week',
-        description: 'Eliminated manual cross-referencing between Shopify, marketplace portals, and ad platforms. One view. One source of truth.',
-        color: '#F59E0B',
-        icon: '⏱',
-        span: 'col-span-1 md:col-span-1',
+        stat: '30%',
+        label: 'Drop in Margin Leak',
+        description: 'Through correlating returns with specific couriers and customer profiles, merchants flagged transit damage and serial wardrobing loops within days.',
+        color: '#FF4D4D', // Fulfillment Domain
+        icon: Shield,
+    },
+    {
+        stat: '25%',
+        label: 'Higher VIP Retention',
+        description: 'Replacing generic email blasts with proactive, AI-triggered alerts for VIP milestones turned passive customer data into high-converting outreach.',
+        color: '#7B61FF', // Relations Domain
+        icon: Star,
     },
 ];
+
+const uxOutcomes = [
+    {
+        stat: '30s',
+        label: 'Decision Time Slashed',
+        description: "Replacing 4 dispersed Shopify/Ad dashboards with a single 'True Profit' waterfall allowed merchants to authorize daily budgets instantly.",
+        color: '#3B82F6', // Intelligence / Blue
+        icon: Clock,
+    },
+    {
+        stat: '100%',
+        label: 'Zero-Click Discovery',
+        description: 'The anticipatory intelligence layer surfaces anomalous return spikes automatically, eliminating the need to dig through complex filter trees.',
+        color: '#F59E0B', // Amber
+        icon: Sparkles,
+    },
+    {
+        stat: 'Daily',
+        label: 'Proactive Engagement',
+        description: 'Clienteling shifted from end-of-month manual segmentation to daily automated triggers, completely transforming VIP customer interactions.',
+        color: '#ec4899', // Pink
+        icon: Bell,
+    },
+];
+
+const OutcomeCard = ({ outcome, delay }) => {
+    const Icon = outcome.icon;
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay, duration: 0.7 }}
+            className="verity-card-dark p-8 group hover:scale-[1.02] transition-transform duration-500 cursor-default"
+            style={{ borderColor: `${outcome.color}12` }}
+        >
+            {/* Subtle top border glow on hover */}
+            <div
+                className="absolute top-0 left-0 right-0 h-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: `linear-gradient(90deg, ${outcome.color}, transparent)` }}
+            />
+
+            {/* Dynamic SVG Icon */}
+            <div className="relative mb-8 w-12 h-12 flex items-center justify-center rounded-[14px] bg-white/[0.03] border border-white/10 group-hover:scale-110 group-hover:border-white/20 transition-all duration-500 origin-left">
+                <div
+                    className="absolute inset-0 rounded-[14px] blur-[8px] opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+                    style={{ backgroundColor: outcome.color }}
+                />
+                {Icon && <Icon size={22} style={{ color: outcome.color }} className="relative z-10" />}
+            </div>
+
+            <div className="mb-4">
+                <span
+                    className="font-mono text-5xl font-bold block leading-none"
+                    style={{ color: outcome.color }}
+                >
+                    {outcome.stat}
+                </span>
+                <p className="text-white/90 font-bold text-base mt-2 leading-tight uppercase tracking-wide">
+                    {outcome.label}
+                </p>
+            </div>
+
+            <p className="text-white/40 text-sm leading-relaxed">{outcome.description}</p>
+        </motion.div>
+    );
+};
 
 export function OutcomeSection() {
     return (
@@ -40,7 +105,7 @@ export function OutcomeSection() {
             />
 
             <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
-                {/* Label */}
+                {/* Phase 04 Label */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -52,6 +117,7 @@ export function OutcomeSection() {
                     <div className="w-8 h-[1px] bg-[#27F59F]" />
                 </motion.div>
 
+                {/* Heading */}
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -71,40 +137,42 @@ export function OutcomeSection() {
                     Measured against the three Jobs to Be Done that defined the design brief.
                 </motion.p>
 
-                {/* Bento Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-                    {outcomes.map((outcome, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.15, duration: 0.7 }}
-                            className="verity-card-dark p-8 group hover:scale-[1.02] transition-transform duration-500 cursor-default"
-                            style={{ borderColor: `${outcome.color}12` }}
-                        >
-                            <div
-                                className="absolute top-0 left-0 right-0 h-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                style={{ background: `linear-gradient(90deg, ${outcome.color}, transparent)` }}
-                            />
+                {/* --- Row 1: Business Impact --- */}
+                <div className="w-full mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-3 mb-8 w-full justify-start md:justify-center"
+                    >
+                        <span className="text-white/50 font-bold tracking-[0.2em] uppercase text-xs">Business Impact</span>
+                        <div className="h-[1px] flex-1 md:flex-none md:w-32 bg-white/10" />
+                    </motion.div>
 
-                            <span className="text-3xl mb-6 block">{outcome.icon}</span>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+                        {businessOutcomes.map((outcome, i) => (
+                            <OutcomeCard key={i} outcome={outcome} delay={i * 0.15} />
+                        ))}
+                    </div>
+                </div>
 
-                            <div className="mb-3">
-                                <span
-                                    className="font-mono text-5xl font-bold block leading-none"
-                                    style={{ color: outcome.color }}
-                                >
-                                    {outcome.stat}
-                                </span>
-                                <p className="text-white/80 font-semibold text-base mt-2 leading-tight">
-                                    {outcome.label}
-                                </p>
-                            </div>
+                {/* --- Row 2: UX Impact --- */}
+                <div className="w-full">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-3 mb-8 w-full justify-start md:justify-center"
+                    >
+                        <span className="text-white/50 font-bold tracking-[0.2em] uppercase text-xs">UX Impact</span>
+                        <div className="h-[1px] flex-1 md:flex-none md:w-32 bg-white/10" />
+                    </motion.div>
 
-                            <p className="text-white/40 text-sm leading-relaxed">{outcome.description}</p>
-                        </motion.div>
-                    ))}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+                        {uxOutcomes.map((outcome, i) => (
+                            <OutcomeCard key={i} outcome={outcome} delay={i * 0.15 + 0.3} />
+                        ))}
+                    </div>
                 </div>
 
             </div>
