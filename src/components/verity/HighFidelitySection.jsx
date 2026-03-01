@@ -78,24 +78,31 @@ export function HighFidelitySection() {
                             className={`group relative ${i % 2 === 1 ? 'md:mt-24' : ''}`}
                         >
                             <div className="relative rounded-[20px] overflow-hidden border border-white/10 shadow-2xl bg-[#111] aspect-[16/10]">
-                                {/* Dark Mode Image */}
-                                <motion.img
-                                    src={design.darkSrc}
-                                    alt={`${design.title} Dark`}
-                                    className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
-                                    initial={false}
-                                    animate={{ opacity: isDarkMode ? 1 : 0 }}
-                                    transition={{ duration: 0.5 }}
-                                />
-                                {/* Light Mode Image */}
-                                <motion.img
-                                    src={design.lightSrc}
-                                    alt={`${design.title} Light`}
-                                    className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
-                                    initial={false}
-                                    animate={{ opacity: isDarkMode ? 0 : 1 }}
-                                    transition={{ duration: 0.5 }}
-                                />
+                                <div className={`absolute inset-0 w-full h-full transition-colors duration-500 ${design.title === 'Fulfillment Tracker'
+                                        ? (isDarkMode ? 'bg-[#0a0a0a]' : 'bg-[#f8f9fa]')
+                                        : 'bg-transparent'
+                                    }`}>
+                                    {/* Dark Mode Image */}
+                                    <motion.img
+                                        src={design.darkSrc}
+                                        alt={`${design.title} Dark`}
+                                        className={`absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-[1.03] ${design.title === 'Fulfillment Tracker' ? 'object-contain' : 'object-cover object-top'
+                                            }`}
+                                        initial={false}
+                                        animate={{ opacity: isDarkMode ? 1 : 0 }}
+                                        transition={{ duration: 0.5 }}
+                                    />
+                                    {/* Light Mode Image */}
+                                    <motion.img
+                                        src={design.lightSrc}
+                                        alt={`${design.title} Light`}
+                                        className={`absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-[1.03] ${design.title === 'Fulfillment Tracker' ? 'object-contain' : 'object-cover object-top'
+                                            }`}
+                                        initial={false}
+                                        animate={{ opacity: isDarkMode ? 0 : 1 }}
+                                        transition={{ duration: 0.5 }}
+                                    />
+                                </div>
 
                                 {/* Overlay Gradient */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
