@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Ban, Gift, Sparkles, AlertTriangle, CheckCircle, ShoppingBag, Globe, Package, Plus } from 'lucide-react';
 
 // ── Overview View: Net Profit Waterfall ──────────────────────
@@ -168,78 +168,201 @@ function RelationsView() {
     );
 }
 
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
 // ── Fulfillment View: Global Logistics ────────────────────────
+const DARK_TILES = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+const LIGHT_TILES = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+
+function createPulseIcon(color) {
+    return L.divIcon({
+        className: '',
+        html: `
+      <div style="position:relative;width:14px;height:14px;">
+        <div style="position:absolute;inset:0;background:${color};border-radius:50%;box-shadow:0 0 12px ${color};animation:pulse 2s infinite;"></div>
+        <div style="position:absolute;inset:2px;background:${color};border-radius:50%;filter:brightness(1.5);"></div>
+      </div>
+    `,
+        iconSize: [14, 14],
+        iconAnchor: [7, 7],
+    });
+}
+
+const healthyIcon = createPulseIcon('#27F59F');
+const criticalIcon = createPulseIcon('#FF4D4D');
+
 function FulfillmentView() {
-    // Simplified Map Logic for Widget Size
-    const [hoveredRegion, setHoveredRegion] = React.useState(null);
-    const MAP_IMAGE = "https://images.unsplash.com/photo-1640697687394-d02650d7ecc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXJrJTIwd29ybGQlMjBtYXAlMjBhYnN0cmFjdHxlbnwxfHx8fDE3NzE0NTY0NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080";
+    const [hoveredRegion, setHoveredRegion] = useState(null);
+    const theme = 'dark'; // Hardcoded for Verity case study's dark aesthetic
+
+    const locations = [
+        {
+            id: 'newyork',
+            name: 'New York, US',
+            lat: 40.7128,
+            lng: -74.006,
+            status: 'healthy',
+            carrier: 'FedEx Ground',
+            metric: 'On-Time Rate',
+            metricValue: '99.2%',
+            statusLabel: 'On Time',
+            badge: 'OPTIMAL',
+            tooltipPos: 'left-[26%] top-[38%]',
+            color: '#27F59F'
+        },
+        {
+            id: 'berlin',
+            name: 'Berlin, DE',
+            lat: 52.52,
+            lng: 13.405,
+            status: 'critical',
+            carrier: 'DHL Express',
+            metric: 'Damage Rate',
+            metricValue: '18%',
+            statusLabel: 'High Damage',
+            badge: 'CRITICAL',
+            tooltipPos: 'left-[53%] top-[30%]',
+            color: '#FF4D4D'
+        },
+    ];
 
     return (
-        <div className="h-full flex flex-col">
-            {/* Top: Global Map */}
-            <div className="flex-1 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-[#050505] opacity-80 mix-blend-screen">
-                    <img
-                        src={MAP_IMAGE}
-                        alt="Global Map"
-                        className="w-full h-full object-cover opacity-60 scale-110 group-hover:scale-100 transition-transform duration-[3s]"
+        <div className="h-full flex flex-col relative group">
+            {/* Map Container */}
+            <div className="flex-1 min-h-0 relative bg-[#050505] overflow-hidden">
+                <MapContainer
+                    center={[35, -10]}
+                    zoom={2}
+                    minZoom={2}
+                    maxZoom={6}
+                    zoomControl={false}
+                    attributionControl={false}
+                    style={{ height: '100%', width: '100%', background: '#0a0a0a' }}
+                    className="z-0"
+                >
+                    <TileLayer
+                        attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+                        url={theme === 'light' ? LIGHT_TILES : DARK_TILES}
                     />
-                </div>
+                    {locations.map((loc) => (
+                        <Marker
+                            key={loc.id}
+                            position={[loc.lat, loc.lng]}
+                            icon={loc.status === 'healthy' ? healthyIcon : criticalIcon}
+                            eventHandlers={{
+                                mouseover: () => setHoveredRegion(loc.id),
+                                mouseout: () => setHoveredRegion(null),
+                            }}
+                        />
+                    ))}
+                </MapContainer>
 
-                <div className="absolute top-4 left-5 right-5 flex justify-between items-center z-10">
-                    <h4 className="text-white/60 font-medium text-xs tracking-wide uppercase">Live Fulfillment</h4>
-                    <div className="flex gap-3 text-[9px] font-mono">
-                        <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#27F59F] shadow-[0_0_5px_#27F59F]"></span>Active</span>
-                        <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#FF4D4D] shadow-[0_0_5px_#FF4D4D]"></span>Delayed</span>
-                    </div>
-                </div>
-
-                {/* Active Hub (NY) */}
-                <div className="absolute left-[24%] top-[40%]">
-                    <div className="relative group/marker cursor-help">
-                        <div className="w-2 h-2 bg-[#27F59F] rounded-full shadow-[0_0_10px_#27F59F] animate-pulse" />
-                        <div className="absolute inset-0 bg-[#27F59F] rounded-full animate-ping opacity-50" />
-
-                        {/* Tooltip */}
-                        <div className="absolute left-4 top-0 bg-black/90 backdrop-blur border border-white/10 p-2 rounded-lg opacity-0 group-hover/marker:opacity-100 transition-opacity pointer-events-none w-28 z-20">
-                            <p className="text-white text-[10px] font-bold">New York</p>
-                            <p className="text-[#27F59F] text-[9px] font-mono">Operational</p>
+                {/* Header Overlay */}
+                <div className="absolute top-4 left-5 right-5 flex justify-between items-center z-20 pointer-events-none">
+                    <h4 className="text-white/60 font-medium text-[10px] tracking-widest uppercase">Global Delivery Health</h4>
+                    <div className="flex gap-4 text-[9px] font-mono">
+                        <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#27F59F] shadow-[0_0_5px_#27F59F]"></span>
+                            <span className="text-white/40">Healthy</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D4D] shadow-[0_0_5px_#FF4D4D]"></span>
+                            <span className="text-white/40">Critical</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Delayed Hub (Berlin) */}
-                <div className="absolute left-[51%] top-[30%]">
-                    <div className="relative group/marker cursor-help">
-                        <div className="w-2 h-2 bg-[#FF4D4D] rounded-full shadow-[0_0_10px_#FF4D4D] animate-pulse" />
-                        <div className="absolute inset-0 bg-[#FF4D4D] rounded-full animate-ping opacity-50" />
+                {/* Tooltips (Mimicking the new Leaflet style but adapted for absolute positioning over the container) */}
+                <AnimatePresence>
+                    {locations.map((loc) => (
+                        hoveredRegion === loc.id && (
+                            <motion.div
+                                key={loc.id}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                className={`absolute w-56 p-4 rounded-xl backdrop-blur-xl shadow-2xl z-50 pointer-events-none bg-black/90 border border-white/10 ${loc.tooltipPos}`}
+                            >
+                                <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                                    <span className="font-display font-medium text-[11px] text-white">
+                                        {loc.name}
+                                    </span>
+                                    <span
+                                        className={`px-1.5 py-0.5 rounded text-[8px] font-mono border ${loc.status === 'critical'
+                                            ? 'bg-[#FF4D4D]/20 text-[#FF4D4D] border-[#FF4D4D]/20'
+                                            : 'bg-[#27F59F]/20 text-[#27F59F] border-[#27F59F]/20'
+                                            }`}
+                                    >
+                                        {loc.badge}
+                                    </span>
+                                </div>
+                                <div className="space-y-2 text-[10px] font-mono">
+                                    <div className="flex justify-between">
+                                        <span className="text-white/40">Carrier:</span>
+                                        <span className="text-white">{loc.carrier}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-white/40">Status:</span>
+                                        <span
+                                            className={`flex items-center gap-1 ${loc.status === 'critical' ? 'text-[#FF4D4D]' : 'text-[#27F59F]'
+                                                }`}
+                                        >
+                                            {loc.status === 'critical' ? <AlertTriangle size={8} /> : <CheckCircle size={8} />}
+                                            {loc.statusLabel}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/10">
+                                        <span className="text-white/40">{loc.metric}:</span>
+                                        <span
+                                            className={`text-sm font-bold ${loc.status === 'critical' ? 'text-[#FF4D4D]' : 'text-[#27F59F]'
+                                                }`}
+                                        >
+                                            {loc.metricValue}
+                                        </span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )
+                    ))}
+                </AnimatePresence>
 
-                        {/* Tooltip */}
-                        <div className="absolute left-4 top-0 bg-black/90 backdrop-blur border border-[#FF4D4D]/30 p-2 rounded-lg opacity-0 group-hover/marker:opacity-100 transition-opacity pointer-events-none w-32 z-20">
-                            <p className="text-white text-[10px] font-bold">Berlin Hub</p>
-                            <p className="text-[#FF4D4D] text-[9px] font-mono flex items-center gap-1"><AlertTriangle size={8} /> +48h Delay</p>
-                        </div>
-                    </div>
+                {/* AI Alert Banner (Mimicking LogisticsAIInternal component) */}
+                <div className="absolute bottom-4 left-4 z-20 pointer-events-none">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="bg-black/60 backdrop-blur-md border border-[#FF4D4D]/20 p-2.5 rounded-lg max-w-[170px]"
+                    >
+                        <p className="text-[#FF4D4D] text-[9px] font-mono font-bold mb-1 flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-[#FF4D4D] animate-pulse" />
+                            ALERT: BERLIN HUB
+                        </p>
+                        <p className="text-white/40 text-[8px] leading-tight">
+                            Critical damage rate detected. Switching to secondary carrier recommended.
+                        </p>
+                    </motion.div>
                 </div>
             </div>
 
             {/* Bottom: Return Reasons Donut (Compact) */}
-            <div className="h-[140px] border-t border-white/5 bg-[#121212] p-4 flex items-center justify-between">
+            <div className="h-[100px] border-t border-white/5 bg-[#121212] p-4 flex items-center justify-between">
                 <div>
-                    <h5 className="text-white/60 text-[10px] uppercase tracking-wider mb-1">Fraud Alert</h5>
-                    <div className="flex items-center gap-2">
-                        <span className="text-2xl text-white font-mono font-bold">30%</span>
-                        <span className="text-[#FFD700] text-[10px] bg-[#FFD700]/10 border border-[#FFD700]/20 px-1.5 py-0.5 rounded">Wardrobing</span>
+                    <h5 className="text-white/60 text-[9px] uppercase tracking-wider mb-1">Carrier Performance</h5>
+                    <div className="flex items-center gap-2 text-white">
+                        <span className="text-2xl font-mono font-bold">18%</span>
+                        <div className="flex flex-col">
+                            <span className="text-[#FF4D4D] text-[9px] font-bold uppercase">Damage Rate</span>
+                            <span className="text-white/20 text-[8px] font-mono">Berlin Hub Anomaly</span>
+                        </div>
                     </div>
                 </div>
                 {/* Micro Chart SVG */}
-                <div className="w-16 h-16 relative">
+                <div className="w-10 h-10 relative">
                     <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#333" strokeWidth="12" />
-                        {/* Wardrobing Slice (30%) */}
-                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#FFD700" strokeWidth="12" strokeDasharray="94 251" />
-                        {/* Damaged Slice (20%) */}
-                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#FF4D4D" strokeWidth="12" strokeDasharray="63 251" strokeDashoffset="-94" />
+                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#333" strokeWidth="14" />
+                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#FF4D4D" strokeWidth="14" strokeDasharray="63 251" />
                     </svg>
                 </div>
             </div>
