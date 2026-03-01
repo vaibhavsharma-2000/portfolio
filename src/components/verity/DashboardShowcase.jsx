@@ -70,6 +70,7 @@ function OverviewView() {
 
 // ── Reach View: Creative Gallery ─────────────────────────────
 function ReachView() {
+    const [paused, setPaused] = useState(false);
     const creatives = [
         { src: 'https://images.unsplash.com/photo-1610048616223-4499c1afc20b?w=400&q=80', ctr: '3.5%', sales: '$4,200', tag: 'Top Winner', status: 'good' },
         { src: 'https://images.unsplash.com/photo-1685527012908-394504c2a230?w=400&q=80', ctr: '1.2%', sales: '$500', tag: null, status: 'average' },
@@ -112,14 +113,119 @@ function ReachView() {
                                     </div>
                                 </div>
                                 {c.status === 'poor' && (
-                                    <button className="px-2 py-1 bg-[#FF4D4D]/20 border border-[#FF4D4D] text-[#FF4D4D] rounded text-[9px] font-bold flex items-center gap-1">
-                                        <Ban size={8} />Kill Ad?
+                                    <button
+                                        onClick={() => setPaused(!paused)}
+                                        className={`px-2 py-1 rounded text-[9px] font-bold flex items-center gap-1 transition-all ${paused
+                                            ? 'bg-[#27F59F]/20 border border-[#27F59F] text-[#27F59F]'
+                                            : 'bg-[#FF4D4D]/20 border border-[#FF4D4D] text-[#FF4D4D]'
+                                            }`}
+                                    >
+                                        {paused ? <><CheckCircle size={8} />Paused</> : <><Ban size={8} />Pause Creative</>}
                                     </button>
                                 )}
                             </div>
                         </div>
                     </div>
                 ))}
+            </div>
+        </div>
+    );
+}
+
+// ── Capital View: AI Insight Panel ──────────────────────────
+function CapitalView() {
+    const [aiState, setAiState] = useState('active'); // active | applied | dismissed
+
+    return (
+        <div className="p-6 h-full flex flex-col">
+            <div className="flex items-center justify-between mb-5">
+                <div>
+                    <h4 className="text-white font-medium text-sm">Verity AI · Margin Intelligence</h4>
+                    <p className="text-white/30 text-xs mt-0.5">Real-time alerts with one-click corrective actions</p>
+                </div>
+            </div>
+
+            <div className={`flex-1 rounded-2xl p-6 flex flex-col border transition-all duration-500 ${aiState === 'applied'
+                ? 'bg-[#27F59F]/5 border-[#27F59F]/30 shadow-[0_0_30px_rgba(39,245,159,0.1)]'
+                : aiState === 'dismissed'
+                    ? 'bg-white/[0.02] border-white/5'
+                    : 'bg-[#7B61FF]/5 border-[#7B61FF]/30 shadow-[0_0_30px_rgba(123,97,255,0.15)]'
+                }`}>
+                <div className="flex items-center gap-2 mb-4">
+                    <div className={`p-1.5 rounded-lg ${aiState === 'applied' ? 'bg-[#27F59F]' : 'bg-[#7B61FF]'}`}>
+                        {aiState === 'applied' ? <CheckCircle size={14} className="text-white" /> : <Sparkles size={14} className="text-white" />}
+                    </div>
+                    <span className="text-white/60 text-xs font-bold uppercase tracking-wider">Verity AI</span>
+                    <span className={`ml-auto px-2 py-0.5 rounded-full text-[8px] font-bold uppercase ${aiState === 'active' ? 'bg-[#FF4D4D]/10 text-[#FF4D4D] border border-[#FF4D4D]/20' :
+                        aiState === 'applied' ? 'bg-[#27F59F]/10 text-[#27F59F] border border-[#27F59F]/20' :
+                            'bg-white/5 text-white/30 border border-white/10'
+                        }`}>
+                        {aiState === 'active' ? 'Alert' : aiState === 'applied' ? 'Resolved' : 'Dismissed'}
+                    </span>
+                </div>
+
+                {aiState === 'active' && (
+                    <>
+                        <div className="mb-4">
+                            <span className="text-[#FF4D4D] text-xs font-mono font-bold uppercase flex items-center gap-1.5 mb-2">
+                                <AlertTriangle size={12} /> Margin Alert — Farfetch
+                            </span>
+                            <p className="text-white/50 text-sm leading-relaxed">
+                                Farfetch margin on <span className="text-white/80 font-medium">'Evening Wear'</span> dropped to <span className="text-[#FF4D4D] font-mono font-bold">12%</span>, below the 15% threshold. Recommend increasing price by <span className="text-[#27F59F] font-mono font-bold">$45</span> to restore target margin.
+                            </p>
+                        </div>
+
+                        <div className="bg-white/[0.03] rounded-xl p-3 mb-4 border border-white/5">
+                            <div className="flex items-center justify-between text-[10px] text-white/30 mb-1.5">
+                                <span>Current Margin</span>
+                                <span>Target</span>
+                            </div>
+                            <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden relative">
+                                <div className="h-full bg-[#FF4D4D] rounded-full w-[40%]" />
+                                <div className="absolute right-[35%] top-0 h-full w-[2px] bg-white/20" />
+                            </div>
+                            <div className="flex items-center justify-between text-[9px] font-mono mt-1">
+                                <span className="text-[#FF4D4D] font-bold">12%</span>
+                                <span className="text-white/20">15%</span>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 mt-auto">
+                            <button onClick={() => setAiState('applied')} className="flex-1 py-2.5 rounded-xl bg-[#7B61FF] text-white text-xs font-bold hover:bg-[#6848FF] transition-colors flex items-center justify-center gap-1.5">
+                                <Sparkles size={12} />Apply Price Update
+                            </button>
+                            <button onClick={() => setAiState('dismissed')} className="px-4 py-2.5 rounded-xl border border-white/10 text-white/40 text-xs hover:bg-white/5 transition-colors">
+                                Dismiss
+                            </button>
+                        </div>
+                    </>
+                )}
+
+                {aiState === 'applied' && (
+                    <div className="flex-1 flex flex-col items-center justify-center text-center">
+                        <div className="relative mb-4">
+                            <div className="absolute -inset-3 bg-[#27F59F]/10 rounded-full blur-lg" />
+                            <CheckCircle size={40} className="text-[#27F59F] relative" />
+                        </div>
+                        <p className="text-white/80 text-sm font-medium mb-1">Price Update Applied</p>
+                        <p className="text-white/30 text-xs">Evening Wear · Farfetch</p>
+                        <div className="flex items-center gap-3 mt-4 text-sm font-mono">
+                            <span className="text-[#FF4D4D]/50 line-through">12%</span>
+                            <span className="text-white/30">→</span>
+                            <span className="text-[#27F59F] font-bold text-lg">22%</span>
+                        </div>
+                        <p className="text-white/20 text-[10px] mt-2">Projected margin recovery in 48h</p>
+                    </div>
+                )}
+
+                {aiState === 'dismissed' && (
+                    <div className="flex-1 flex flex-col items-center justify-center text-center">
+                        <p className="text-white/20 text-sm mb-2">Alert dismissed</p>
+                        <button onClick={() => setAiState('active')} className="text-[#7B61FF] text-xs hover:underline">
+                            Undo
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -224,6 +330,62 @@ function FulfillmentView() {
             statusLabel: 'High Damage',
             badge: 'CRITICAL',
             tooltipPos: 'left-[53%] top-[30%]',
+            color: '#FF4D4D'
+        },
+        {
+            id: 'london',
+            name: 'London, UK',
+            lat: 51.5074,
+            lng: -0.1278,
+            status: 'healthy',
+            carrier: 'Royal Mail',
+            metric: 'On-Time Rate',
+            metricValue: '97.8%',
+            statusLabel: 'On Time',
+            badge: 'OPTIMAL',
+            tooltipPos: 'left-[46%] top-[28%]',
+            color: '#27F59F'
+        },
+        {
+            id: 'dubai',
+            name: 'Dubai, AE',
+            lat: 25.2048,
+            lng: 55.2708,
+            status: 'healthy',
+            carrier: 'Aramex',
+            metric: 'On-Time Rate',
+            metricValue: '96.5%',
+            statusLabel: 'On Time',
+            badge: 'OPTIMAL',
+            tooltipPos: 'left-[62%] top-[48%]',
+            color: '#27F59F'
+        },
+        {
+            id: 'tokyo',
+            name: 'Tokyo, JP',
+            lat: 35.6762,
+            lng: 139.6503,
+            status: 'healthy',
+            carrier: 'Yamato Transport',
+            metric: 'On-Time Rate',
+            metricValue: '99.8%',
+            statusLabel: 'On Time',
+            badge: 'OPTIMAL',
+            tooltipPos: 'left-[78%] top-[38%]',
+            color: '#27F59F'
+        },
+        {
+            id: 'saopaulo',
+            name: 'São Paulo, BR',
+            lat: -23.5505,
+            lng: -46.6333,
+            status: 'critical',
+            carrier: 'Correios',
+            metric: 'Delay Rate',
+            metricValue: '24%',
+            statusLabel: 'Customs Hold',
+            badge: 'DELAYED',
+            tooltipPos: 'left-[32%] top-[65%]',
             color: '#FF4D4D'
         },
     ];
@@ -422,6 +584,7 @@ function IntegrationsView() {
 // ── Main Component ────────────────────────────────────────────
 const views = [
     { id: 'overview', label: 'OVERVIEW', sub: 'Net Profit · Marketplace Fees', component: OverviewView },
+    { id: 'capital', label: 'CAPITAL', sub: 'AI Margin Intelligence', component: CapitalView },
     { id: 'reach', label: 'REACH', sub: 'Creative Gallery · ROAS', component: ReachView },
     { id: 'relations', label: 'RELATIONS', sub: 'VIP Intelligence · Birthdays', component: RelationsView },
     { id: 'fulfillment', label: 'FULFILLMENT', sub: 'Global Health · Wardrobing', component: FulfillmentView },
@@ -477,7 +640,7 @@ export function DashboardShowcase() {
                             <div className={`md:col-span-4 ${i % 2 === 1 ? 'md:order-last' : ''}`}>
                                 <span
                                     className="text-xs font-bold uppercase tracking-[0.3em] mb-3 block"
-                                    style={{ color: ['#27F59F', '#7B61FF', '#F59E0B', '#FF4D4D', '#3B82F6'][i] }}
+                                    style={{ color: ['#27F59F', '#7B61FF', '#F59E0B', '#FF4D4D', '#3B82F6', '#636366'][i] }}
                                 >
                                     {view.label}
                                 </span>
@@ -485,7 +648,8 @@ export function DashboardShowcase() {
                                 <p className="text-white/40 text-sm leading-relaxed">
                                     {[
                                         `Merchants on Shopify see Gross Sales as their headline number, but after marketplace commissions, gateway fees, and returns, Net Profit can be 30 to 50% lower. I designed the waterfall chart specifically so the true number is the last bar you see, emotionally landing after you've processed every deduction. The AI alert on the marketplace fee bar was added after users said they had no idea how much Zalando was taking.`,
-                                        `During research, multiple merchants described checking ad performance by opening four tabs: Meta Ads Manager, Shopify, Google Analytics, and a spreadsheet. The Reach module collapses that into one view. I chose to show ad creatives as actual images (not just row data) because merchants said they needed to see what was underperforming visually, not just read a number, to make a kill decision.`,
+                                        `Every merchant we interviewed was making pricing decisions on gut feel. The AI Insight panel actively monitors channel margins against thresholds you set. When Farfetch margin drops below 15%, Verity surfaces the exact product, the exact shortfall, and a one-click corrective price update. Click 'Apply' and the margin recovers, no spreadsheet, no guesswork, no lag.`,
+                                        `During research, multiple merchants described checking ad performance by opening four tabs: Meta Ads Manager, Shopify, Google Analytics, and a spreadsheet. The Reach module collapses that into one view, surfacing ROAS (Return on Ad Spend, the revenue earned per dollar spent on ads) as the north-star metric. I chose to show ad creatives as actual images (not just row data) because merchants said they needed to see what was underperforming visually, not just read a number, to make a pause decision.`,
                                         `Luxury customers have a significant share of wallet concentrated in a small VIP segment. Retention here isn't email blasts. It's personalised timing. I added the birthday and anniversary feed because interviewees mentioned missing VIP renewal windows due to no reminder system. The one-click offer trigger was designed to remove friction down to a single action.`,
                                         `Returns are the silent killer of fashion margins. I designed the Global Health map to be more than just valid data visualization. It's an operational war room. By correlating return spikes with specific hubs (like 'Berlin Delayed'), merchants can switch carriers instantly, saving thousands in potential lost stock before the damage compounds.`,
                                         `A fragmented stack breaks data integrity. The Ecosystem view isn't just a list of apps; it's a unified status monitor. I centralized the connection health of Shopify, Meta, and 3PLs into one symmetrical grid so technical debt doesn't compound silently. If a connection drops, you know immediately, protecting your downstream analytics.`,
