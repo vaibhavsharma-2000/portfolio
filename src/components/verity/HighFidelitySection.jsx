@@ -1,35 +1,15 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 
-// Import all 8 high-fidelity visuals (Dark Mode)
-import imgOverviewDark from '../../assets/Verity Overview Page.png';
-import imgCapitalDark from '../../assets/Verity Capital Page.png';
-import imgFulfillmentDark from '../../assets/Verity Fulfillment Page.png';
-import imgReachDark from '../../assets/Verity Reach Page.png';
-import imgRelationDark from '../../assets/Verity Relation Page.png';
-import imgSettingsDark from '../../assets/Verity Settings Page.png';
-import imgBillingsDark from '../../assets/Verity Settings Billings page.png';
-import imgIntelDark from '../../assets/Verity Settings Intelligence page.png';
-
-// Import all 8 high-fidelity visuals (Light Mode)
-import imgOverviewLight from '../../assets/Light-Verity Overview Page.png';
-import imgCapitalLight from '../../assets/Light-Verity Capital Page.png';
-import imgFulfillmentLight from '../../assets/Light-Verity Fulfillment Page.png';
-import imgReachLight from '../../assets/Light-Verity Reach Page.png';
-import imgRelationLight from '../../assets/Light-Verity Relation Page.png';
-import imgSettingsLight from '../../assets/Light-Verity Settings Page.png';
-import imgBillingsLight from '../../assets/Light-Verity Settings Billings page.png';
-import imgIntelLight from '../../assets/Light-Verity Settings Intelligence page.png';
-
 const designs = [
-    { darkSrc: imgOverviewDark, lightSrc: imgOverviewLight, title: 'Dashboard Overview' },
-    { darkSrc: imgCapitalDark, lightSrc: imgCapitalLight, title: 'Capital Management' },
-    { darkSrc: imgFulfillmentDark, lightSrc: imgFulfillmentLight, title: 'Fulfillment Tracker' },
-    { darkSrc: imgReachDark, lightSrc: imgReachLight, title: 'Reach & Ad Performance' },
-    { darkSrc: imgRelationDark, lightSrc: imgRelationLight, title: 'Customer Relations' },
-    { darkSrc: imgSettingsDark, lightSrc: imgSettingsLight, title: 'General Settings' },
-    { darkSrc: imgBillingsDark, lightSrc: imgBillingsLight, title: 'Billings & Invoices' },
-    { darkSrc: imgIntelDark, lightSrc: imgIntelLight, title: 'Intelligence Reports' },
+    { darkSrc: '/assets/verity/overview-dark.png', lightSrc: '/assets/verity/overview-light.png', title: 'Dashboard Overview' },
+    { darkSrc: '/assets/verity/capital-dark.png', lightSrc: '/assets/verity/capital-light.png', title: 'Capital Management' },
+    { darkSrc: '/assets/verity/fulfillment-dark.png', lightSrc: '/assets/verity/fulfillment-light.png', title: 'Fulfillment Tracker' },
+    { darkSrc: '/assets/verity/reach-dark.png', lightSrc: '/assets/verity/reach-light.png', title: 'Reach & Ad Performance' },
+    { darkSrc: '/assets/verity/relation-dark.png', lightSrc: '/assets/verity/relation-light.png', title: 'Customer Relations' },
+    { darkSrc: '/assets/verity/settings-dark.png', lightSrc: '/assets/verity/settings-light.png', title: 'General Settings' },
+    { darkSrc: '/assets/verity/billings-dark.png', lightSrc: '/assets/verity/billings-light.png', title: 'Billings & Invoices' },
+    { darkSrc: '/assets/verity/intelligence-dark.png', lightSrc: '/assets/verity/intelligence-light.png', title: 'Intelligence Reports' },
 ];
 
 export function HighFidelitySection() {

@@ -9,7 +9,7 @@ import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
 import portfolioImg from "../assets/My Portfolio cover.png";
-import verityImg from "../assets/verity-cover.png";
+const verityImg = "/assets/verity/verity-cover.png";
 
 
 const BehanceIcon = ({ className }) => (

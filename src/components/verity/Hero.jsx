@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowLeft, X, ExternalLink, Play, Monitor } from 'lucide-react';
 
-import verityMockupImg from '../../assets/Verity Overview Page.png';
+const verityMockupImg = '/assets/verity/overview-dark.png';
 
 const FIGMA_SITE = 'https://yang-dull-27767610.figma.site/';
 
