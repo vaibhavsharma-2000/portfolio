@@ -1,8 +1,7 @@
-import { useRef } from "react";
-import { useScroll, motion, useTransform, useSpring, useMotionTemplate, useMotionValue } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowUpRight, Github } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
-
 // Import local assets
 import animindImg from "../assets/Animind.png";
 import brewQuestImg from "../assets/Brew-Quest-Light.png";
@@ -10,7 +9,6 @@ import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
 import portfolioImg from "../assets/My Portfolio cover.png";
 const verityImg = "/assets/verity/verity-cover.png";
-
 
 const BehanceIcon = ({ className }) => (
     <svg className={className} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,6 +18,8 @@ const BehanceIcon = ({ className }) => (
     </svg>
 );
 
+
+
 const projects = [
     {
         id: 4,
@@ -28,7 +28,8 @@ const projects = [
         visual: animindImg,
         color: "#ba0000",
         link: "/work/animind",
-        tags: ['UX Design', 'Front-end', 'UX Research']
+        tags: ['UX Design', 'Front-end', 'UX Research'],
+        category: "UX & Engineering",
     },
     {
         id: 6,
@@ -37,7 +38,8 @@ const projects = [
         visual: verityImg,
         color: "#7B61FF",
         link: "/work/verity",
-        tags: ['UX Design', 'SaaS Dashboard', 'AI']
+        tags: ['UX Design', 'SaaS Dashboard', 'AI'],
+        category: "Full-Stack Design",
     },
     {
         id: 1,
@@ -46,7 +48,8 @@ const projects = [
         visual: brewQuestImg,
         color: "#FFC107",
         link: "/work/brewquest",
-        tags: ['UX Research', 'UX Design', 'Figma']
+        tags: ['UX Research', 'UX Design', 'Figma'],
+        category: "UX Research",
     },
     {
         id: 2,
@@ -58,7 +61,8 @@ const projects = [
             { label: "View Project", link: "https://www.behance.net/gallery/218546301/Recy-pe-AI-Solutions-for-Recyclers-(UX-Case-Study)", icon: ArrowUpRight }
         ],
         platform: "behance",
-        tags: ['UX Research', 'UI Design', 'Product Strategy']
+        tags: ['UX Research', 'UI Design', 'Product Strategy'],
+        category: "Product Strategy",
     },
     {
         id: 5,
@@ -69,7 +73,8 @@ const projects = [
         customButtons: [
             { label: "View Code", link: "https://github.com/vaibhavsharma-2000/portfolio", icon: Github }
         ],
-        tags: ['UX Design', 'Front-end', 'Tailwind']
+        tags: ['UX Design', 'Front-end', 'Tailwind'],
+        category: "Front-end Development",
     },
     {
         id: 3,
@@ -81,170 +86,201 @@ const projects = [
             { label: "View Project", link: "https://www.behance.net/gallery/208525545/DB-BahnAssist-(UX-Research-Wireframing-Prototyping)", icon: ArrowUpRight }
         ],
         platform: "behance",
-        tags: ['UX Research', 'UI Design', 'Figma']
+        tags: ['UX Research', 'UI Design', 'Figma'],
+        category: "UX Research",
     },
 ];
 
-const Card = ({ project, index, progress, range, targetScale }) => {
-    const container = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: container,
-        offset: ['start end', 'start start']
-    });
+/* ─── Single Rolodex Card ─── */
+const RolodexCard = ({ project, index, scrollYProgress, total }) => {
+    // Each card gets a segment with dead space (gap) between cards
+    // Layout: [enter flip][hold][exit flip][gap][next card...]
+    const gapFraction = 0.03; // blank gap between cards
+    const usablePerCard = (1 - gapFraction * (total - 1)) / total;
+    const start = index * (usablePerCard + gapFraction);
+    const end = start + usablePerCard;
 
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
+    const enterEnd = start + usablePerCard * 0.2;    // 20% of card time for enter flip
+    const exitStart = end - usablePerCard * 0.2;     // 20% of card time for exit flip
 
-    const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
-    const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
+    // 3D Rolodex flip — NO fade, fully visible at all angles
+    // Enter: rotateX 90° → 0° | Hold: 0° | Exit: 0° → -90°
+    const rotateX = useTransform(
+        scrollYProgress,
+        [start, enterEnd, exitStart, end],
+        [90, 0, 0, -90]
+    );
 
-    // Spotlight Gradient following mouse
-    const spotlightLeft = useTransform(mouseX, [-0.5, 0.5], ["0%", "100%"]);
-    const spotlightTop = useTransform(mouseY, [-0.5, 0.5], ["0%", "100%"]);
+    // Visibility: hard on/off (no fade) — card appears at start, disappears at end
+    // Use a step function: invisible outside range, fully visible inside
+    const visibility = useTransform(
+        scrollYProgress,
+        [start - 0.001, start, end, end + 0.001],
+        [0, 1, 1, 0]
+    );
 
-    const onMouseMove = ({ currentTarget, clientX, clientY }) => {
-        const { left, top, width, height } = currentTarget.getBoundingClientRect();
-        x.set((clientX - left) / width - 0.5);
-        y.set((clientY - top) / height - 0.5);
+    const getLink = () => {
+        if (project.customButtons) return project.customButtons[0].link;
+        return project.link;
     };
 
-    const onMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
-    // Scale effect for the card itself as it stacks
-    const scale = useTransform(progress, range, [1, targetScale]);
-
-    // Smooth opacity transition if needed, but let's keep it solid for stacking
-    // const opacity = useTransform(progress, range, [1, 0.5]);
+    const isExternal = !!project.customButtons;
+    const linkProps = isExternal
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {};
 
     return (
-        <div ref={container} className="h-screen flex items-center justify-center sticky top-0 pointer-events-none">
-            <motion.div
-                style={{
-                    scale,
-                    top: `calc(10vh + ${index * 25}px)`
-                }}
-                onMouseMove={onMouseMove}
-                onMouseLeave={onMouseLeave}
-                className="relative flex flex-col-reverse md:flex-row h-[65vh] w-[90vw] md:w-[70vw] rounded-[30px] border border-white/10 bg-[#1a1a1a] overflow-hidden shadow-2xl origin-top group pointer-events-auto"
-            >
-                {/* Spotlight Overlay */}
-                <motion.div
-                    style={{
-                        background: useMotionTemplate`
-                            radial-gradient(
-                                600px circle at ${spotlightLeft} ${spotlightTop}, 
-                                ${project.color}20, 
-                                transparent 80%
-                            )
-                        `,
-                    }}
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none mix-blend-screen"
-                />
-                {/* Left Side: Content */}
-                <div className="w-full h-[60%] md:h-full md:w-[45%] p-6 md:p-12 flex flex-col justify-center md:justify-start relative z-20 bg-[#1a1a1a]">
+        <motion.div
+            style={{
+                rotateX,
+                opacity: visibility,
+                transformOrigin: "center center",
+            }}
+            className="absolute inset-0 flex flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-[#141414] shadow-2xl"
+        >
+            {/* Background Image */}
+            <img
+                src={project.visual}
+                alt={`${project.title} — ${project.tags.join(', ')} project by Vaibhav Sharma`}
+                className="absolute inset-0 h-full w-full object-cover opacity-60"
+            />
+
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none" />
+
+            {/* Behance Badge */}
+            {project.platform === "behance" && (
+                <div className="absolute top-5 right-5 z-20">
+                    <div className="bg-black/50 backdrop-blur-md p-2 rounded-full border border-white/20">
+                        <BehanceIcon className="w-5 h-5 text-white" />
+                    </div>
+                </div>
+            )}
+
+            {/* Card Content */}
+            <div className="relative z-20 flex flex-col md:flex-row w-full items-end justify-between p-6 md:p-10 lg:p-12 gap-6">
+                <div className="flex-1">
+
+
+                    {/* Title */}
+                    <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-2 leading-tight">
+                        {project.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-white/60 text-sm md:text-base max-w-md leading-relaxed hidden md:block">
+                        {project.description}
+                    </p>
+
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="flex flex-wrap gap-2 mt-4">
                         {project.tags.map((tag, i) => (
-                            <span key={i} style={{ borderColor: project.color, color: project.color }} className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest border rounded-full bg-black/20">
+                            <span
+                                key={i}
+                                style={{ borderColor: `${project.color}50`, color: `${project.color}` }}
+                                className="px-3 py-1 text-[8px] md:text-[9px] font-bold uppercase tracking-widest border rounded-full bg-black/30 backdrop-blur-sm"
+                            >
                                 {tag}
                             </span>
                         ))}
                     </div>
-
-                    <h3 className="text-2xl min-[400px]:text-3xl md:text-5xl font-serif font-bold text-white mb-3 md:mb-4 leading-tight">
-                        {project.title}
-                    </h3>
-
-                    <p className="text-white/60 text-sm md:text-lg mb-6 leading-relaxed line-clamp-3 md:line-clamp-none">
-                        {project.description}
-                    </p>
-
-                    <div className="mt-auto flex gap-4">
-                        {project.customButtons ? (
-                            project.customButtons.map((btn, i) => (
-                                <a
-                                    key={i}
-                                    href={btn.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
-                                    aria-label={`${btn.label} - ${project.title}`}
-                                >
-                                    {btn.label}
-                                    <btn.icon className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" aria-hidden="true" />
-                                </a>
-                            ))
-                        ) : (
-                            <a
-                                href={project.link}
-                                className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-[#FFC107] transition-colors"
-                                aria-label={`View Project - ${project.title}`}
-                            >
-                                View Project
-                                <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" aria-hidden="true" />
-                            </a>
-                        )}
-                    </div>
                 </div>
 
-                {/* Right Side: Image */}
-                <div className="w-full h-[40%] md:h-full md:w-[55%] relative overflow-hidden bg-black border-b md:border-b-0 md:border-l border-white/5">
-                    <motion.div className="w-full h-full relative group">
-                        <img
-                            src={project.visual}
-                            alt={`${project.title} - ${project.tags.join(', ')} project by Vaibhav Sharma`}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-transparent to-[#1a1a1a] opacity-50" />
-                    </motion.div>
-
-                    {/* Behance Badge if applicable */}
-                    {project.platform === "behance" && (
-                        <div className="absolute top-4 right-4 md:bottom-6 md:right-6 z-20">
-                            <div className="bg-black/50 backdrop-blur-md p-2 rounded-full border border-white/20">
-                                <BehanceIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </motion.div>
-        </div>
+                {/* CTA Button */}
+                <a
+                    href={getLink()}
+                    {...linkProps}
+                    className="group/btn flex items-center gap-3 rounded-full bg-white px-6 md:px-8 py-3 md:py-4 text-sm font-bold text-black uppercase tracking-wider transition-all hover:bg-brand hover:scale-105 hover:shadow-[0_0_25px_rgba(255,193,7,0.3)] shrink-0"
+                    aria-label={`${project.customButtons ? project.customButtons[0].label : "Explore Case Study"} — ${project.title}`}
+                >
+                    {project.customButtons ? project.customButtons[0].label : "Explore Case Study"}
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                </a>
+            </div>
+        </motion.div>
     );
 };
 
+/* ─── Main Section ─── */
 export default function WorkCarousel() {
-    const container = useRef(null);
+    const containerRef = useRef(null);
+
     const { scrollYProgress } = useScroll({
-        target: container,
-        offset: ['start start', 'end end']
+        target: containerRef,
+        offset: ["start start", "end end"],
     });
 
-    return (
-        <section ref={container} id="work" className="bg-[#0a0a0a] relative">
-            <div className="py-20 px-6 max-w-7xl mx-auto mb-10">
-                <SectionHeader title="Work and Projects" />
-                <p className="text-white/50 text-center max-w-2xl mx-auto mt-4">
-                    A curated selection of my design research and development work.
-                </p>
-            </div>
+    // Map vertical scroll to horizontal text movement (parallax marquee)
+    const backgroundTextX = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
 
-            <div className="mt-10 mb-[20vh]">
-                {projects.map((project, index) => {
-                    const targetScale = 1 - ((projects.length - index) * 0.05);
-                    return (
-                        <Card
-                            key={index}
-                            index={index}
+    return (
+        <section
+            ref={containerRef}
+            id="work"
+            className="relative bg-[#0a0a0a]"
+            style={{ height: `${(projects.length + 1) * 100}vh` }}
+        >
+            {/* The Sticky Viewport — locks to screen while user scrolls */}
+            <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
+
+                {/* Layer 1: Parallax Background Marquee Text */}
+                <motion.div
+                    style={{ x: backgroundTextX }}
+                    className="pointer-events-none absolute flex whitespace-nowrap text-[15vw] md:text-[18vw] font-serif font-black uppercase text-white select-none"
+                >
+                    Selected Works — Selected Works — Selected Works — Selected Works —
+                </motion.div>
+
+                {/* Section Header */}
+                <div className="absolute top-0 w-full z-30 pointer-events-none">
+                    <SectionHeader title="Work & Projects" />
+                </div>
+
+                {/* Layer 2: The 3D Card Stack */}
+                <div
+                    className="relative z-10 w-[92vw] md:w-[85vw] lg:w-full lg:max-w-5xl aspect-[3/4] md:aspect-video mt-32 md:mt-40"
+                    style={{ perspective: '1200px' }}
+                >
+                    {projects.map((project, index) => (
+                        <RolodexCard
+                            key={project.id}
                             project={project}
-                            progress={scrollYProgress}
-                            range={[index * 0.25, 1]}
-                            targetScale={targetScale}
+                            index={index}
+                            scrollYProgress={scrollYProgress}
+                            total={projects.length}
                         />
-                    );
-                })}
+                    ))}
+                </div>
+
+                {/* Progress Indicator */}
+                <div className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-30">
+                    {projects.map((project, index) => {
+                        const total = projects.length;
+                        const gapFraction = 0.03;
+                        const usablePerCard = (1 - gapFraction * (total - 1)) / total;
+                        const start = index * (usablePerCard + gapFraction);
+                        const end = start + usablePerCard;
+
+                        return (
+                            <motion.div
+                                key={project.id}
+                                style={{
+                                    opacity: useTransform(
+                                        scrollYProgress,
+                                        [start - 0.01, start + 0.02, end - 0.02, end + 0.01],
+                                        [0.2, 1, 1, 0.2]
+                                    ),
+                                    scale: useTransform(
+                                        scrollYProgress,
+                                        [start - 0.01, start + 0.02, end - 0.02, end + 0.01],
+                                        [0.5, 1, 1, 0.5]
+                                    ),
+                                }}
+                                className="w-2 h-2 rounded-full bg-brand"
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </section>
     );

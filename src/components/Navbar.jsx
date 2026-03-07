@@ -12,8 +12,8 @@ const Navbar = () => {
         { id: 'experience', label: 'Experience' },
         { id: 'work', label: 'Work' },
         { id: 'skills', label: 'Skills' },
+        { id: 'ai-process', label: 'AI' },
         { id: 'articles', label: 'Articles' },
-        // { id: 'lab', label: 'Lab' }, // Commented out for future use
         { id: 'contact', label: 'Contact' },
     ];
 
@@ -21,22 +21,28 @@ const Navbar = () => {
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
 
-    // Scroll Spy Logic
+    // Scroll Spy Logic — using getBoundingClientRect for reliable detection
+    // with sticky/absolute positioned sections
     useEffect(() => {
         const handleScroll = () => {
-            const sections = navItems.map(item => document.getElementById(item.id));
-            const scrollPosition = window.scrollY + 100; // Offset for better triggering
+            const threshold = 200; // how far below the top of viewport to check
+            let currentSection = 'home';
 
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = sections[i];
-                if (section && section.offsetTop <= scrollPosition) {
-                    setActiveTab(navItems[i].id);
-                    break;
+            for (let i = navItems.length - 1; i >= 0; i--) {
+                const section = document.getElementById(navItems[i].id);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= threshold) {
+                        currentSection = navItems[i].id;
+                        break;
+                    }
                 }
             }
+
+            setActiveTab(currentSection);
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 

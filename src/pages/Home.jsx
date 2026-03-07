@@ -7,9 +7,20 @@ import BentoGrid from '../sections/BentoGrid';
 import Journey from '../sections/Journey';
 import Articles from '../sections/Articles';
 import WorkCarousel from "../sections/WorkCarousel";
+import AIProcess from "../sections/AIProcess";
+import Marquee from "../components/Marquee";
 
 import SectionHeader from '../components/SectionHeader';
 import Footer from '../components/Footer';
+
+const skillsMarquee = [
+    "React", "Figma", "Tailwind CSS", "JavaScript", "Framer",
+    "SPSS", "Jira", "UX Design", "User Research", "Prototyping",
+    "Design Systems", "A/B Testing", "Usability Testing", "Confluence",
+    "HTML", "CSS", "Git", "GitHub", "Responsive Design",
+    "Wireframing", "Information Architecture", "Interaction Design",
+    "Qualitative Research", "Quantitative Research", "Data Analysis"
+];
 
 function Home() {
     const { hash } = useLocation();
@@ -38,6 +49,12 @@ function Home() {
                 <header id="home" role="banner">
                     <Hero />
                 </header>
+
+                {/* Skills Marquee */}
+                <div className="bg-[#0a0a0a] py-6 md:py-8">
+                    <Marquee items={skillsMarquee} speed={35} separator="·" />
+                </div>
+
                 <Bridge />
                 <section id="experience" aria-label="Experience and Qualifications">
                     <SectionHeader title="Experience & Qualifications" />
@@ -52,6 +69,8 @@ function Home() {
                         <BentoGrid />
                     </div>
                 </section>
+
+                <AIProcess />
 
                 <section id="articles" aria-label="Articles and Publications">
                     <SectionHeader title="Articles & Publications" />
