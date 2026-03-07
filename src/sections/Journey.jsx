@@ -124,10 +124,10 @@ const Pill = ({ exp, index, totalCount }) => {
 
     return (
         <motion.div
-            initial={{ opacity: 0, x: -60, y: 20 }}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 1, 0.5, 1] }}
             className="w-full"
             style={{
                 paddingLeft: isMobile ? '0px' : `clamp(0px, ${staggerOffset * 0.5}%, 45%)`,
@@ -271,8 +271,14 @@ const Journey = () => {
     return (
         <section className="py-16 md:py-24 bg-dark relative overflow-hidden">
             <div className="max-w-5xl mx-auto px-6">
-                {/* Legend */}
-                <div className="flex items-center gap-6 mb-12 md:mb-16">
+                {/* Legend - Fades in first */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="flex items-center gap-6 mb-12 md:mb-16"
+                >
                     {Object.entries(colorConfig).map(([type, config]) => (
                         <div key={type} className="flex items-center gap-2">
                             <div
@@ -284,7 +290,7 @@ const Journey = () => {
                             </span>
                         </div>
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Staggered Pills */}
                 <div className="flex flex-col gap-5 md:gap-6">
