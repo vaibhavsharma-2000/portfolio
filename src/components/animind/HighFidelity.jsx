@@ -138,7 +138,7 @@ export function HighFidelity() {
                             <span className="text-[10px] text-white font-mono uppercase">Antigravity Editor</span>
                         </div>
                         <div className="bg-[#121212] p-1 rounded-xl border border-white/10 overflow-hidden">
-                            <img src={imgAntigravity} alt="Google Antigravity Editor" className="w-full h-auto rounded-lg opacity-90 hover:opacity-100 transition-opacity" />
+                            <img src={imgAntigravity} alt="Google Antigravity Editor" loading="lazy" className="w-full h-auto rounded-lg opacity-90 hover:opacity-100 transition-opacity" />
                         </div>
                     </div>
 

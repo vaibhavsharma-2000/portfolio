@@ -67,7 +67,7 @@ function AnimeCard({ title, img }) {
     return (
         <div className="group relative rounded-lg overflow-hidden bg-[#121212] cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_#f80000] hover:ring-1 hover:ring-[#ff4d6d]">
             <div className="aspect-[2/3] w-full relative">
-                <img alt={title} className="w-full h-full object-cover" src={img} />
+                <img alt={title} loading="lazy" className="w-full h-full object-cover" src={img} />
             </div>
             <div className="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-4">
                 <h3 className="text-white font-bold truncate text-xs md:text-sm">{title}</h3>

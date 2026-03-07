@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/SEOHead';
 import UserFlow from '../components/UserFlow';
 import sketch1 from '../assets/Sketch-BrewQuest 1.png';
 import sketch2 from '../assets/Sketch-BrewQuest 2.png';
@@ -13,6 +14,12 @@ const BrewQuestPage = () => {
 
     return (
         <div className="bg-[#0a0a0a] min-h-screen text-white selection:bg-[#FFC107] selection:text-black">
+            <SEOHead
+                title="BrewQuest Case Study"
+                description="A comprehensive UX Research & Design case study for BrewQuest, an app addressing Germany's fragmented homebrewing community."
+                keywords="UX Research, UI Design, Case Study, App Design, Figma, Personas, BrewQuest"
+                url="/work/brewquest"
+            />
             {/* Navigation - Floating Back Button */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -246,6 +253,7 @@ const BrewQuestPage = () => {
                             <img
                                 src={personaImg}
                                 alt="Lukas Weber - User Persona"
+                                loading="lazy"
                                 className="w-full h-95% object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#FFC107]/20 to-transparent opacity-60" />
@@ -386,7 +394,7 @@ const BrewQuestPage = () => {
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl border border-white/5"
                         >
-                            <img src={sketch1} alt="Early ideation sketch 1" className="w-full h-auto object-cover opacity-90 contrast-85 brightness-95 hover:opacity-100 hover:contrast-100 transition-all duration-300" />
+                            <img src={sketch1} alt="Early ideation sketch 1" loading="lazy" className="w-full h-auto object-cover opacity-90 contrast-85 brightness-95 hover:opacity-100 hover:contrast-100 transition-all duration-300" />
                         </motion.div>
 
                         <motion.div
@@ -396,7 +404,7 @@ const BrewQuestPage = () => {
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                             className="bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl border border-white/5"
                         >
-                            <img src={sketch2} alt="Early ideation sketch 2" className="w-full h-auto object-cover opacity-90 contrast-85 brightness-95 hover:opacity-100 hover:contrast-100 transition-all duration-300" />
+                            <img src={sketch2} alt="Early ideation sketch 2" loading="lazy" className="w-full h-auto object-cover opacity-90 contrast-85 brightness-95 hover:opacity-100 hover:contrast-100 transition-all duration-300" />
                         </motion.div>
                     </div>
 
@@ -430,6 +438,7 @@ const BrewQuestPage = () => {
                         <img
                             src={hifiMockups}
                             alt="BrewQuest High-Fidelity Mockups"
+                            loading="lazy"
                             className="w-full h-auto contrast-85 brightness-95 transition-all duration-500"
                         />
                     </motion.div>

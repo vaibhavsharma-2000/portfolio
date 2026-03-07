@@ -12,6 +12,7 @@ import Marquee from "../components/Marquee";
 
 import SectionHeader from '../components/SectionHeader';
 import Footer from '../components/Footer';
+import SEOHead from '../components/SEOHead';
 
 const skillsMarquee = [
     "React", "Figma", "Tailwind CSS", "JavaScript", "Framer",
@@ -40,6 +41,12 @@ function Home() {
 
     return (
         <>
+            <SEOHead
+                title="Home"
+                description="Vaibhav Sharma — UX Designer, Front-end Developer, and Product Manager based in Germany. Specializing in user research, UI/UX design, Figma, React, and human-centered product design."
+                keywords="UX Designer, Front-end Developer, Product Manager, Project Manager, UI/UX Design, User Research, Figma, React, Portfolio, Germany, Vaibhav Sharma"
+                url="/"
+            />
             {/* Skip to main content link for accessibility */}
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand text-dark px-4 py-2 rounded z-50 font-bold">
                 Skip to main content

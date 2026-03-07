@@ -55,7 +55,7 @@ export function Wireframing() {
 
                     <div className="mt-auto w-full">
                         <div className="rounded-lg overflow-hidden border border-white/10 shadow-lg relative group w-full">
-                            <img src={imgStitch} alt="Google Stitch Wireframes" className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity" />
+                            <img src={imgStitch} alt="Google Stitch Wireframes" loading="lazy" className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
                         </div>
                     </div>
@@ -96,7 +96,7 @@ export function Wireframing() {
 
                     <div className="mt-auto">
                         <div className="rounded-lg overflow-hidden border border-white/10 shadow-lg relative group w-full">
-                            <img src={imgFigma} alt="Figma Design System" className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity" />
+                            <img src={imgFigma} alt="Figma Design System" loading="lazy" className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
                         </div>
                     </div>

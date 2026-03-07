@@ -140,9 +140,11 @@ const RolodexCard = ({ project, index, scrollYProgress, total }) => {
         >
             {/* Background Image */}
             <img
-                src={project.visual}
-                alt={`${project.title} — ${project.tags.join(', ')} project by Vaibhav Sharma`}
-                className="absolute inset-0 h-full w-full object-cover opacity-60"
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                draggable={false}
+                className="w-full h-full object-cover rounded-3xl"
             />
 
             {/* Gradient Overlay */}

@@ -34,7 +34,7 @@ export function Solutions() {
                                 <div className="relative aspect-[460/996] w-full">
                                     {/* Screen content inside the frame */}
                                     <div className="absolute inset-[3%] rounded-[44px] overflow-hidden bg-black z-0">
-                                        <img src={imgVisualSearch} alt="Visual Search UI" className="w-full h-full object-cover" />
+                                        <img src={imgVisualSearch} alt="Visual Search UI" loading="lazy" className="w-full h-full object-cover" />
                                     </div>
                                     {/* iPhone frame overlay */}
                                     <div className="absolute inset-0 z-10 pointer-events-none">
@@ -98,7 +98,7 @@ export function Solutions() {
                     visual={
                         <div className="flex justify-center w-full">
                             <div className="relative w-full max-w-[663px]">
-                                <img src={imgSmartSearch} alt="Smart Search Mockup" className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" />
+                                <img src={imgSmartSearch} alt="Smart Search Mockup" loading="lazy" className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" />
                             </div>
                         </div>
                     }
@@ -114,7 +114,7 @@ export function Solutions() {
                     visual={
                         <div className="flex justify-center w-full">
                             <div className="relative w-full max-w-[800px]">
-                                <img src={imgDataDossier} alt="Data Dossier Mockup" className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" />
+                                <img src={imgDataDossier} alt="Data Dossier Mockup" loading="lazy" className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" />
                             </div>
                         </div>
                     }

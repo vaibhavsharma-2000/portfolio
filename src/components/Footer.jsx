@@ -153,6 +153,7 @@ const Footer = () => {
                                         whileHover={{ y: -5, scale: 1.1 }}
                                         className="w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white hover:text-brand hover:border-brand/50 transition-all flex items-center justify-center p-0"
                                         aria-label={`Visit ${social.label} profile`}
+                                        title={`${social.label} profile`}
                                     >
                                         <span aria-hidden="true">{social.icon}</span>
                                     </motion.a>

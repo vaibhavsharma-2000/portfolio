@@ -110,6 +110,8 @@ const Navbar = () => {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
                         className="ml-2 px-5 py-2 bg-brand text-dark text-sm font-sans font-bold rounded-full hover:shadow-[0_0_20px_rgba(255,193,7,0.4)] transition-all"
+                        aria-label="Download CV as PDF"
+                        title="Download CV"
                     >
                         CV
                     </motion.a>
@@ -132,6 +134,8 @@ const Navbar = () => {
                             rel="noopener noreferrer"
                             whileHover={{ scale: 1.05 }}
                             className="px-4 py-1.5 bg-brand text-dark text-xs font-sans font-bold rounded-full"
+                            aria-label="Download CV as PDF"
+                            title="Download CV"
                         >
                             CV
                         </motion.a>
