@@ -25,7 +25,7 @@ const projects = [
         id: 4,
         title: "ANIMIND",
         description: "A social sanctuary to catalog, review, and curate your personal anime odyssey.",
-        visual: animindImg,
+        image: animindImg,
         color: "#ba0000",
         link: "/work/animind",
         tags: ['UX Design', 'Front-end', 'UX Research'],
@@ -35,7 +35,7 @@ const projects = [
         id: 6,
         title: "VERITY",
         description: "The Dashboard for Quiet Luxury. An AI-driven decision engine for high-end fashion merchants.",
-        visual: verityImg,
+        image: verityImg,
         color: "#7B61FF",
         link: "/work/verity",
         tags: ['UX Design', 'SaaS Dashboard', 'AI'],
@@ -45,7 +45,7 @@ const projects = [
         id: 1,
         title: "BREWQUEST",
         description: "25+ Interviews bridging the homebrewing community.",
-        visual: brewQuestImg,
+        image: brewQuestImg,
         color: "#FFC107",
         link: "/work/brewquest",
         tags: ['UX Research', 'UX Design', 'Figma'],
@@ -55,7 +55,7 @@ const projects = [
         id: 2,
         title: "RECY-PE",
         description: "AI algorithms optimizing recycled material sourcing.",
-        visual: recypeImg,
+        image: recypeImg,
         color: "#8076A3",
         customButtons: [
             { label: "View Project", link: "https://www.behance.net/gallery/218546301/Recy-pe-AI-Solutions-for-Recyclers-(UX-Case-Study)", icon: ArrowUpRight }
@@ -68,7 +68,7 @@ const projects = [
         id: 5,
         title: "MY WEBSITE",
         description: "A personal portfolio website that brings all my work together.",
-        visual: portfolioImg,
+        image: portfolioImg,
         color: "#FFC107",
         customButtons: [
             { label: "View Code", link: "https://github.com/vaibhavsharma-2000/portfolio", icon: Github }
@@ -80,7 +80,7 @@ const projects = [
         id: 3,
         title: "BAHN ASSIST",
         description: "Predictive delay alerts for DB station operators.",
-        visual: bahnAssistImg,
+        image: bahnAssistImg,
         color: "#EF4444",
         customButtons: [
             { label: "View Project", link: "https://www.behance.net/gallery/208525545/DB-BahnAssist-(UX-Research-Wireframing-Prototyping)", icon: ArrowUpRight }
@@ -138,17 +138,19 @@ const RolodexCard = ({ project, index, scrollYProgress, total }) => {
             }}
             className="absolute inset-0 flex flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-[#141414] shadow-2xl"
         >
-            {/* Background Image */}
-            <img
-                src={project.image}
-                alt={project.title}
-                loading="lazy"
-                draggable={false}
-                className="w-full h-full object-cover rounded-3xl"
-            />
+            {/* Image Wrapper - Centered and Contained */}
+            <div className="absolute inset-0 p-8 md:p-12 lg:p-16 flex items-center justify-center">
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    draggable={false}
+                    className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+                />
+            </div>
 
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none" />
+            {/* Bottom Gradient for text readability */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent pointer-events-none" />
 
             {/* Behance Badge */}
             {project.platform === "behance" && (
