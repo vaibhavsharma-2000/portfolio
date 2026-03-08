@@ -102,7 +102,7 @@ const AIProcess = () => {
     return (
         <section id="ai-process" className="bg-[#0a0a0a] py-20 md:py-32 relative overflow-hidden">
             <div className="px-6 max-w-7xl mx-auto">
-                <SectionHeader title="AI-Powered Rapid Development" />
+                <SectionHeader title="My AI-Powered Development Workflow" />
 
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
