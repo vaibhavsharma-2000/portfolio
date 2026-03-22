@@ -214,8 +214,7 @@ export default function WorkCarousel() {
         offset: ["start start", "end end"],
     });
 
-    // Map vertical scroll to horizontal text movement (parallax marquee)
-    const backgroundTextX = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+
 
     return (
         <section
@@ -227,13 +226,7 @@ export default function WorkCarousel() {
             {/* The Sticky Viewport — locks to screen while user scrolls */}
             <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
 
-                {/* Layer 1: Parallax Background Marquee Text */}
-                <motion.div
-                    style={{ x: backgroundTextX }}
-                    className="pointer-events-none absolute flex whitespace-nowrap text-[15vw] md:text-[18vw] font-serif font-black uppercase text-white select-none"
-                >
-                    Selected Works — Selected Works — Selected Works — Selected Works —
-                </motion.div>
+
 
                 {/* Section Header */}
                 <div className="absolute top-0 w-full z-30 pointer-events-none">
