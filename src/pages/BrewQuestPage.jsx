@@ -9,16 +9,36 @@ import sketch2 from '../assets/Sketch-BrewQuest 2.png';
 import hifiMockups from '../assets/BrewQuest HiFi mockups.png';
 import personaImg from '../assets/Persona-BrewQuest.png';
 
+const BREWQUEST_JSON_LD = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "BrewQuest — UX Research & Design Case Study",
+    "author": {
+        "@type": "Person",
+        "name": "Vaibhav Sharma",
+        "url": "https://www.vaibhavsharma.de"
+    },
+    "description": "UX Research and Design case study for BrewQuest, a community app addressing Germany's fragmented homebrewing ecosystem. Featuring user interviews, personas, user flows, and high-fidelity Figma prototypes.",
+    "url": "https://www.vaibhavsharma.de/work/brewquest",
+    "dateCreated": "2024",
+    "genre": "UX Case Study",
+    "keywords": "BrewQuest, homebrewing app, UX case study, UX research, user interviews, personas, Figma, product design, Germany",
+    "tools": ["Figma", "Google Forms", "Google Meet", "Notion"],
+    "inLanguage": "en"
+};
+
 const BrewQuestPage = () => {
     const [isPrototypeLoaded, setIsPrototypeLoaded] = useState(false);
 
     return (
         <div className="bg-[#0a0a0a] min-h-screen text-white selection:bg-[#FFC107] selection:text-black">
             <SEOHead
-                title="BrewQuest Case Study"
-                description="A comprehensive UX Research & Design case study for BrewQuest, an app addressing Germany's fragmented homebrewing community."
-                keywords="UX Research, UI Design, Case Study, App Design, Figma, Personas, BrewQuest"
+                title="BrewQuest — UX Research & Design Case Study"
+                description="A comprehensive UX Research & Design case study for BrewQuest, an app addressing Germany's fragmented homebrewing community. User interviews, personas, flows, and Figma prototypes."
+                keywords="BrewQuest, homebrewing app, UX case study, UX research, user interviews, personas, Figma, product design, Germany, Vaibhav Sharma"
                 url="/work/brewquest"
+                ogType="article"
+                jsonLd={BREWQUEST_JSON_LD}
             />
             {/* Navigation - Floating Back Button */}
             <motion.div

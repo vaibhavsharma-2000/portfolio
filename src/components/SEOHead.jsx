@@ -54,6 +54,7 @@ export default function SEOHead({
     image = DEFAULT_OG_IMAGE,
     keywords = '',
     jsonLd = null,
+    ogType = 'website',
 }) {
     useEffect(() => {
         const fullTitle = `${title} | ${SITE_NAME}`;
@@ -72,7 +73,7 @@ export default function SEOHead({
         els.push(setLink('canonical', canonicalUrl));
 
         // Open Graph
-        els.push(setMeta('property', 'og:type', 'article'));
+        els.push(setMeta('property', 'og:type', ogType));
         els.push(setMeta('property', 'og:url', canonicalUrl));
         els.push(setMeta('property', 'og:title', fullTitle));
         els.push(setMeta('property', 'og:description', description));

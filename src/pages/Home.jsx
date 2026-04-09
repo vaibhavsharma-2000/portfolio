@@ -42,10 +42,11 @@ function Home() {
     return (
         <>
             <SEOHead
-                title="Home"
-                description="Vaibhav Sharma — UX Designer, Front-end Developer, and Product Manager based in Germany. Specializing in user research, UI/UX design, Figma, React, and human-centered product design."
-                keywords="UX Designer, Front-end Developer, Product Manager, Project Manager, UI/UX Design, User Research, Figma, React, Portfolio, Germany, Vaibhav Sharma"
+                title="Vaibhav Sharma — UX Designer & Working Student at PwC"
+                description="Vaibhav Sharma — UX Designer & Working Student at PwC Deutschland in Stuttgart. MSc Usability Engineering. UX research, human-centered design, Figma, and React portfolio."
+                keywords="Vaibhav Sharma, UX Designer, UX Researcher, Working Student, PwC Deutschland, Stuttgart, Germany, Usability Engineering, UI/UX Design, User Research, Figma, React, Portfolio, Human-Centered Design, Product Design"
                 url="/"
+                ogType="website"
             />
             {/* Skip to main content link for accessibility */}
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand text-dark px-4 py-2 rounded z-50 font-bold">

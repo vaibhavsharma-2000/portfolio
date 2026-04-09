@@ -5,6 +5,22 @@ import SectionHeader from '../components/SectionHeader';
 
 const experiences = [
     {
+        id: 6,
+        type: "work",
+        role: "Working Student – UX Design",
+        org: "PwC Deutschland",
+        date: "2026 – Present",
+        period: "04/2026 – Present",
+        year: "2026",
+        location: "Stuttgart",
+        highlights: [
+            "Supporting the Internal Firm Services (IFS) team in researching, designing, and improving internal applications used across the company.",
+            "Collaborating with development teams and cross-functional departments to contribute UX research and design thinking to ongoing product improvement efforts.",
+            "Assisting in exploring how AI can be integrated into internal UX and design workflows."
+        ],
+        tags: ["UX Design", "UX Research", "AI", "Internal Tools", "Cross-functional"]
+    },
+    {
         id: 1,
         type: "work",
         role: "UX Research Intern",
@@ -151,13 +167,13 @@ const ExperienceCard = ({ exp }) => {
                     </span>
                 </div>
 
-                <h3 className={`font-serif text-3xl md:text-5xl font-bold mb-3 tracking-tight transition-colors duration-500 ${isInView ? 'text-white' : 'text-neutral-600'
+                <h3 className={`font-serif text-xl md:text-3xl font-medium mb-2 tracking-tight transition-colors duration-500 ${isInView ? 'text-white' : 'text-neutral-600'
                     }`}>
                     {exp.role}
                 </h3>
-                <h4 className={`text-lg md:text-xl mb-6 font-serif transition-colors duration-500 ${isInView ? 'text-neutral-400' : 'text-neutral-700'
+                <h4 className={`text-sm md:text-base mb-6 font-sans font-normal transition-colors duration-500 ${isInView ? 'text-neutral-400' : 'text-neutral-700'
                     }`}>
-                    {exp.org} {exp.context && <span className="text-neutral-500 text-sm ml-2">· {exp.context}</span>}
+                    {exp.org}{exp.location && <span className="text-neutral-500 ml-1"> · {exp.location}</span>}{exp.context && <span className="text-neutral-500 ml-1">· {exp.context}</span>}
                 </h4>
 
                 <div className={`space-y-4 mb-8 max-w-2xl transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-30 translate-y-2'}`}>

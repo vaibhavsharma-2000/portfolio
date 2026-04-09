@@ -33,14 +33,14 @@ const Bridge = () => {
 
     const paragraphs = [
         "I design by understanding people first, whether that's through a deep-dive research session or a conversation over a meal I've just cooked. With a foundation in Psychology and an MSc in Usability Engineering, I look past the visual layer to solve for human behavior and system logic.",
-        "I am a firm believer that the future of design is not found in static prototypes but in living, working applications. Currently at TeamViewer, I use mixed-method research and AI-driven insights to ensure our work leads to real product impact instead of just documentation.",
+        "I am a firm believer that the future of design is not found in static prototypes but in living, working applications. I've recently started working as a Working Student in UX Design at PwC Deutschland in Stuttgart, supporting internal design and research efforts alongside AI-driven workflows.",
         "When I'm not at my desk, you'll likely find me traveling to gain new perspectives or cooking with the same trial and error logic I use in design. I'm an outgoing collaborator who believes the best products and the best stories are built together."
     ];
 
     const highlightWords = [
         "psychology", "usability", "engineering", "human", "behavior", "system",
-        "logic", "deep-dive", "research", "teamviewer", "mixed-method",
-        "ai-driven", "insights", "product", "impact", "design",
+        "logic", "deep-dive", "research", "pwc", "deutschland", "stuttgart",
+        "ai-driven", "workflows", "product", "impact", "design",
         "prototypes", "applications", "collaborator", "perspectives",
         "trial", "error"
     ];
