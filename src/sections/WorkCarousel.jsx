@@ -8,6 +8,7 @@ import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
 import portfolioImg from "../assets/My Portfolio cover.png";
+import teamviewerCoverImg from "../assets/teamviewer/teamviewer-cover.png";
 const verityImg = "/assets/verity/verity-cover.png";
 
 const BehanceIcon = ({ className }) => (
@@ -30,6 +31,16 @@ const projects = [
         link: "/work/animind",
         tags: ['UX Design', 'Front-end', 'UX Research'],
         category: "UX & Engineering",
+    },
+    {
+        id: 7,
+        title: "TEAMVIEWER",
+        description: "Bridging qualitative research with scalable AI operations as a UX Research Intern.",
+        image: teamviewerCoverImg,
+        color: "#4361EE",
+        link: "/work/teamviewer",
+        tags: ['UX Research', 'AI Prompt Engineering', 'Heuristic Evaluation'],
+        category: "UX Research",
     },
     {
         id: 6,

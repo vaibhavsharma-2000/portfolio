@@ -1,0 +1,124 @@
+/* ═══════════════════════════════════════════
+   TeamViewer Case Study — Page Styles
+   Brand: #060451 (deep navy) + #4361EE accent
+   ═══════════════════════════════════════════ */
+
+.teamviewer-page {
+  --tv-navy: #060451;
+  --tv-blue: #4361EE;
+  --tv-blue-light: #7B8FFF;
+  --tv-blue-mid: #2A35CC;
+  --tv-blue-glow: rgba(67, 97, 238, 0.18);
+  --tv-blue-subtle: rgba(67, 97, 238, 0.07);
+}
+
+/* Selection color */
+.teamviewer-page ::selection {
+  background: var(--tv-blue);
+  color: white;
+}
+
+/* Custom scrollbar */
+.teamviewer-page ::-webkit-scrollbar { width: 3px; }
+.teamviewer-page ::-webkit-scrollbar-track { background: transparent; }
+.teamviewer-page ::-webkit-scrollbar-thumb { background: var(--tv-blue); border-radius: 2px; }
+
+/* ── Hero mouse-follow glow ── */
+.hero-glow {
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(67, 97, 238, 0.12), transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Animated number glow ── */
+@keyframes numPulse {
+  0%, 100% { text-shadow: 0 0 15px rgba(67,97,238,0.2), 0 0 30px rgba(67,97,238,0.1); }
+  50%       { text-shadow: 0 0 30px rgba(67,97,238,0.4), 0 0 50px rgba(67,97,238,0.15); }
+}
+.stat-num { animation: numPulse 3s ease-in-out infinite; }
+
+/* ── Toolkit pill hover ── */
+.toolkit-pill {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.toolkit-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(67,97,238,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.toolkit-pill:hover::before { opacity: 1; }
+.toolkit-pill:hover {
+  border-color: rgba(67, 97, 238, 0.5) !important;
+  box-shadow: 0 0 12px rgba(67,97,238,0.2);
+  color: #fff !important;
+}
+
+/* ── Flow diagram pulse ── */
+@keyframes flowPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+.flow-connector { animation: flowPulse 2s ease-in-out infinite; }
+.flow-connector:nth-child(2) { animation-delay: 0.25s; }
+.flow-connector:nth-child(3) { animation-delay: 0.5s; }
+.flow-connector:nth-child(4) { animation-delay: 0.75s; }
+.flow-connector:nth-child(5) { animation-delay: 1s; }
+
+/* ── Accordion project card ── */
+.project-card-header {
+  transition: background 0.3s;
+}
+.project-card-header:hover { background: rgba(67,97,238,0.05); }
+.project-card-header.active { background: rgba(67,97,238,0.08); }
+
+/* ── Pull quote decoration ── */
+.pull-quote {
+  position: relative;
+}
+.pull-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -24px;
+  left: -8px;
+  font-size: 7rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--tv-blue);
+  opacity: 0.12;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ── Stat card glow loop ── */
+@keyframes statGlow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(67,97,238,0.1), 0 0 20px rgba(67,97,238,0.04); }
+  50%       { box-shadow: 0 0 0 1px rgba(67,97,238,0.25), 0 0 40px rgba(67,97,238,0.12); }
+}
+.stat-card-glow { animation: statGlow 3.5s ease-in-out infinite; }
+
+/* ── Section reveal line ── */
+@keyframes lineGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.section-line {
+  transform-origin: left;
+  animation: lineGrow 0.6s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+/* ── Number ghost background ── */
+.ghost-num {
+  font-size: clamp(8rem, 20vw, 18rem);
+  font-weight: 900;
+  background: linear-gradient(180deg, rgba(67,97,238,0.15) 0%, transparent 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
