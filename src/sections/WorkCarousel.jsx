@@ -8,7 +8,7 @@ import brewQuestImg from "../assets/Brew-Quest-Light.png";
 import recypeImg from "../assets/RecyPeCase-study.png";
 import bahnAssistImg from "../assets/BahnAssist-Case-study.png";
 import portfolioImg from "../assets/My Portfolio cover.png";
-import teamviewerCoverImg from "../assets/teamviewer/teamviewer-cover.png";
+import teamviewerCoverImg from "../assets/teamviewer/teamviewer-cover-new.png";
 const verityImg = "/assets/verity/verity-cover.png";
 
 const BehanceIcon = ({ className }) => (
@@ -36,6 +36,7 @@ const projects = [
         id: 7,
         title: "TEAMVIEWER",
         description: "Bridging qualitative research with scalable AI operations as a UX Research Intern.",
+        badge: "Internship Report",
         image: teamviewerCoverImg,
         color: "#4361EE",
         link: "/work/teamviewer",
@@ -166,8 +167,20 @@ const RolodexCard = ({ project, index, scrollYProgress, total }) => {
             {/* Behance Badge */}
             {project.platform === "behance" && (
                 <div className="absolute top-5 right-5 z-20">
-                    <div className="bg-black/50 backdrop-blur-md p-2 rounded-full border border-white/20">
+                    <div className="bg-black/50 backdrop-blur-md p-2 rounded-full border border-white/20 shadow-lg">
                         <BehanceIcon className="w-5 h-5 text-white" />
+                    </div>
+                </div>
+            )}
+
+            {/* Custom Badge */}
+            {project.badge && (
+                <div className="absolute top-5 right-5 md:top-6 md:right-6 z-20">
+                    <div className="bg-black/40 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 flex items-center shadow-xl">
+                        <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full mr-2" style={{ backgroundColor: project.color }} />
+                        <span className="text-[8px] md:text-[9px] font-bold text-white/80 uppercase tracking-widest">
+                            {project.badge}
+                        </span>
                     </div>
                 </div>
             )}

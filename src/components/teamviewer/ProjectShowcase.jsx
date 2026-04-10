@@ -248,7 +248,7 @@ const projects = [
 /* ═══════════════════════════════════════════
    Expanded Project Content
    ═══════════════════════════════════════════ */
-function ProjectBody({ project }) {
+function ProjectBody({ project, onImageClick }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -314,11 +314,17 @@ function ProjectBody({ project }) {
                                 <p className="text-white/55 text-base md:text-lg leading-relaxed">{step.description}</p>
                                 {step.image && (
                                     <motion.div
-                                        className="mt-6 rounded-2xl overflow-hidden border border-white/10 bg-white shadow-2xl cursor-zoom-in"
+                                        className="mt-6 rounded-2xl overflow-hidden border border-white/10 bg-[#e5e5e5] shadow-2xl cursor-zoom-in relative group/img"
                                         whileHover={{ scale: 1.015 }}
                                         transition={{ duration: 0.4 }}
+                                        onClick={() => onImageClick && onImageClick(step.image)}
                                     >
                                         <img src={step.image} alt={step.imageAlt} loading="lazy" className="w-full h-auto" />
+                                        <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/10 transition-colors flex items-center justify-center pointer-events-none">
+                                            <span className="opacity-0 group-hover/img:opacity-100 bg-black/60 text-white backdrop-blur-sm px-4 py-2 rounded-full text-xs tracking-widest uppercase font-bold transition-opacity duration-300">
+                                                Click to Expand
+                                            </span>
+                                        </div>
                                     </motion.div>
                                 )}
                             </div>
@@ -439,6 +445,7 @@ function ProjectBody({ project }) {
 export function ProjectShowcase() {
     // using a Set-like state to allow multiple open at once. This fixes the "scroll to end" jump issue when toggling.
     const [openStates, setOpenStates] = useState({});
+    const [lightboxImage, setLightboxImage] = useState(null);
 
     const toggleOpen = (idx) => {
         setOpenStates(prev => ({
@@ -558,7 +565,7 @@ export function ProjectShowcase() {
                                             className="overflow-hidden"
                                         >
                                             <div className="px-0 md:pl-20 mt-4 md:mt-8">
-                                                <ProjectBody project={project} />
+                                                <ProjectBody project={project} onImageClick={setLightboxImage} />
                                             </div>
                                         </motion.div>
                                     )}
@@ -571,6 +578,34 @@ export function ProjectShowcase() {
 
             {/* Background glow */}
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#4361EE]/5 blur-[200px] rounded-full pointer-events-none" />
+
+            {/* FULLSCREEN LIGHTBOX SECTION */}
+            <AnimatePresence>
+                {lightboxImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        onClick={() => setLightboxImage(null)}
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-10 cursor-zoom-out backdrop-blur-sm"
+                    >
+                        <motion.img
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                            src={lightboxImage}
+                            alt="Expanded view"
+                            className="max-w-full max-h-full rounded-2xl shadow-2xl border border-white/10"
+                        />
+                        {/* Close button */}
+                        <div className="absolute top-6 right-6 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors pointer-events-none">
+                            ✕
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }
