@@ -98,7 +98,7 @@ const BentoGrid = () => {
     const cards = [
         {
             title: "User Research",
-            subtitle: <>SUS, UEQ, <span className="text-neutral-300 font-medium">JTBD & ODI</span>, User Interviews, <span className="text-neutral-300 font-medium">A/B Testing</span></>,
+            subtitle: <>SUS, UEQ, <span className="text-neutral-300 font-medium">JTBD & ODI</span>, User Interviews, <span className="text-neutral-300 font-medium">A/B Testing, Condens</span></>,
             size: "md:col-span-2 md:row-span-2",
             color: "#FFC107",
             icon: Search
@@ -112,7 +112,7 @@ const BentoGrid = () => {
         },
         {
             title: "Front-end Development",
-            subtitle: <>HTML, CSS, <span className="text-neutral-300 font-medium">JavaScript</span>, React, Tailwind, Git, GitHub,</>,
+            subtitle: <>HTML, CSS, <span className="text-neutral-300 font-medium">JavaScript</span>, React, Tailwind, Git, GitHub, <span className="text-neutral-300 font-medium">Skills.md, Cursor, Google Antigravity</span>, Agentic Development</>,
             size: "md:col-span-1 md:row-span-2",
             color: "#06B6D4",
             icon: Code2
