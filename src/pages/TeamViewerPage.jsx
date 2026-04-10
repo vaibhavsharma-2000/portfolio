@@ -12,19 +12,42 @@ import '../styles/teamviewer.css';
 const TEAMVIEWER_JSON_LD = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    "name": "TeamViewer — UX Research Internship Case Study",
+    "name": "TeamViewer — UX Research Internship Report & Case Study",
     "author": {
         "@type": "Person",
         "name": "Vaibhav Sharma",
-        "url": "https://www.vaibhavsharma.de"
+        "url": "https://www.vaibhavsharma.de",
+        "jobTitle": "UX Designer & UX Researcher"
     },
-    "description": "UX Research internship case study at TeamViewer GmbH. AI-driven feedback pipelines, strategic prototype validation with Nielsen's Heuristics, knowledge retrieval AI agent, and foundational user research with ODI opportunity gap mapping.",
+    "description": "6-month UX Research internship at TeamViewer GmbH. Covers AI-driven customer feedback pipelines using JTBD/ODI, strategic prototype validation using Nielsen's 10 Heuristics, a knowledge retrieval AI agent for Research Operations, and foundational user research with opportunity gap mapping.",
     "url": "https://www.vaibhavsharma.de/work/teamviewer",
-    "dateCreated": "2025-2026",
+    "dateCreated": "2025",
+    "datePublished": "2026",
     "genre": "UX Case Study",
-    "keywords": "TeamViewer, UX research, internship, AI prompt engineering, JTBD, ODI, heuristic evaluation, usability testing, knowledge management, case study",
-    "tools": ["Microsoft Copilot", "UEQ+", "SUS", "Nielsen's Heuristics", "JTBD", "ODI"],
-    "inLanguage": "en"
+    "keywords": "TeamViewer, UX research internship, AI prompt engineering, JTBD, Jobs To Be Done, ODI, Outcome-Driven Innovation, heuristic evaluation, Nielsen heuristics, usability testing, knowledge management, AI agent, research operations, ReOps, UEQ+, SUS, Vaibhav Sharma",
+    "inLanguage": "en",
+    "hasPart": [
+        {
+            "@type": "CreativeWork",
+            "name": "AI-Driven Customer Feedback Analysis",
+            "description": "Automated multi-hour manual analysis into weekly pipelines using AI prompt engineering and JTBD syntax in Microsoft Copilot."
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Strategic Validation of TeamViewer ONE",
+            "description": "Objective A–F grading system for prototype evaluation using Problem-Solution Assessment Matrix and Nielsen's 10 Heuristics."
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Knowledge Retrieval AI Agent",
+            "description": "Built a UXRchive AI agent trained exclusively on TeamViewer's proprietary UX research repository for self-service knowledge retrieval."
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Foundational Research & Usability Testing",
+            "description": "Ran structured user interviews with enterprise IT admins using ODI opportunity gap mapping to prioritize roadmap features for TIA Copilot."
+        }
+    ]
 };
 
 export default function TeamViewerPage() {
@@ -36,11 +59,13 @@ export default function TeamViewerPage() {
             className="teamviewer-page bg-[#0a0a0a] min-h-screen text-white"
         >
             <SEOHead
-                title="TeamViewer — UX Research Internship Case Study"
-                description="UX Research internship case study at TeamViewer. AI-driven feedback pipelines, strategic prototype validation, knowledge retrieval agent, and foundational user research."
+                title="TeamViewer UX Research Internship — Case Study"
+                description="6-month UX Research Internship at TeamViewer GmbH. AI-driven feedback pipelines, prototype validation with Nielsen's Heuristics, a knowledge retrieval AI agent, and ODI-based user research. By Vaibhav Sharma."
                 url="/work/teamviewer"
-                keywords="TeamViewer, UX research, internship, AI, JTBD, heuristic evaluation, usability testing, Vaibhav Sharma"
+                image="https://www.vaibhavsharma.de/assets/teamviewer/teamviewer-cover-new.png"
+                keywords="TeamViewer, UX research, internship, AI prompt engineering, JTBD, Jobs To Be Done, ODI, heuristic evaluation, Nielsen heuristics, usability testing, knowledge management, research operations, ReOps, Vaibhav Sharma"
                 jsonLd={TEAMVIEWER_JSON_LD}
+                ogType="article"
             />
 
             {/* Navigation - Floating Back Button */}
